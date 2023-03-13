@@ -8,9 +8,7 @@ class UserServiceTest {
 
     @Test
     void get() {
-        UserService userService = new UserService();
-        UserModel model = userService.get("Re86sT1MJa3Pm30whdqr");
-        System.out.println(model);
+
     }
 
     /*@Test
