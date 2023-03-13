@@ -1,8 +1,8 @@
 package com.appdev.terra.models;
 
 public class EarthquakeModel {
-    String id;
-    Double longitude;
-    Double latitude;
-    Double magnitude;
+    public String id;
+    public Double longitude;
+    public Double latitude;
+    public Double magnitude;
 }

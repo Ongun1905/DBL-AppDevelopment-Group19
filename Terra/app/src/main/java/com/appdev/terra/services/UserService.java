@@ -1,32 +1,24 @@
 package com.appdev.terra.services;
 
-import android.content.ContentValues;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
+
+import com.appdev.terra.enums.StatusEnum;
+import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IDatabaseService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
-import com.appdev.terra.services.helpers.Container;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class UserService implements IDatabaseService<UserModel> {
 
@@ -38,8 +30,6 @@ public class UserService implements IDatabaseService<UserModel> {
         usersRef = db.collection("Users");
     }
 
-
-    // do not use
     @Override
     public void get(String id, IFirestoreCallback firestoreCallback) {
         usersRef.whereEqualTo(FieldPath.documentId(), id).get().addOnCompleteListener(task -> {
@@ -63,6 +53,7 @@ public class UserService implements IDatabaseService<UserModel> {
             }
 
         });
+
     }
 
     public void getAllUsers(IFirestoreCallback firestoreCallback) {
@@ -117,7 +108,6 @@ public class UserService implements IDatabaseService<UserModel> {
                     System.out.println("User updated!");
                     firestoreCallback.onCallback(model);
                 });
-
     }
 
     @Override

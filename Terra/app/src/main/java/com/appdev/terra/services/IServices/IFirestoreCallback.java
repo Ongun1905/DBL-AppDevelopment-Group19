@@ -4,16 +4,16 @@ import com.appdev.terra.models.UserModel;
 
 import java.util.ArrayList;
 
-public interface IFirestoreCallback {
+public interface IFirestoreCallback<T> {
     default void onCallback() {
 
     }
 
-    default void onCallback(UserModel model) {
+    default void onCallback(T model) {
 
     }
 
-    default void onCallback(ArrayList<UserModel> userModels) {
+    default void onCallback(ArrayList<T> userModels) {
 
     }
 }

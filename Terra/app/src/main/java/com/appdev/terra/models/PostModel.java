@@ -7,10 +7,10 @@ import com.google.firebase.firestore.GeoPoint;
 import java.util.Date;
 
 public class PostModel {
-    String id;
-    String title;
-    String description;
-    Timestamp postedAt;
+    public String id;
+    public String title;
+    public String description;
+    public Timestamp postedAt;
     public GeoPoint location;
-    StatusEnum status;
+    public StatusEnum status;
 }

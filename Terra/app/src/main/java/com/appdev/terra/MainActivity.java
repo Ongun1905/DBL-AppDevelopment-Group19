@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UserService userService = new UserService();
-                userService.get("Re86sT1MJa3Pm30whdqr", new IFirestoreCallback() {
+                userService.get("Re86sT1MJa3Pm30whdqr", new IFirestoreCallback<UserModel>() {
 
                     @Override
                     public void onCallback(UserModel model) {
