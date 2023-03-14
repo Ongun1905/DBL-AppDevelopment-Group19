@@ -1,8 +1,9 @@
 package com.appdev.terra.models;
 
+import com.google.firebase.firestore.GeoPoint;
+
 public class EarthquakeModel {
     public String id;
-    public Double longitude;
-    public Double latitude;
+    public GeoPoint location;
     public Double magnitude;
 }
