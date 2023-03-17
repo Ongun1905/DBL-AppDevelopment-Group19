@@ -17,8 +17,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -34,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     LocationManager locationManager;
     String latitude, longitude;
 
-
+    // Services
+    PostService postService = new PostService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                             Location userLocation = userLocationOption.get();
                             Toast.makeText(getApplicationContext(), "Longitude: " + String.valueOf(userLocation.getLongitude()), Toast.LENGTH_SHORT).show();
                             Toast.makeText(getApplicationContext(), "Latitude: " + String.valueOf(userLocation.getLatitude()), Toast.LENGTH_SHORT).show();
+
+                            PostModel post = PostModel.sosPost("415", userLocation.getLatitude(), userLocation.getLongitude());
+                            postService.add(post, new IFirestoreCallback<PostModel>() {});
                         } else {
                             Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
                         }
