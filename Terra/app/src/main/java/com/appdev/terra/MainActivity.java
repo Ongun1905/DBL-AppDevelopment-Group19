@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         Button sendButton = (Button) findViewById(R.id.button);
         Button sosButton = (Button) findViewById(R.id.sos_button);
+        Button homebutton = (Button) findViewById(R.id.home);
+        homebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Feed.class);
+                startActivity(intent);
+            }
+        });
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

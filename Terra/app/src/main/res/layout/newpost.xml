@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/postdetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New post details:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/locationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/postdetails"
+        android:hint="Location"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/numberOfVictims"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locationEditText"
+        android:hint="Possible number of victims"
+        android:minHeight="48dp" />
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/numberOfVictims"
+        android:hint="Description (Information on the accident)"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:text="Status:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <Spinner
+        android:id="@+id/statusSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="Choose the severity of the accident"
+        android:layout_below="@id/statusTextView"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/requirementsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/statusSpinner"
+        android:text="Requirements:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <CheckBox
+        android:id="@+id/foodCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requirementsTextView"
+        android:text="Food"/>
+
+    <CheckBox
+        android:id="@+id/waterCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foodCheckBox"
+        android:text="Water"/>
+
+    <CheckBox
+        android:id="@+id/powerToolsCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/waterCheckBox"
+        android:text="Power Tools"/>
+
+    <CheckBox
+        android:id="@+id/transportCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/powerToolsCheckBox"
+        android:text="Transport"/>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/transportCheckBox"
+        android:text="Submit"/>
+</RelativeLayout>
