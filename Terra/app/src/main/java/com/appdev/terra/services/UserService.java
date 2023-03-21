@@ -76,7 +76,6 @@ public class UserService implements IDatabaseService<UserModel> {
             } else {
                 System.out.println("Task failed!");
             }
-
         });
     }
 
