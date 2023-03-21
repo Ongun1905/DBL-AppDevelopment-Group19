@@ -56,6 +56,30 @@ public class UserService implements IDatabaseService<UserModel> {
 
     }
 
+    public void get(Long phoneNumber, IFirestoreCallback firestoreCallback) {
+        usersRef.whereEqualTo("phoneNmbr", phoneNumber).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                if (document.exists()) {
+                    UserModel model = new UserModel();
+                    model.id = document.getId();
+                    model.name = document.getString("name");
+                    model.address = document.getGeoPoint("address");
+                    model.surname = document.getString("surname");
+                    model.password = document.getString("password");
+                    model.phoneNumber = document.getLong("mobileNmbr");
+                    model.contactIds = (ArrayList<String>) document.get("contacts");
+                    firestoreCallback.onCallback(model);
+                } else {
+                    System.out.println("Document doesn't exist!");
+                }
+            } else {
+                System.out.println("Task failed!");
+            }
+
+        });
+    }
+
     public void getAllUsers(IFirestoreCallback firestoreCallback) {
         usersRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
