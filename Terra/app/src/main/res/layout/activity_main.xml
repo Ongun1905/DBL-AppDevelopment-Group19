@@ -49,4 +49,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
+    <Button
+        android:id="@+id/goQualifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="go to qualifications page"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sos_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
