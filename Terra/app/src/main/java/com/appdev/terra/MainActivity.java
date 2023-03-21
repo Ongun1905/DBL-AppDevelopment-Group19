@@ -1,35 +1,88 @@
 package com.appdev.terra;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
+import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
+import android.Manifest;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Optional;
 
+public class MainActivity extends AppCompatActivity implements LocationListener {
 
+    ActivityMainBinding binding;
 
+    public static final int REQUEST_LOCATION = 1;
 
+    // Should keep track of location data
+    LocationManager locationManager;
+    String latitude, longitude;
+
+    // Services
+    PostService postService = new PostService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        binding.bottomNavigationView.setSelectedItemId(R.id.sos);
+
+//        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+//
+//            switch (item.getItemId()){
+//
+//                case R.id.profile:
+//                    replaceFragment(new profile());
+//                    break;
+//                case R.id.home:
+//                    replaceFragment(new home());
+//                    break;
+//                case R.id.sos:
+//                    break;
+//                case R.id.contact:
+//                    replaceFragment(new contact());
+//                    break;
+//                case R.id.search:
+//                    replaceFragment(new search());
+//                    break;
+//
+//            }
+//            return true;
+//
+//        });
+
+
+        // Should request location
+        ActivityCompat.requestPermissions( this,
+                new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
 
         Button sendButton = (Button) findViewById(R.id.button);
-        Button addButton = (Button) findViewById(R.id.button);
+        Button sosButton = (Button) findViewById(R.id.sos_button);
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,14 +107,83 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                PostService postService = new PostService();
+            public void onClick(View v) {
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    OnGPS();
+                } else {
+                    Optional<Location> userLocationOption = getLocation();
 
-                postService.add();
+                    if (userLocationOption != null) {
+                        if (userLocationOption.isPresent()) {
+                            Location userLocation = userLocationOption.get();
+                            Toast.makeText(getApplicationContext(), "Longitude: " + String.valueOf(userLocation.getLongitude()), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Latitude: " + String.valueOf(userLocation.getLatitude()), Toast.LENGTH_SHORT).show();
 
+                            PostModel post = PostModel.sosPost("415", userLocation.getLatitude(), userLocation.getLongitude());
+                            postService.add(post, new IFirestoreCallback<PostModel>() {});
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
+    }
+
+    private void replaceFragment(Fragment fragment){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commit();
+
+    }
+
+    private void OnGPS() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * A method that returns an optional location. If the returned value is `null`, location
+     * permissions are not granted. If the enclosed value in the `Optional` wrapper is null, the
+     * location could not be accessed. If the the enclosed value is a location, that is the most
+     * recent user location.
+     *
+     * @return Possibly the user's location. Could fail in two ways.
+     */
+    private Optional<Location> getLocation() {
+        if (
+                ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)   != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+            return null;
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            return Optional.ofNullable(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        // Wow! Such empty!
     }
 }

@@ -36,13 +36,15 @@ public class PostService implements IDatabaseService<PostModel> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 if (document.exists()) {
-                    PostModel model = new PostModel();
-                    model.id = document.getId();
-                    model.description = document.getString("Description");
-                    model.location = document.getGeoPoint("Location");
-                    model.postedAt = document.getTimestamp("PostedAt");
-                    model.status = StatusEnum.valueOf(document.getString("Status"));
-                    model.title = document.getString("Title");
+                    PostModel model = new PostModel(
+                            document.getId(),
+                            document.getString("Title"),
+                            document.getString("Description"),
+                            document.getTimestamp("PostedAt"),
+                            document.getGeoPoint("Location"),
+                            StatusEnum.valueOf(document.getString("Status"))
+                    );
+
                     firestoreCallback.onCallback(model);
                 } else {
                     System.out.println("Document doesn't exist!");
@@ -61,13 +63,15 @@ public class PostService implements IDatabaseService<PostModel> {
                 if (task.isSuccessful()) {
                     ArrayList<PostModel> postModels = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        PostModel model = new PostModel();
-                        model.id = document.getId();
-                        model.description = document.getString("Description");
-                        model.location = document.getGeoPoint("Location");
-                        model.postedAt = document.getTimestamp("PostedAt");
-                        model.status = StatusEnum.valueOf(document.getString("Status"));
-                        model.title = document.getString("Title");
+                        PostModel model = new PostModel(
+                                document.getId(),
+                                document.getString("Title"),
+                                document.getString("Description"),
+                                document.getTimestamp("PostedAt"),
+                                document.getGeoPoint("Location"),
+                                StatusEnum.valueOf(document.getString("Status"))
+                        );
+
                         postModels.add(model);
                     }
                     firestoreCallback.onCallback(postModels);
@@ -87,7 +91,7 @@ public class PostService implements IDatabaseService<PostModel> {
         post.put("Title", model.title);
         post.put("Status", model.status);
 
-        postsRef.document().set(post).addOnCompleteListener(task -> {
+        postsRef.document(model.id).set(post).addOnCompleteListener(task -> {
             System.out.println("Post added");
             firestoreCallback.onCallback(model);
         });
