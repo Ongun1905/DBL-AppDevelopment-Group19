@@ -2,6 +2,9 @@ package com.appdev.terra;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -32,6 +35,8 @@ import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
+    ActivityMainBinding binding;
+
     public static final int REQUEST_LOCATION = 1;
 
     // Should keep track of location data
@@ -44,7 +49,33 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        binding.bottomNavigationView.setSelectedItemId(R.id.sos);
+
+//        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+//
+//            switch (item.getItemId()){
+//
+//                case R.id.profile:
+//                    replaceFragment(new profile());
+//                    break;
+//                case R.id.home:
+//                    replaceFragment(new home());
+//                    break;
+//                case R.id.sos:
+//                    break;
+//                case R.id.contact:
+//                    replaceFragment(new contact());
+//                    break;
+//                case R.id.search:
+//                    replaceFragment(new search());
+//                    break;
+//
+//            }
+//            return true;
+//
+//        });
 
 
         // Should request location
@@ -105,6 +136,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 }
             }
         });
+    }
+
+    private void replaceFragment(Fragment fragment){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commit();
+
     }
 
     private void OnGPS() {
