@@ -1,5 +1,6 @@
 package com.appdev.terra;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,9 +8,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.appdev.terra.databinding.ActivityMainBinding;
 import com.appdev.terra.databinding.ActivityMainScreenBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainScreen extends AppCompatActivity {
 
@@ -20,6 +25,7 @@ public class MainScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         binding.bottomNavigationView.setSelectedItemId(R.id.home);
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
@@ -30,12 +36,11 @@ public class MainScreen extends AppCompatActivity {
                     replaceFragment(new profile());
                     break;
                 case R.id.home:
-                    replaceFragment(new home());
                     break;
                 case R.id.sos:
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     overridePendingTransition(0,0);
-                    return true;
+                    break;
                 case R.id.contact:
                     replaceFragment(new contact());
                     break;
