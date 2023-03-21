@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.GeoPoint;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button sendButton = (Button) findViewById(R.id.button);
+        Button addButton = (Button) findViewById(R.id.button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
                 model.contactIds = new ArrayList<>();
                 userService.add(model); */
 
+
+            }
+        });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PostService postService = new PostService();
+
+                postService.add();
 
             }
         });
