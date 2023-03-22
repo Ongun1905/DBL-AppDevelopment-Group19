@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.appdev.terra.R;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
