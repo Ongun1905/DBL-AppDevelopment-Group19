@@ -18,4 +18,6 @@ public interface IFirestoreCallback<T> {
     }
 
     default void onCallback(T model, boolean loginSuccess, String message) {}
+
+    default void onCallback(boolean result, String message) {}
 }
