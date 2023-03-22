@@ -92,7 +92,7 @@ public class PostService implements IDatabaseService<PostModel> {
         post.put("Status", model.status);
 
         postsRef.document(model.id).set(post).addOnCompleteListener(task -> {
-            System.out.println("Post added");
+            System.out.println("com.appdev.terra.Post added");
             firestoreCallback.onCallback(model);
         });
     }
@@ -104,7 +104,7 @@ public class PostService implements IDatabaseService<PostModel> {
                 "PostedAt", model.postedAt,
                 "Title", model.title,
                 "Status", model.status).addOnCompleteListener(task -> {
-            System.out.println("Post updated!");
+            System.out.println("com.appdev.terra.Post updated!");
             firestoreCallback.onCallback(model);
         });
     }
@@ -112,7 +112,7 @@ public class PostService implements IDatabaseService<PostModel> {
     @Override
     public void remove(String id, IFirestoreCallback firestoreCallback) {
         postsRef.document(id).delete().addOnSuccessListener(unused -> {
-            System.out.println("Post deleted!");
+            System.out.println("com.appdev.terra.Post deleted!");
             firestoreCallback.onCallback();
         });
     }
