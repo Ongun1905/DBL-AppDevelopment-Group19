@@ -1,5 +1,6 @@
 package com.appdev.terra;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -16,17 +17,18 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.appdev.terra.databinding.ActivityMainBinding;
-import com.appdev.terra.databinding.ActivityMainScreenBinding;
+
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
 import android.Manifest;
@@ -35,7 +37,7 @@ import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
-    ActivityMainBinding binding;
+    BottomNavigationView bottomNavigationView;
 
     public static final int REQUEST_LOCATION = 1;
 
@@ -49,33 +51,47 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        binding.bottomNavigationView.setSelectedItemId(R.id.sos);
+        setContentView(R.layout.activity_main);
 
-//        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-//
-//            switch (item.getItemId()){
-//
-//                case R.id.profile:
-//                    replaceFragment(new profile());
-//                    break;
-//                case R.id.home:
-//                    replaceFragment(new home());
-//                    break;
-//                case R.id.sos:
-//                    break;
-//                case R.id.contact:
-//                    replaceFragment(new contact());
-//                    break;
-//                case R.id.search:
-//                    replaceFragment(new search());
-//                    break;
-//
-//            }
-//            return true;
-//
-//        });
+        //UI Navigation
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.sos);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+
+                    case R.id.contact:
+                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.sos:
+                        return true;
+
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.search:
+                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                }
+                return false;
+            }
+        });
+
+
 
 
         // Should request location
@@ -138,14 +154,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         });
     }
 
-    private void replaceFragment(Fragment fragment){
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
-        fragmentTransaction.commit();
-
-    }
 
     private void OnGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
