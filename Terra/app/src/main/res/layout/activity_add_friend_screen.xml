@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_friend_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient2"
-    android:visibility="visible"
-    tools:context=".views.ContactsPage">
+    tools:context=".AddFriendScreen">
 
     <TextView
         android:id="@+id/textView"
@@ -40,9 +40,9 @@
 
     <EditText
         android:id="@+id/ContactTextField"
-        android:layout_width="316dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="50dp"
+        android:layout_width="334dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="20dp"
         android:background="#779A9691"
         android:ems="10"
@@ -76,13 +76,13 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="411dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="411dp" />
 
     <EditText
         android:id="@+id/contactTextField"
-        android:layout_width="316dp"
-        android:layout_height="0dp"
+        android:layout_width="327dp"
+        android:layout_height="51dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="20dp"
         android:background="#CF8E45"
@@ -116,5 +116,16 @@
         android:text="Copy Link"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contactTextField" />
+
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="676dp"
+        android:layout_marginEnd="304dp"
+        android:text="Back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
