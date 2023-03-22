@@ -21,8 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;

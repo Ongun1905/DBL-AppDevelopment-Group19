@@ -16,4 +16,6 @@ public interface IFirestoreCallback<T> {
     default void onCallback(ArrayList<T> userModels) {
 
     }
+
+    default void onCallback(T model, boolean loginSuccess, String message) {}
 }
