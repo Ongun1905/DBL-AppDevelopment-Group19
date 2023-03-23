@@ -10,7 +10,7 @@ public class PostModel {
     // 6 characters, 2 decimals: ???.??
     private static final String GEO_POINT_INDEX_FORMAT = "[%06.2f, %06.2f]";
 
-    public String id;
+    public String geoId;
     public String title;
     public String description;
     public Timestamp postedAt;
@@ -18,10 +18,10 @@ public class PostModel {
     public StatusEnum status;
 
     public PostModel(
-            String title, String description, Timestamp postedAt,
-            GeoPoint location, StatusEnum status
+            String title, String description,
+            Timestamp postedAt, GeoPoint location, StatusEnum status
     ) {
-        this.id = String.format(GEO_POINT_INDEX_FORMAT, location.getLatitude(), location.getLongitude());
+        this.geoId = makeGeoId(location.getLatitude(), location.getLongitude());
         this.title = title;
         this.description = description;
         this.postedAt = postedAt;
@@ -33,7 +33,7 @@ public class PostModel {
             String title, String description, Timestamp postedAt,
             double latitude, double longitude, StatusEnum status
     ) {
-        this.id = String.format(GEO_POINT_INDEX_FORMAT, latitude, longitude);
+        this.geoId = makeGeoId(latitude, longitude);
         this.title = title;
         this.description = description;
         this.postedAt = postedAt;
@@ -57,5 +57,9 @@ public class PostModel {
                 longitude,
                 StatusEnum.NEED_EQUIPMENT
         );
+    }
+
+    public static String makeGeoId(double latitude, double longitude) {
+        return String.format(GEO_POINT_INDEX_FORMAT, latitude, longitude);
     }
 }

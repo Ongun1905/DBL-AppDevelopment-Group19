@@ -31,6 +31,7 @@ import com.google.firebase.firestore.GeoPoint;
 
 import android.Manifest;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
@@ -102,14 +103,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserService userService = new UserService();
-                userService.get("Re86sT1MJa3Pm30whdqr", new IFirestoreCallback<UserModel>() {
+//                UserService userService = new UserService();
+//                userService.get("Re86sT1MJa3Pm30whdqr", new IFirestoreCallback<UserModel>() {
+//
+//                    @Override
+//                    public void onCallback(UserModel model) {
+//                        System.out.println("data: " + model.id);
+//                    }
+//                });
 
-                    @Override
-                    public void onCallback(UserModel model) {
-                        System.out.println("data: " + model.id);
-                    }
-                });
                 //UserModel model = new UserModel();
                 /*model.phoneNumber = Long.valueOf(234234234);
                 model.password = "asdasdsa";
@@ -119,7 +121,37 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 model.contactIds = new ArrayList<>();
                 userService.add(model); */
 
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    OnGPS();
+                    return;
+                }
+
+                Optional<Location> userLocationOption = getLocation();
+
+                if (userLocationOption == null) {
+                    Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!userLocationOption.isPresent()) {
+                    Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Location userLocation = userLocationOption.get();
+
+                postService.getAllPosts(new IFirestoreCallback<PostModel>() {
+                    @Override
+                    public void onCallback(ArrayList<PostModel> models) {
+                        IFirestoreCallback.super.onCallback(models);
+
+                        for (PostModel model : models) {
+                            System.out.println(model.description);
+                        }
+                    }
+                });
             }
         });
 
