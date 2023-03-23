@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     // Should keep track of location data
     LocationManager locationManager;
-    String latitude, longitude;
 
     // Services
     PostService postService = new PostService();
@@ -128,26 +127,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View v) {
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
                 if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     OnGPS();
-                } else {
-                    Optional<Location> userLocationOption = getLocation();
-
-                    if (userLocationOption != null) {
-                        if (userLocationOption.isPresent()) {
-                            Location userLocation = userLocationOption.get();
-                            Toast.makeText(getApplicationContext(), "Longitude: " + String.valueOf(userLocation.getLongitude()), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getApplicationContext(), "Latitude: " + String.valueOf(userLocation.getLatitude()), Toast.LENGTH_SHORT).show();
-
-                            PostModel post = PostModel.sosPost("415", userLocation.getLatitude(), userLocation.getLongitude());
-                            postService.add(post, new IFirestoreCallback<PostModel>() {});
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
-                    }
+                    return;
                 }
+
+                Optional<Location> userLocationOption = getLocation();
+
+                if (userLocationOption == null) {
+                    Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!userLocationOption.isPresent()) {
+                    Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Location userLocation = userLocationOption.get();
+                PostModel post = PostModel.sosPost(userLocation.getLatitude(), userLocation.getLongitude());
+                postService.add(post, new IFirestoreCallback<PostModel>() {});
             }
         });
     }

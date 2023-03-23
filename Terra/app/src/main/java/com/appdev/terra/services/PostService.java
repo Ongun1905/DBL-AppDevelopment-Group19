@@ -37,7 +37,6 @@ public class PostService implements IDatabaseService<PostModel> {
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 if (document.exists()) {
                     PostModel model = new PostModel(
-                            document.getId(),
                             document.getString("Title"),
                             document.getString("Description"),
                             document.getTimestamp("PostedAt"),
@@ -64,7 +63,6 @@ public class PostService implements IDatabaseService<PostModel> {
                     ArrayList<PostModel> postModels = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         PostModel model = new PostModel(
-                                document.getId(),
                                 document.getString("Title"),
                                 document.getString("Description"),
                                 document.getTimestamp("PostedAt"),
