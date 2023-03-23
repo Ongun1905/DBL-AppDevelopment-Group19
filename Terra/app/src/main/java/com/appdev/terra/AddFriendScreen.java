@@ -2,26 +2,28 @@ package com.appdev.terra;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class SplashScreen extends AppCompatActivity {
+public class AddFriendScreen extends AppCompatActivity {
 
-    Button buttonCitizen;
+    Button buttonBack;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.activity_add_friend_screen);
 
-        buttonCitizen = (Button) findViewById(R.id.button);
+        buttonBack = (Button) findViewById(R.id.back);
 
-        buttonCitizen.setOnClickListener(new View.OnClickListener() {
+        buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
+                Intent intent = new Intent(AddFriendScreen.this, ContactScreen.class);
                 startActivity(intent);
 
             }

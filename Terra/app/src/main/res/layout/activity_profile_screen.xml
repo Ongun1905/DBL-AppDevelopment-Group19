@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient2"    android:visibility="visible"
-    tools:context=".views.QualificationPage"
-    tools:visibility="visible">
+    tools:context=".ProfileScreen">
 
     <TextView
         android:id="@+id/Title"
@@ -322,5 +321,15 @@
         app:layout_constraintEnd_toEndOf="@+id/Title"
         app:layout_constraintStart_toStartOf="@+id/Title"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="413dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="660dp"
+        android:background="#C6C6C6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
