@@ -1,8 +1,6 @@
 package com.appdev.terra;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,16 +15,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.appdev.terra.databinding.ActivityMainBinding;
-import com.appdev.terra.databinding.ActivityMainScreenBinding;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
-import com.google.firebase.firestore.GeoPoint;
-
-import android.Manifest;
 
 import java.util.Optional;
 
