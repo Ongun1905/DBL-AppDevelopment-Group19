@@ -61,28 +61,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/requirementsTextView"
-        android:text="Food"/>
+        android:minHeight="48dp"
+        android:text="Food" />
 
     <CheckBox
         android:id="@+id/waterCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/foodCheckBox"
-        android:text="Water"/>
+        android:minHeight="48dp"
+        android:text="Water" />
 
     <CheckBox
         android:id="@+id/powerToolsCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/waterCheckBox"
-        android:text="Power Tools"/>
+        android:minHeight="48dp"
+        android:text="Power Tools" />
 
     <CheckBox
         android:id="@+id/transportCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/powerToolsCheckBox"
-        android:text="Transport"/>
+        android:minHeight="48dp"
+        android:text="Transport" />
 
     <Button
         android:id="@+id/submitButton"

@@ -32,6 +32,7 @@ import com.google.firebase.firestore.GeoPoint;
 import android.Manifest;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     // Services
     PostService postService = new PostService();
+    private List<Post> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
