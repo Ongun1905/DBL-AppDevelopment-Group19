@@ -11,7 +11,7 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="550dp"
+        android:layout_marginTop="570dp"
         android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
     <android.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="409dp"
-        android:layout_height="77dp"
+        android:layout_height="70dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="416dp"
-        android:layout_height="604dp"
+        android:layout_height="550dp"
         android:contentDescription="bla bla bla"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
