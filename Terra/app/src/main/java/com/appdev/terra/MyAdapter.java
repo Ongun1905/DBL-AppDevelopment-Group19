@@ -1,12 +1,9 @@
 package com.appdev.terra;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.view.View;
 import java.util.List;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
 
 
@@ -35,4 +32,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     public int getItemCount() {
         return items.size();
     }
+
+    public void setItems(List<Post> items) {
+        this.items = items;
+        notifyDataSetChanged();
+    }
+
 }

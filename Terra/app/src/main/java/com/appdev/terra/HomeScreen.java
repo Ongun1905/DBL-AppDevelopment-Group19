@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,11 +26,16 @@ public class HomeScreen extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     private List<Post> items = new ArrayList<>();
+    private List<Post> filteredItems = new ArrayList<>();
+
+    private SearchView searchView;
+    private RecyclerView recyclerView;
+    private MyAdapter adapter;
+    private ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_home_screen);
 
         for (int i = 1; i <= 50; i++) {
@@ -36,16 +43,64 @@ public class HomeScreen extends AppCompatActivity {
             items.add(post);
         }
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        scrollView = findViewById(R.id.scrollView2);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyAdapter(items));
+        adapter = new MyAdapter(items);
+        recyclerView.setAdapter(adapter);
 
         Button addButton = findViewById(R.id.button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(HomeScreen.this, NewPostActivity.class);
-                startActivity(intent2);
+                Intent intent = new Intent(HomeScreen.this, NewPostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        searchView = findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Perform the search
+                search(query);
+                // Return true to indicate that the search has been handled
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Perform the search on every text change
+                search(newText);
+                // Return true to indicate that the search has been handled
+                return true;
+            }
+        });
+
+        // Initialize filteredItems with all the items
+        filteredItems.addAll(items);
+    }
+
+    private void search(String query) {
+        // Clear the current filteredItems list
+        filteredItems.clear();
+
+        // Loop through the original items list and add the items that match the query
+        for (Post post : items) {
+            if (post.getPostText().toLowerCase().contains(query.toLowerCase())) {
+                filteredItems.add(post);
+            }
+        }
+
+        // Update the RecyclerView with the filtered items list
+        adapter.setItems(filteredItems);
+
+        // Scroll to the top of the ScrollView after updating the RecyclerView
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(View.FOCUS_UP);
             }
         });
 
@@ -87,12 +142,12 @@ public class HomeScreen extends AppCompatActivity {
         });
     }
 
-//    private void replaceFragment(Fragment fragment){
-//
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.frame_layout,fragment);
-//        fragmentTransaction.commit();
-//
-//    }
+    private void replaceFragment(Fragment fragment){
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        fragmentTransaction.commit();
+
+    }
 }
