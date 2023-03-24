@@ -21,11 +21,12 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="413dp"
         android:layout_height="71dp"
-        android:layout_marginTop="660dp"
         android:background="#C6C6C6"
-        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
-        app:layout_constraintStart_toStartOf="@+id/frame_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
