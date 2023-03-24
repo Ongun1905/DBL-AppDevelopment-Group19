@@ -2,6 +2,8 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -19,9 +21,8 @@ import java.util.List;
 
 public class ContactScreen extends AppCompatActivity {
 
-    ListView listView;
-    List list = new ArrayList<>();
-    ArrayAdapter adapter;
+    ArrayList<ContactList>  contactLists = new ArrayList<>();
+    int profilePicture = R.drawable.baseline_person_24;
 
     BottomNavigationView bottomNavigationView;
     Button buttonAddFriend;
@@ -82,73 +83,25 @@ public class ContactScreen extends AppCompatActivity {
             }
         });
 
+        RecyclerView recyclerView = findViewById(R.id.contact_list_view);
 
-        listView = (ListView) findViewById(R.id.contact_list);
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
-        list.add("Daua");
+        setUpContactList();
 
+        ContactListAdapter adapter = new ContactListAdapter(this, contactLists);
 
-
-
-        adapter = new ArrayAdapter(ContactScreen.this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
-
-
-
-
-
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
+
+    private void setUpContactList() {
+        String[] contactListNames = getResources().getStringArray(R.array.contact_list_names);
+        String[] contactListStatus = getResources().getStringArray(R.array.contact_list_status);
+
+        for (int i=0; i<contactListNames.length; i++) {
+            contactLists.add(new ContactList(contactListNames[i], contactListStatus[i],profilePicture));
+        }
+
+    }
+
 }

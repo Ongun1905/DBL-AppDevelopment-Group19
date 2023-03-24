@@ -1,5 +1,58 @@
 <resources>
     <string name="app_name">Terra</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="contact_list_names">
+        <item>Daua</item>
+        <item>Divina</item>
+        <item>Dea</item>
+        <item>Ongun</item>
+        <item>Dea</item>
+        <item>Meir</item>
+        <item>Methan</item>
+        <item>Atilla</item>
+        <item>Geri</item>
+        <item>Valentina</item>
+        <item>Yuran</item>
+        <item>Alinne</item>
+        <item>Daua</item>
+        <item>Divina</item>
+        <item>Dea</item>
+        <item>Ongun</item>
+        <item>Dea</item>
+        <item>Meir</item>
+        <item>Methan</item>
+        <item>Atilla</item>
+        <item>Geri</item>
+        <item>Valentina</item>
+        <item>Yuran</item>
+        <item>Alinne</item>
+    </string-array>
+
+    <string-array name="contact_list_status">
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+        <item>Safe</item>
+        <item>Danger</item>
+        <item>Unknown</item>
+    </string-array>
+
 </resources>
