@@ -21,11 +21,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.appdev.terra.databinding.ActivityMainBinding;
+import com.appdev.terra.databinding.ActivityTerraQualificationsPageBinding;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
+import com.appdev.terra.views.QualificationPage;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -184,6 +188,21 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 postService.add(post, new IFirestoreCallback<PostModel>() {});
             }
         });
+
+
+
+        //I will add a temporary button which will just change the page for testing -meir
+        Button goQualification;
+
+        goQualification = findViewById(R.id.goQualifications);
+        goQualification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), QualificationPage.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
