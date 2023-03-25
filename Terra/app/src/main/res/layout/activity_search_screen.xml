@@ -77,12 +77,7 @@
             android:text="List of resources"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resources_label"/>
-        android:layout_marginEnd="316dp"
-        android:layout_marginBottom="684dp"
-        android:text="Search Screen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/resources_label" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -96,14 +91,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="413dp"
-            android:layout_height="61dp"
-            android:layout_marginTop="740dp"
-            android:background="#C6C6C6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/bottom_navigation_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
