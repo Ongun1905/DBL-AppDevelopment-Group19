@@ -30,9 +30,6 @@
             android:name=".HomeScreen"
             android:exported="false" />
         <activity
-            android:name=".views.QualificationPage"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
