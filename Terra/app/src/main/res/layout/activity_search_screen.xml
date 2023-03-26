@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SearchScreen">
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="413dp"
-        android:layout_height="661dp"
-        android:layout_marginBottom="68dp"
-        android:backgroundTint="@color/material_dynamic_neutral60"
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="316dp"
+        android:layout_marginBottom="684dp"
+        android:text="Search Screen"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-    </FrameLayout>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -23,8 +22,7 @@
         android:layout_height="71dp"
         android:layout_marginTop="660dp"
         android:background="#C6C6C6"
-        app:layout_constraintEnd_toEndOf="@+id/frame_layout"
-        app:layout_constraintStart_toStartOf="@+id/frame_layout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 

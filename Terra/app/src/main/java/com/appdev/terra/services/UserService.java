@@ -30,6 +30,10 @@ public class UserService implements IDatabaseService<UserModel> {
         usersRef = db.collection("Users");
     }
 
+    public static String getUserId() {
+        return "Mathieu";
+    }
+
     @Override
     public void get(String id, IFirestoreCallback firestoreCallback) {
         usersRef.whereEqualTo(FieldPath.documentId(), id).get().addOnCompleteListener(task -> {
@@ -76,7 +80,6 @@ public class UserService implements IDatabaseService<UserModel> {
             } else {
                 System.out.println("Task failed!");
             }
-
         });
     }
 

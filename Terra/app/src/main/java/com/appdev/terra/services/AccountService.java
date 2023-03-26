@@ -4,8 +4,10 @@ import com.appdev.terra.models.RegisterModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +15,12 @@ public class AccountService {
 
     private FirebaseFirestore db;
     private CollectionReference usersRef;
+    private CollectionReference tokenRef;
 
     public AccountService() {
         db = FirebaseFirestore.getInstance();
         usersRef = db.collection("Users");
+        tokenRef = db.collection("AuthTokens");
     }
 
     UserService userService = new UserService();
@@ -56,6 +60,27 @@ public class AccountService {
                 } else {
                     firestoreCallback.onCallback(model, false, "A user with the same number exists!");
                 }
+            }
+        });
+    }
+
+    // Only for authorized users
+    public void validateToken(String username, String token, IFirestoreCallback firestoreCallback) {
+        tokenRef.whereEqualTo("username", username).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                if (document.exists()) {
+                    if (document.getString("token") == token) {
+                        firestoreCallback.onCallback(true, "Successful login.");
+                    } else {
+                        firestoreCallback.onCallback(false, "Invalid access token!");
+                    }
+                } else {
+                    firestoreCallback.onCallback(false, "User with the username not found!");
+                    System.out.println("Document doesn't exist!");
+                }
+            } else {
+                System.out.println("Task failed!");
             }
         });
     }
