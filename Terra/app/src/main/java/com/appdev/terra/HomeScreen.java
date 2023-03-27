@@ -2,13 +2,11 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +14,11 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
+import com.appdev.terra.models.PostModel;
+import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.PostService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;

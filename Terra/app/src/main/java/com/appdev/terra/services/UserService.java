@@ -48,6 +48,16 @@ public class UserService implements IDatabaseService<UserModel> {
                     model.password = document.getString("password");
                     model.phoneNumber = document.getLong("mobileNmbr");
                     model.contactIds = (ArrayList<String>) document.get("contacts");
+                    ArrayList<UserModel> friends = new ArrayList<>();
+                    for (String i : model.contactIds) {
+                        get(i, new IFirestoreCallback<UserModel>() {
+                            @Override
+                            public void onCallback(UserModel friend) {
+                                friends.add(friend);
+                            }
+                        });
+                    }
+                    model.contacts = friends;
                     firestoreCallback.onCallback(model);
                 } else {
                     System.out.println("Document doesn't exist!");
@@ -73,6 +83,16 @@ public class UserService implements IDatabaseService<UserModel> {
                     model.password = document.getString("password");
                     model.phoneNumber = document.getLong("mobileNmbr");
                     model.contactIds = (ArrayList<String>) document.get("contacts");
+                    ArrayList<UserModel> friends = new ArrayList<>();
+                    for (String i : model.contactIds) {
+                        get(i, new IFirestoreCallback<UserModel>() {
+                            @Override
+                            public void onCallback(UserModel friend) {
+                                friends.add(friend);
+                            }
+                        });
+                    }
+                    model.contacts = friends;
                     firestoreCallback.onCallback(model);
                 } else {
                     System.out.println("Document doesn't exist!");
@@ -98,6 +118,16 @@ public class UserService implements IDatabaseService<UserModel> {
                         model.password = document.getString("password");
                         model.phoneNumber = document.getLong("mobileNmbr");
                         model.contactIds = (ArrayList<String>) document.get("contacts");
+                        ArrayList<UserModel> friends = new ArrayList<>();
+                        for (String i : model.contactIds) {
+                            get(i, new IFirestoreCallback<UserModel>() {
+                                @Override
+                                public void onCallback(UserModel friend) {
+                                    friends.add(friend);
+                                }
+                            });
+                        }
+                        model.contacts = friends;
                         userModels.add(model);
                     }
                     firestoreCallback.onCallback(userModels);
