@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewPostActivity">
+
+    <TextView
+        android:id="@+id/postdetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New post details:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <fragment android:id="@+id/autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        android:layout_below="@id/postdetails"/>
+
+    <!--<EditText
+        android:id="@+id/locationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/postdetails"
+        android:hint="Location"
+        android:minHeight="48dp" />-->
+
+    <EditText
+        android:id="@+id/numberOfVictims"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/autocomplete_fragment"
+        android:hint="Possible number of victims"
+        android:minHeight="48dp" />
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/numberOfVictims"
+        android:hint="Description (Information on the accident)"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:text="Status:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <Spinner
+        android:id="@+id/statusSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="Choose the severity of the accident"
+        android:layout_below="@id/statusTextView"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:id="@+id/requirementsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/statusSpinner"
+        android:text="Requirements:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <CheckBox
+        android:id="@+id/foodCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/requirementsTextView"
+        android:minHeight="48dp"
+        android:text="Food" />
+
+    <CheckBox
+        android:id="@+id/waterCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foodCheckBox"
+        android:minHeight="48dp"
+        android:text="Water" />
+
+    <CheckBox
+        android:id="@+id/powerToolsCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/waterCheckBox"
+        android:minHeight="48dp"
+        android:text="Power Tools" />
+
+    <CheckBox
+        android:id="@+id/transportCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/powerToolsCheckBox"
+        android:minHeight="48dp"
+        android:text="Transport" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/transportCheckBox"
+        android:text="Submit"/>
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.appdev.terra;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -16,67 +17,81 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.appdev.terra.databinding.ActivityMainBinding;
-import com.appdev.terra.databinding.ActivityTerraQualificationsPageBinding;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
-import com.appdev.terra.views.QualificationPage;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
 import android.Manifest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
-    ActivityMainBinding binding;
+    BottomNavigationView bottomNavigationView;
 
     public static final int REQUEST_LOCATION = 1;
 
     // Should keep track of location data
     LocationManager locationManager;
-    String latitude, longitude;
 
     // Services
     PostService postService = new PostService();
+    private List<Post> items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        binding.bottomNavigationView.setSelectedItemId(R.id.sos);
+        setContentView(R.layout.activity_main);
 
-//        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
-//
-//            switch (item.getItemId()){
-//
-//                case R.id.profile:
-//                    replaceFragment(new profile());
-//                    break;
-//                case R.id.home:
-//                    replaceFragment(new home());
-//                    break;
-//                case R.id.sos:
-//                    break;
-//                case R.id.contact:
-//                    replaceFragment(new contact());
-//                    break;
-//                case R.id.search:
-//                    replaceFragment(new search());
-//                    break;
-//
-//            }
-//            return true;
-//
-//        });
+        //UI Navigation
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.sos);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+
+                    case R.id.contact:
+                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.sos:
+                        return true;
+
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                    case R.id.search:
+                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
+                        overridePendingTransition(0,0);
+                        return true;
+
+                }
+                return false;
+            }
+        });
+
+
 
 
         // Should request location
@@ -90,14 +105,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserService userService = new UserService();
-                userService.get("Re86sT1MJa3Pm30whdqr", new IFirestoreCallback<UserModel>() {
+//                UserService userService = new UserService();
+//                userService.get("Re86sT1MJa3Pm30whdqr", new IFirestoreCallback<UserModel>() {
+//
+//                    @Override
+//                    public void onCallback(UserModel model) {
+//                        System.out.println("data: " + model.id);
+//                    }
+//                });
 
-                    @Override
-                    public void onCallback(UserModel model) {
-                        System.out.println("data: " + model.id);
-                    }
-                });
                 //UserModel model = new UserModel();
                 /*model.phoneNumber = Long.valueOf(234234234);
                 model.password = "asdasdsa";
@@ -107,7 +123,37 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 model.contactIds = new ArrayList<>();
                 userService.add(model); */
 
+                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    OnGPS();
+                    return;
+                }
+
+                Optional<Location> userLocationOption = getLocation();
+
+                if (userLocationOption == null) {
+                    Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!userLocationOption.isPresent()) {
+                    Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Location userLocation = userLocationOption.get();
+
+                postService.getAllPosts(new IFirestoreCallback<PostModel>() {
+                    @Override
+                    public void onCallback(ArrayList<PostModel> models) {
+                        IFirestoreCallback.super.onCallback(models);
+
+                        for (PostModel model : models) {
+                            System.out.println(model.description);
+                        }
+                    }
+                });
             }
         });
 
@@ -115,53 +161,31 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View v) {
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
                 if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     OnGPS();
-                } else {
-                    Optional<Location> userLocationOption = getLocation();
-
-                    if (userLocationOption != null) {
-                        if (userLocationOption.isPresent()) {
-                            Location userLocation = userLocationOption.get();
-                            Toast.makeText(getApplicationContext(), "Longitude: " + String.valueOf(userLocation.getLongitude()), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getApplicationContext(), "Latitude: " + String.valueOf(userLocation.getLatitude()), Toast.LENGTH_SHORT).show();
-
-                            PostModel post = PostModel.sosPost("415", userLocation.getLatitude(), userLocation.getLongitude());
-                            postService.add(post, new IFirestoreCallback<PostModel>() {});
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
-                    }
+                    return;
                 }
+
+                Optional<Location> userLocationOption = getLocation();
+
+                if (userLocationOption == null) {
+                    Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!userLocationOption.isPresent()) {
+                    Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Location userLocation = userLocationOption.get();
+                PostModel post = PostModel.sosPost(userLocation.getLatitude(), userLocation.getLongitude());
+                postService.add(post, new IFirestoreCallback<PostModel>() {});
             }
         });
-
-
-
-        //I will add a temporary button which will just change the page for testing -meir
-        Button goQualification;
-
-        goQualification = findViewById(R.id.goQualifications);
-        goQualification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), QualificationPage.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
-    private void replaceFragment(Fragment fragment){
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
-        fragmentTransaction.commit();
-
-    }
 
     private void OnGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
