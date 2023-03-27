@@ -1,6 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".NewPostActivity">
 
     <TextView
         android:id="@+id/postdetails"
@@ -9,19 +11,25 @@
         android:text="New post details:"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <EditText
+    <fragment android:id="@+id/autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        android:layout_below="@id/postdetails"/>
+
+    <!--<EditText
         android:id="@+id/locationEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/postdetails"
         android:hint="Location"
-        android:minHeight="48dp" />
+        android:minHeight="48dp" />-->
 
     <EditText
         android:id="@+id/numberOfVictims"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/locationEditText"
+        android:layout_below="@id/autocomplete_fragment"
         android:hint="Possible number of victims"
         android:minHeight="48dp" />
     <EditText
