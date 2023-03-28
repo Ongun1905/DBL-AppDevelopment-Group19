@@ -6,12 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileScreen extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+
+    private boolean[] checkBoxStates = new boolean[7];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,5 +60,34 @@ public class ProfileScreen extends AppCompatActivity {
                 return false;
             }
         });
+
+        //Listening the checkboxes
+
+        CheckBox checkBox1 = findViewById(R.id.checkBox1);
+        CheckBox checkBox2 = findViewById(R.id.checkBox2);
+        CheckBox checkBox3 = findViewById(R.id.checkBox3);
+        CheckBox checkBox4 = findViewById(R.id.checkBox4);
+        CheckBox checkBox5 = findViewById(R.id.checkBox5);
+        CheckBox checkBox6 = findViewById(R.id.checkBox6);
+        CheckBox checkBox7 = findViewById(R.id.checkBox7);
+
+        Button saveButton = findViewById(R.id.SaveButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                checkBoxStates[0] = checkBox1.isChecked();
+                checkBoxStates[1] = checkBox2.isChecked();
+                checkBoxStates[2] = checkBox3.isChecked();
+                checkBoxStates[3] = checkBox4.isChecked();
+                checkBoxStates[4] = checkBox5.isChecked();
+                checkBoxStates[5] = checkBox6.isChecked();
+                checkBoxStates[6] = checkBox7.isChecked();
+                // Print the contents of the boolean array
+                System.out.println(java.util.Arrays.toString(checkBoxStates));
+            }
+        });
+
     }
 }
