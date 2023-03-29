@@ -30,6 +30,9 @@
             android:name=".HomeScreen"
             android:exported="false" />
         <activity
+            android:name=".HomeScreenGov"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

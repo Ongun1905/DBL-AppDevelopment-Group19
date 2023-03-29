@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        android:layout_below="@id/postdetails"/>
+        android:layout_below="@id/postdetails" />
 
     <!--<EditText
         android:id="@+id/locationEditText"
@@ -32,6 +32,7 @@
         android:layout_below="@id/autocomplete_fragment"
         android:hint="Possible number of victims"
         android:minHeight="48dp" />
+
     <EditText
         android:id="@+id/description"
         android:layout_width="match_parent"
