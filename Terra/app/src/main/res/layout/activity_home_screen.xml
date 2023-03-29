@@ -11,38 +11,42 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="570dp"
         android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.836" />
 
     <android.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp" />
+        tools:layout_editor_absoluteX="2dp"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="416dp"
-        android:layout_height="550dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="bla bla bla"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView">
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintHorizontal_bias="0.5">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:layout_constraintHorizontal_bias="0.5"/>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
