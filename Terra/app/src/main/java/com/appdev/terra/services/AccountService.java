@@ -17,6 +17,8 @@ public class AccountService {
     private CollectionReference usersRef;
     private CollectionReference tokenRef;
 
+    public static String logedInUserId;
+
     public AccountService() {
         db = FirebaseFirestore.getInstance();
         usersRef = db.collection("Users");
@@ -30,6 +32,7 @@ public class AccountService {
             public void onCallback(UserModel model) {
                 if (password == model.password) {
                     firestoreCallback.onCallback(model, true, "Login sucessful!");
+                    logedInUserId = model.id;
                 } else {
                     firestoreCallback.onCallback(model, false, "Password doesn't match!");
                 }
