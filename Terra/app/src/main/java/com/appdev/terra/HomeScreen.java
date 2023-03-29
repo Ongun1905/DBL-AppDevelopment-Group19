@@ -2,9 +2,6 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -87,7 +84,7 @@ public class HomeScreen extends AppCompatActivity {
         adapter = new MyAdapter(items);
         recyclerView.setAdapter(adapter);
 
-        Button addButton = findViewById(R.id.button);
+        Button addButton = findViewById(R.id.citizen_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
