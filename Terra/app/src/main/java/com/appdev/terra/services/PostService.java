@@ -1,5 +1,7 @@
 package com.appdev.terra.services;
 
+import android.location.Location;
+
 import androidx.annotation.NonNull;
 
 import com.appdev.terra.enums.StatusEnum;
@@ -33,6 +35,12 @@ public class PostService implements IDatabaseService<PostModel> {
         db = FirebaseFirestore.getInstance();
         postsRef = db.collection("Posts");
         userId = UserService.getUserId();
+    }
+
+    public PostService(String userId) {
+        db = FirebaseFirestore.getInstance();
+        postsRef = db.collection("Posts");
+        this.userId = userId;
     }
 
     @Override
@@ -200,5 +208,42 @@ public class PostService implements IDatabaseService<PostModel> {
                 });
             }
         });
+    }
+
+    //checks if there are any nearby posts or not
+    private void nearbyPostsExists(GeoPoint location, IFirestoreCallback firestoreCallback) {
+        getAllPosts(new IFirestoreCallback<PostModel>() {
+            @Override
+            public void onCallback(ArrayList<PostModel> models) {
+                for (PostModel model : models) {
+                    float[] results = new float[1];
+                    Location.distanceBetween(location.getLatitude(), location.getLongitude(), model.location.getLatitude(), model.location.getLongitude(), results);
+                    if (results[0] < 4000) {
+                        firestoreCallback.onCallback(true, "Nearby posts exist!");
+                    }
+                }
+                firestoreCallback.onCallback(false, "No nearby posts exist!");
+            }
+        });
+
+    }
+
+    // returns all the nearby posts if exists
+    private void getNearbyPosts(GeoPoint location, IFirestoreCallback firestoreCallback) {
+        getAllPosts(new IFirestoreCallback<PostModel>() {
+            @Override
+            public void onCallback(ArrayList<PostModel> models) {
+                ArrayList<PostModel> postModels = new ArrayList<>();
+                for (PostModel model : models) {
+                    float[] results = new float[1];
+                    Location.distanceBetween(location.getLatitude(), location.getLongitude(), model.location.getLatitude(), model.location.getLongitude(), results);
+                    if (results[0] < 4000) {
+                        postModels.add(model);
+                    }
+                }
+                firestoreCallback.onCallback(postModels);
+            }
+        });
+
     }
 }
