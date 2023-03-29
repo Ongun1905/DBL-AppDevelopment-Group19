@@ -15,4 +15,13 @@ public class UserModel {
     public ArrayList<UserModel> contacts;
     public String password;
 
+    public boolean checkBox1;
+    public boolean checkBox2;
+    public boolean checkBox3;
+    public boolean checkBox4;
+    public boolean checkBox5;
+    public boolean checkBox6;
+    public boolean checkBox7;
+
+
 }
