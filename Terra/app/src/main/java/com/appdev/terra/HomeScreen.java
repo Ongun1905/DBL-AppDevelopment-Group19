@@ -2,13 +2,16 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,6 +35,11 @@ public class HomeScreen extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private ScrollView scrollView;
+
+
+    public static final int REQUEST_LOCATION = 1;
+    // Should keep track of location data
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,14 @@ public class HomeScreen extends AppCompatActivity {
                 return false;
             }
         });
+
+    //a/ Add request for location permissions
+        // Request location
+        ActivityCompat.requestPermissions( this,
+                new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+
+    //a/
 
         for (int i = 1; i <= 50; i++) {
             Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i);
