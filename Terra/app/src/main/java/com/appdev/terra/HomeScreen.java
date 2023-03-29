@@ -133,15 +133,5 @@ public class HomeScreen extends AppCompatActivity {
 
         // Update the RecyclerView with the filtered items list
         adapter.setItems(filteredItems);
-
-        // Scroll to the top of the ScrollView after updating the RecyclerView
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(View.FOCUS_UP);
-            }
-        });
-
-
     }
 }
