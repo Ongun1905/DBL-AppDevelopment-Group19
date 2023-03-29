@@ -16,25 +16,36 @@
         tools:targetApi="31">
         <activity
             android:name=".AddFriendScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensor"/>
         <activity
             android:name=".SearchScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensor"/>
         <activity
             android:name=".ProfileScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensor"/>
         <activity
             android:name=".ContactScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensor"/>
         <activity
             android:name=".HomeScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensor"/>
+        <activity
+            android:name=".HomeScreenGov"
+            android:exported="false"
+            android:screenOrientation="sensor"/>
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensor"/>
         <activity
             android:name=".SplashScreen"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="sensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +55,8 @@
         <activity
             android:name=".NewPostActivity"
             android:label="New Post"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="sensor">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
