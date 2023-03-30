@@ -13,7 +13,7 @@ public interface IFirestoreCallback<T> {
 
     }
 
-    default void onCallback(ArrayList<T> userModels) {
+    default void onCallback(ArrayList<T> models) {
 
     }
 

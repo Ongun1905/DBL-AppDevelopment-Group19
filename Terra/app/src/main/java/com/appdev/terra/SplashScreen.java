@@ -11,15 +11,17 @@ import android.widget.Button;
 public class SplashScreen extends AppCompatActivity {
 
     Button buttonCitizen;
+    Button buttonGov;
     Button buttonAuthority;
 
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        //buttonCitizen = (Button) findViewById(R.id.button);
+        buttonGov = (Button) findViewById(R.id.button2);
         buttonCitizen = (Button) findViewById(R.id.citizen_button);
         buttonAuthority = (Button) findViewById(R.id.authority_button);
 
@@ -36,6 +38,15 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SplashScreen.this, AuthorityLoginScreen.class);
+                startActivity(intent);
+
+            }
+        });
+
+        buttonGov.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SplashScreen.this, HomeScreenGov.class);
                 startActivity(intent);
 
             }

@@ -2,16 +2,13 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreenGov extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
@@ -36,15 +33,11 @@ public class HomeScreen extends AppCompatActivity {
     private MyAdapter adapter;
     private ScrollView scrollView;
 
-
-    public static final int REQUEST_LOCATION = 1;
-    // Should keep track of location data
-    LocationManager locationManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
@@ -84,14 +77,6 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-    //a/ Add request for location permissions
-        // Request location
-        ActivityCompat.requestPermissions( this,
-                new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-
-
-    //a/
-
         for (int i = 1; i <= 50; i++) {
             Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i);
             items.add(post);
@@ -103,11 +88,11 @@ public class HomeScreen extends AppCompatActivity {
         adapter = new MyAdapter(items);
         recyclerView.setAdapter(adapter);
 
-        Button addButton = findViewById(R.id.citizen_button);
+        Button addButton = findViewById(R.id.button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, NewPostActivity.class);
+                Intent intent = new Intent(HomeScreenGov.this, NewPostActivity.class);
                 startActivity(intent);
             }
         });
@@ -149,5 +134,15 @@ public class HomeScreen extends AppCompatActivity {
 
         // Update the RecyclerView with the filtered items list
         adapter.setItems(filteredItems);
+
+        // Scroll to the top of the ScrollView after updating the RecyclerView
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(View.FOCUS_UP);
+            }
+        });
+
+
     }
 }
