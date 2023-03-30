@@ -17,17 +17,16 @@ public class MyAdapterThread extends RecyclerView.Adapter<MyViewHolderThread> {
 
     @Override
     public MyViewHolderThread onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_thread, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
 
         return new MyViewHolderThread(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolderThread holder, int position) {
-        holder.postText.setText(items.get(position).getPostText());
-        holder.username.setText(items.get(position).getUsername());
         holder.location.setText(items.get(position).getLocation());
         holder.level.setText(items.get(position).getLevel());
+//        ...
 
     }
 

@@ -21,7 +21,7 @@ import java.util.List;
 public class SearchScreen extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
-    private List<Post> nearbyAccidents;
+    private List<ThreadPost> nearbyAccidents;
     private RecyclerView nearbyAccidentsRecyclerView;
     private MyAdapter nearbyAccidentsAdapter;
 
@@ -43,7 +43,7 @@ public class SearchScreen extends AppCompatActivity {
         // Initialize the data for the nearby accidents section
         nearbyAccidents = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
-            Post post = new Post("Accident " + i, "Username " + i, "Location " + i, "Level " + i);
+            ThreadPost post = new ThreadPost( "Location " + i);
             nearbyAccidents.add(post);
         }
 

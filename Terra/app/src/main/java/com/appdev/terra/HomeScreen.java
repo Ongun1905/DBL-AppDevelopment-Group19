@@ -28,8 +28,8 @@ public class HomeScreen extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
-    private List<Post> items = new ArrayList<>();
-    private List<Post> filteredItems = new ArrayList<>();
+    private List<ThreadPost> items = new ArrayList<>();
+    private List<ThreadPost> filteredItems = new ArrayList<>();
 
     private SearchView searchView;
     private RecyclerView recyclerView;
@@ -94,7 +94,7 @@ public class HomeScreen extends AppCompatActivity {
     //a/
 
         for (int i = 1; i <= 50; i++) {
-            Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i);
+            ThreadPost post = new ThreadPost( "Location " + i);
             items.add(post);
         }
 
@@ -142,8 +142,8 @@ public class HomeScreen extends AppCompatActivity {
         filteredItems.clear();
 
         // Loop through the original items list and add the items that match the query
-        for (Post post : items) {
-            if (post.getPostText().toLowerCase().contains(query.toLowerCase())) {
+        for (ThreadPost post : items) {
+            if (post.getLocation().toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(post);
             }
         }
