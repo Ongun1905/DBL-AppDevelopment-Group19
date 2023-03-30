@@ -5,12 +5,13 @@ import java.util.List;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.appdev.terra.services.helpers.PostCollection;
 
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-    private List<Post> items;
+    private List<PostCollection> items;
 
-    public MyAdapter(List<Post> items) {
+    public MyAdapter(List<PostCollection> items) {
         this.items = items;
     }
 
@@ -22,10 +23,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.postText.setText(items.get(position ).getPostText());
-        holder.username.setText(items.get(position).getUsername());
-        holder.location.setText(items.get(position).getLocation());
-        holder.level.setText(items.get(position).getLevel());
+        // TODO: Please update with correct information
+        holder.postText.setText(items.get(position).getLocation().toString());
+        holder.location.setText("" + items.get(position).getNrPosts());
+        holder.username.setText(items.get(position).getAccidentStatus().toString());
+        holder.level.setText(items.get(position).getRequestedQualifications().toString());
     }
 
     @Override
@@ -33,7 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return items.size();
     }
 
-    public void setItems(List<Post> items) {
+    public void setItems(List<PostCollection> items) {
         this.items = items;
         notifyDataSetChanged();
     }
