@@ -3,6 +3,9 @@ package com.appdev.terra;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,9 +22,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.appdev.terra.models.PostModel;
+import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
+import com.appdev.terra.services.UserService;
+import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.GeoPoint;
 
 import android.Manifest;
 
@@ -93,36 +100,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
 
-        Button sendButton = (Button) findViewById(R.id.citizen_button);
+        Button sendButton = (Button) findViewById(R.id.button);
         Button sosButton = (Button) findViewById(R.id.sos_button);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                UserService userService = new UserService();
-//                userService.get("Re86sT1MJa3Pm30whdqr", new IFirestoreCallback<UserModel>() {
-//
-//                    @Override
-//                    public void onCallback(UserModel model) {
-//                        System.out.println("data: " + model.id);
-//                    }
-//                });
-
-                //UserModel model = new UserModel();
-                /*model.phoneNumber = Long.valueOf(234234234);
-                model.password = "asdasdsa";
-                model.name = "asdasdasdasd";
-                model.surname = "asdasdasdasdasd";
-                model.address = new GeoPoint(23.34, 4.213);
-                model.contactIds = new ArrayList<>();
-                userService.add(model); */
-
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    OnGPS();
-                    return;
-                }
 
                 Optional<Location> userLocationOption = getLocation();
 
@@ -138,16 +122,45 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
                 Location userLocation = userLocationOption.get();
 
-                postService.getAllPosts(new IFirestoreCallback<PostModel>() {
+                postService.getNearbyPostCollections(new GeoPoint(userLocation.getLatitude(), userLocation.getLongitude()), new IFirestoreCallback<PostCollection>() {
                     @Override
-                    public void onCallback(ArrayList<PostModel> models) {
-                        IFirestoreCallback.super.onCallback(models);
+                    public void onCallback(ArrayList<PostCollection> collections) {
+                        IFirestoreCallback.super.onCallback(collections);
 
-                        for (PostModel model : models) {
-                            System.out.println(model.description);
+                        for (PostCollection collection : collections) {
+                            System.out.println(collection.getLocation());
                         }
                     }
                 });
+
+//                postService.get(PostModel.makeGeoId(userLocation.getLatitude(), userLocation.getLongitude()), new IFirestoreCallback<PostModel>() {
+//                    @Override
+//                    public void onCallback(PostModel model) {
+//                        IFirestoreCallback.super.onCallback(model);
+//
+//                        System.out.println("Found a post! It has as description:\n" + model.description);
+//                    }
+//                });
+
+//                postService.remove(PostModel.makeGeoId(userLocation.getLatitude(), userLocation.getLongitude()), new IFirestoreCallback<PostModel>() {
+//                    @Override
+//                    public void onCallback(PostModel model) {
+//                        IFirestoreCallback.super.onCallback(model);
+//
+//                        System.out.println("Removed post with description:\n" + model.description);
+//                    }
+//                });
+
+//                postService.getAllPosts(new IFirestoreCallback<PostModel>() {
+//                    @Override
+//                    public void onCallback(ArrayList<PostModel> models) {
+//                        IFirestoreCallback.super.onCallback(models);
+//
+//                        for (PostModel model : models) {
+//                            System.out.println(model.description);
+//                        }
+//                    }
+//                });
             }
         });
 
@@ -155,11 +168,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             @Override
             public void onClick(View v) {
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    OnGPS();
-                    return;
-                }
 
                 Optional<Location> userLocationOption = getLocation();
 
@@ -178,24 +186,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 postService.add(post, new IFirestoreCallback<PostModel>() {});
             }
         });
-    }
-
-
-    private void OnGPS() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
-        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 
     /**
