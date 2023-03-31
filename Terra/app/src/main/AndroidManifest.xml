@@ -61,6 +61,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".PostThreadActivity"
+            android:label="Thread"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="sensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

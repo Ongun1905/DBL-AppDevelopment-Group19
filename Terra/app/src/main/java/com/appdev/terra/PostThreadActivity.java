@@ -24,16 +24,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeScreen extends AppCompatActivity {
+public class PostThreadActivity extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
-    private List<ThreadPost> items = new ArrayList<>();
-    private List<ThreadPost> filteredItems = new ArrayList<>();
+    private List<Post> items = new ArrayList<>();
+    private List<Post> filteredItems = new ArrayList<>();
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapter adapter;
+    private MyAdapterThread adapter;
     private ScrollView scrollView;
 
 
@@ -85,30 +85,30 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-    //a/ Add request for location permissions
+        //a/ Add request for location permissions
         // Request location
         ActivityCompat.requestPermissions( this,
                 new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
 
-    //a/
+        //a/
 
-        for (int i = 1; i <= 50; i++) {
-            ThreadPost post = new ThreadPost( "Location " + i);
+        for (int i = 5; i <= 9; i++) {
+            Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i, "Requirements:"+i,true );
             items.add(post);
         }
 
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(items);
+        adapter = new MyAdapterThread(items);
         recyclerView.setAdapter(adapter);
 
         Button addButton = findViewById(R.id.button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, NewPostActivity.class);
+                Intent intent = new Intent(PostThreadActivity.this, NewPostActivity.class);
                 startActivity(intent);
             }
         });
@@ -142,8 +142,8 @@ public class HomeScreen extends AppCompatActivity {
         filteredItems.clear();
 
         // Loop through the original items list and add the items that match the query
-        for (ThreadPost post : items) {
-            if (post.getLocation().toLowerCase().contains(query.toLowerCase())) {
+        for (Post post : items) {
+            if (post.getPostText().toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(post);
             }
         }
