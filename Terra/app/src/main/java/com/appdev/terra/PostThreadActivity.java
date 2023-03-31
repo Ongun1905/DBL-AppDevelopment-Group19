@@ -94,9 +94,16 @@ public class PostThreadActivity extends AppCompatActivity {
         //a/
 
         for (int i = 5; i <= 9; i++) {
-            Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i, "Requirements:"+i,true );
+            boolean reqmet = true;
+            if ((i==6) || (i==8)){
+                reqmet = false;
+            }
+
+            Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i, "Requirements:"+i,true, reqmet );
             items.add(post);
         }
+
+
 
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
