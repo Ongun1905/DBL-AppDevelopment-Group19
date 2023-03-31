@@ -73,4 +73,8 @@ public class PostModel {
     public static String makeGeoId(double latitude, double longitude) {
         return String.format(GEO_POINT_INDEX_FORMAT, latitude, longitude);
     }
+
+    public static String makeGeoId(GeoPoint location) {
+        return String.format(GEO_POINT_INDEX_FORMAT, location.getLatitude(), location.getLongitude());
+    }
 }

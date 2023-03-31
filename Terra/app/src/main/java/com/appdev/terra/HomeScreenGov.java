@@ -2,13 +2,12 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,31 +15,64 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
+import com.appdev.terra.models.PostModel;
+import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.PostService;
+import com.appdev.terra.services.UpdatePostScreen;
+import com.appdev.terra.services.helpers.LocationService;
+import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class HomeScreenGov extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
-    private List<ThreadPost> items = new ArrayList<>();
-    private List<ThreadPost> filteredItems = new ArrayList<>();
+    private List<PostCollection> items = new ArrayList<>();
+    private List<PostCollection> filteredItems = new ArrayList<>();
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapter adapter;
+    private MyAdapter adapter = new MyAdapter(items, new MyAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(PostCollection item) {
+            // Open an activity based on this collection
+            System.out.println("Clicked: " + item.getLocation().toString());
+            Intent intent = new Intent(getApplicationContext(), UpdatePostScreen.class);
+            intent.putExtra("geoId", PostModel.makeGeoId(item.getLatitude(), item.getLongitude()));
+            startActivity(intent);
+        }
+    });
     private ScrollView scrollView;
+
+    private PostService postService = new PostService();
+
+    private LocationService locationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        locationService = new LocationService(
+                (LocationManager) getSystemService(Context.LOCATION_SERVICE),
+                this,
+                this
+        );
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        Button addButton = findViewById(R.id.button);
+
+        scrollView = findViewById(R.id.scrollView2);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -70,25 +102,28 @@ public class HomeScreenGov extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), SearchScreen.class));
                         overridePendingTransition(0,0);
                         return true;
-
-
                 }
                 return false;
             }
         });
 
-        for (int i = 1; i <= 50; i++) {
-            ThreadPost post = new ThreadPost( "Location " + i);
-            items.add(post);
+        Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
+
+        if (userLocationOption == null) {
+            System.out.println("Failed to get location for post feed!");
+        } else if (userLocationOption.isPresent()) {
+            postService.getNearbyPostCollections(userLocationOption.get(), new IFirestoreCallback<PostCollection>() {
+                @Override
+                public void onCallback(ArrayList<PostCollection> models) {
+                    IFirestoreCallback.super.onCallback(models);
+                    for (PostCollection collection : models) {
+                        items.add(collection);
+                    }
+                    adapter.setItems(items);
+                }
+            });
         }
 
-        scrollView = findViewById(R.id.scrollView2);
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(items);
-        recyclerView.setAdapter(adapter);
-
-        Button addButton = findViewById(R.id.button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,9 +161,9 @@ public class HomeScreenGov extends AppCompatActivity {
         filteredItems.clear();
 
         // Loop through the original items list and add the items that match the query
-        for (ThreadPost post : items) {
-            if (post.getLocation().toLowerCase().contains(query.toLowerCase())) {
-                filteredItems.add(post);
+        for (PostCollection collection : items) {
+            if (collection.getLocation().toString().contains(query.toLowerCase())) {
+                filteredItems.add(collection);
             }
         }
 
@@ -142,7 +177,5 @@ public class HomeScreenGov extends AppCompatActivity {
                 scrollView.fullScroll(View.FOCUS_UP);
             }
         });
-
-
     }
 }
