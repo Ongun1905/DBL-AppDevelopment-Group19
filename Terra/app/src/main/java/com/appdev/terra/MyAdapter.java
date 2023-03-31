@@ -1,5 +1,8 @@
 package com.appdev.terra;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.View;
 import java.util.List;
 import android.view.LayoutInflater;
@@ -19,7 +22,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_collection_item, parent, false);
+
         return new MyViewHolder(view);
     }
 
