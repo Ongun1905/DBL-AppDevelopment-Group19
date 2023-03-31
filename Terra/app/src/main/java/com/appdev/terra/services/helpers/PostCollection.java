@@ -114,8 +114,8 @@ public class PostCollection {
         return verificationStatus;
     }
 
-    public Iterator<QualificationsEnum> getRequestedQualifications() {
-        return requestedQualifications.iterator();
+    public ArrayList<QualificationsEnum> getRequestedQualifications() {
+        return requestedQualifications.stream().collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
     public Collection<PostModel> getPosts() {

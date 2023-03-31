@@ -23,11 +23,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        // TODO: Please update with correct information
-        holder.postText.setText(items.get(position).getLocation().toString());
-        holder.location.setText("" + items.get(position).getNrPosts());
-        holder.username.setText(items.get(position).getAccidentStatus().toString());
-        holder.level.setText(items.get(position).getRequestedQualifications().toString());
+        holder.setHeader(items.get(position).getLocation().toString());
+        holder.setNrPosts("" + items.get(position).getNrPosts());
+        holder.setStatus(items.get(position).getAccidentStatus().toString());
+        holder.setReqQualifications(items.get(position).getRequestedQualifications().toString());
     }
 
     @Override

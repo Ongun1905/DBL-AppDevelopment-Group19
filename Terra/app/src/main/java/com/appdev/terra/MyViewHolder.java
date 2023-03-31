@@ -6,17 +6,33 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
-    public TextView postText;
-    public TextView username;
-    public TextView location;
-    public TextView level;
+    private TextView header;
+    private TextView nrPosts;
+    private TextView status;
+    private TextView reqQualifications;
 
     public MyViewHolder(View itemView) {
         super(itemView);
-        postText = itemView.findViewById(R.id.post_text);
-        username = itemView.findViewById(R.id.username_text);
-        location = itemView.findViewById(R.id.location_text);
-        level = itemView.findViewById(R.id.emergency_text);
+        header = itemView.findViewById(R.id.post_collection_header);
+        nrPosts = itemView.findViewById(R.id.post_collection_nr_posts);
+        status = itemView.findViewById(R.id.post_collection_status);
+        reqQualifications = itemView.findViewById(R.id.post_collection_req_qualifications);
+    }
+
+    public void setHeader(CharSequence text) {
+        header.setText(text);
+    }
+
+    public void setNrPosts(CharSequence text) {
+        nrPosts.setText("Number of posts: " + text);
+    }
+
+    public void setStatus(CharSequence text) {
+        status.setText("Accident status: " + text);
+    }
+
+    public void setReqQualifications(CharSequence text) {
+        reqQualifications.setText("Requested qualifications: " + text);
     }
 }
 

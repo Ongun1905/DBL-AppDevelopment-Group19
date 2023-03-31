@@ -51,9 +51,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.imageView3);
+            imageView = itemView.findViewById(R.id.user_icon);
             textViewName = itemView.findViewById(R.id.contact_list_name);
-            textViewStatus = itemView.findViewById(R.id.status);
+            textViewStatus = itemView.findViewById(R.id.status_variable_text);
 
         }
     }

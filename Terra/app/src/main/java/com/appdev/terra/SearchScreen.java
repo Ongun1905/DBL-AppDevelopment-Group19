@@ -79,6 +79,7 @@ public class SearchScreen extends AppCompatActivity {
                     for (PostCollection collection : models) {
                         nearbyAccidents.add(collection);
                     }
+                    nearbyAccidentsAdapter.setItems(nearbyAccidents);
                 }
             });
         }
