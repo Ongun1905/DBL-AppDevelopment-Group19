@@ -20,9 +20,22 @@ public enum QualificationsEnum {
 
     public static String encodeQualifications(HashSet<QualificationsEnum> qualifications) {
         return Arrays.stream(QualificationsEnum.values())
-                     .map((q) -> {return qualifications.contains(q) ? "T" : "F";})
-                     .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
-                     .toString();
+                .map((q) -> {return qualifications.contains(q) ? "T" : "F";})
+                .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                .toString();
+    }
+
+    public static String encodeQualifications(ArrayList<Boolean> qualifications) {
+        return qualifications.stream()
+                             .map((q) -> {return q ? "T" : "F";})
+                             .collect(StringBuilder::new, StringBuilder::append, StringBuilder::append)
+                             .toString();
+    }
+
+    public static ArrayList<Boolean> encodeQualificationsBools(HashSet<QualificationsEnum> qualifications) {
+        return Arrays.stream(QualificationsEnum.values())
+                     .map(qualifications::contains)
+                     .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
     public static HashSet<QualificationsEnum> decodeQualifications(String qualifications) {

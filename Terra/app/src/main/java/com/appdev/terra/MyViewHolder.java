@@ -5,6 +5,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appdev.terra.services.helpers.PostCollection;
+
 public class MyViewHolder extends RecyclerView.ViewHolder {
     private TextView header;
     private TextView nrPosts;
@@ -33,6 +35,20 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     public void setReqQualifications(CharSequence text) {
         reqQualifications.setText("Requested qualifications: " + text);
+    }
+
+    public void bind(final PostCollection item, final MyAdapter.OnItemClickListener listener) {
+        header.setText(item.getLocation().toString());
+        nrPosts.setText("" + item.getNrPosts());
+        status.setText(item.getAccidentStatus().toString());
+        reqQualifications.setText(item.getRequestedQualifications().toString());
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(item);
+            }
+        });
     }
 }
 

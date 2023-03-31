@@ -39,6 +39,10 @@
             android:exported="false"
             android:screenOrientation="sensor"/>
         <activity
+            android:name=".services.UpdatePostScreen"
+            android:exported="false"
+            android:screenOrientation="sensor"/>
+        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="sensor"/>

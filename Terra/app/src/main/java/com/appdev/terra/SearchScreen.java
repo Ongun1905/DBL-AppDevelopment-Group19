@@ -2,21 +2,14 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.appdev.terra.services.IServices.IFirestoreCallback;
@@ -27,7 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,7 +86,13 @@ public class SearchScreen extends AppCompatActivity {
         // Initialize the RecyclerViews for each section
         nearbyAccidentsRecyclerView = findViewById(R.id.nearbyAccidentsList);
         nearbyAccidentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        nearbyAccidentsAdapter = new MyAdapter(nearbyAccidents);
+        nearbyAccidentsAdapter = new MyAdapter(nearbyAccidents, new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(PostCollection item) {
+                // Open an activity based on this collection
+                System.out.println("Clicked: " + item.getLocation().toString());
+            }
+        });
         nearbyAccidentsRecyclerView.setAdapter(nearbyAccidentsAdapter);
 
 

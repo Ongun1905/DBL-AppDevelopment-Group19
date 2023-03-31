@@ -10,9 +10,11 @@ import com.appdev.terra.services.helpers.PostCollection;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private List<PostCollection> items;
+    private OnItemClickListener listener;
 
-    public MyAdapter(List<PostCollection> items) {
+    public MyAdapter(List<PostCollection> items, OnItemClickListener listener) {
         this.items = items;
+        this.listener = listener;
     }
 
     @Override
@@ -23,10 +25,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.setHeader(items.get(position).getLocation().toString());
-        holder.setNrPosts("" + items.get(position).getNrPosts());
-        holder.setStatus(items.get(position).getAccidentStatus().toString());
-        holder.setReqQualifications(items.get(position).getRequestedQualifications().toString());
+        holder.bind(items.get(position), listener);
     }
 
     @Override
@@ -39,4 +38,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         notifyDataSetChanged();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(PostCollection item);
+    }
 }
