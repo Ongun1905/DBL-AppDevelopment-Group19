@@ -9,10 +9,11 @@
     tools:context=".NewPostActivity" >
 
     <RelativeLayout
+        android:id="@+id/rel_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="15dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
         app:layout_constraintTop_toTopOf="parent" >
 
         <TextView
@@ -74,45 +75,54 @@
             android:text="Requirements:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <CheckBox
-            android:id="@+id/foodCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/requirementsTextView"
-            android:minHeight="48dp"
-            android:text="Food" />
-
-        <CheckBox
-            android:id="@+id/waterCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/foodCheckBox"
-            android:minHeight="48dp"
-            android:text="Water" />
-
-        <CheckBox
-            android:id="@+id/powerToolsCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/waterCheckBox"
-            android:minHeight="48dp"
-            android:text="Power Tools" />
-
-        <CheckBox
-            android:id="@+id/transportCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/powerToolsCheckBox"
-            android:minHeight="48dp"
-            android:text="Transport" />
-
-        <Button
-            android:id="@+id/submitButton"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/checkboxes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/transportCheckBox"
-            android:text="Submit"/>
+            android:layout_below="@id/requirementsTextView">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/foodCheckBox"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/requirementsTextView"-->
+<!--            android:minHeight="48dp"-->
+<!--            android:text="Food" />-->
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/waterCheckBox"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/foodCheckBox"-->
+<!--            android:minHeight="48dp"-->
+<!--            android:text="Water" />-->
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/powerToolsCheckBox"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/waterCheckBox"-->
+<!--            android:minHeight="48dp"-->
+<!--            android:text="Power Tools" />-->
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/transportCheckBox"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/powerToolsCheckBox"-->
+<!--            android:minHeight="48dp"-->
+<!--            android:text="Transport" />-->
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rel_layout"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        android:text="Submit"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

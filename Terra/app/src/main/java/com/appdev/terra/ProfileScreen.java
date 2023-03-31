@@ -21,8 +21,6 @@ public class ProfileScreen extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CheckBoxAdapter adapter;
 
-    private boolean[] checkBoxStates = new boolean[7];
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

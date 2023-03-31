@@ -43,6 +43,9 @@ public enum QualificationsEnum {
         int i = 0;
 
         for (QualificationsEnum qualification : QualificationsEnum.values()) {
+            if (i == qualifications.length()) {
+                break;
+            }
             if (qualifications.charAt(i++) == 'T') {
                 qualificationsSet.add(qualification);
             }
