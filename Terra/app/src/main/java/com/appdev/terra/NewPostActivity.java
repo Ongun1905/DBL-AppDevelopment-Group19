@@ -1,7 +1,11 @@
 package com.appdev.terra;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +21,26 @@ import java.util.Arrays;
 
 public class NewPostActivity extends AppCompatActivity {
 
+    ImageButton buttonBack;
+
     private static final String TAG = NewPostActivity.class.getSimpleName();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newpost);
+
+        buttonBack = (ImageButton) findViewById(R.id.newpost_back_button);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewPostActivity.this, HomeScreen.class);
+                startActivity(intent);
+
+            }
+        });
 
         //Initialize the SDK
         String apiKey = "AIzaSyBbjGgg9-D0FK4rhhGaf6jm-CvEhqjVfKc";

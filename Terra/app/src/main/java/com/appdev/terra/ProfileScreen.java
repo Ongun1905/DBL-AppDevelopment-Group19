@@ -71,7 +71,7 @@ public class ProfileScreen extends AppCompatActivity {
         CheckBox checkBox6 = findViewById(R.id.checkBox6);
         CheckBox checkBox7 = findViewById(R.id.checkBox7);
 
-        Button saveButton = findViewById(R.id.SaveButton);
+        Button saveButton = findViewById(R.id.save_button);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,10 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class AddFriendScreen extends AppCompatActivity {
 
-    Button buttonBack;
+    ImageButton buttonBack;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -18,7 +19,7 @@ public class AddFriendScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend_screen);
 
-        buttonBack = (Button) findViewById(R.id.back);
+        buttonBack = (ImageButton) findViewById(R.id.addfriend_back_button);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override

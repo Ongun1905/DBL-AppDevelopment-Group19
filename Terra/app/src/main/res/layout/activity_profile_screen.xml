@@ -16,6 +16,7 @@
         android:layout_marginEnd="81dp"
         android:background="#0003DAC5"
         android:backgroundTint="@color/teal_200"
+        android:fontFamily="@font/montserrat_black"
         android:scaleX="1"
         android:scaleY="1"
         android:text="User Profile"
@@ -29,8 +30,8 @@
 
     <ImageView
         android:id="@+id/ProfileImage"
-        android:layout_width="58dp"
-        android:layout_height="76dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginStart="52dp"
         android:layout_marginEnd="10dp"
         android:background="#0003DAC5"
@@ -39,17 +40,20 @@
         app:layout_constraintEnd_toStartOf="@+id/Title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.566"
         app:srcCompat="@drawable/user_avatar_svg" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:background="#00039DDA"
+        android:fontFamily="@font/montserrat_black"
         android:text="User ID:"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/Title"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/Title"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
 
@@ -80,7 +84,9 @@
                     android:id="@+id/textView1"
                     android:layout_width="299dp"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
                     android:text="Provide food"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -105,7 +111,9 @@
                     android:id="@+id/textView2"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
-                    android:text="Provide food"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Provide Shelter"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -130,7 +138,9 @@
                     android:id="@+id/textView3"
                     android:layout_width="199dp"
                     android:layout_height="wrap_content"
-                    android:text="Provide food"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Provide Heavy Machiney"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -155,7 +165,9 @@
                     android:id="@+id/textView4"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
-                    android:text="Provide food"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Provide Mental Help"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -180,7 +192,9 @@
                     android:id="@+id/textView5"
                     android:layout_width="299dp"
                     android:layout_height="wrap_content"
-                    android:text="Provide food"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Provide Physical Labor"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -188,6 +202,7 @@
                     android:id="@+id/checkBox5"
                     android:layout_width="47dp"
                     android:layout_height="53dp"
+                    android:background="#FFFFFF"
                     android:scaleX="2"
                     android:scaleY="2"
                     android:textAlignment="center"
@@ -205,7 +220,9 @@
                     android:id="@+id/textView6"
                     android:layout_width="320dp"
                     android:layout_height="wrap_content"
-                    android:text="Provide food"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="Provide Financial Help"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -230,7 +247,9 @@
                     android:id="@+id/textView7"
                     android:layout_width="228dp"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_medium"
                     android:text="Provide food"
+                    android:textColor="#000000"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -255,6 +274,8 @@
         android:layout_width="413dp"
         android:layout_height="71dp"
         android:background="#C6C6C6"
+        app:itemIconTint="@color/nav_color"
+        app:itemTextColor="@color/nav_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -266,9 +287,11 @@
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <Button
-        android:id="@+id/SaveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/save_button"
+        android:layout_width="94dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/montserrat_black"
         android:text="Save"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"

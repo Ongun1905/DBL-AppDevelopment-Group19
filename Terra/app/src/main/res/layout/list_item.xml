@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/postCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -24,48 +24,52 @@
             android:id="@+id/post_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_black"
+            android:maxLines="1"
             android:padding="10dp"
             android:text="This is a sample post."
             android:textColor="@color/black"
-            android:textSize="16sp"
-            android:maxLines="1"
-            android:ellipsize="end" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/location_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="1"
             android:padding="10dp"
             android:text="Location:"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:maxLines="1"
-            android:ellipsize="end" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/username_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="1"
             android:padding="10dp"
             android:text="Username:"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:maxLines="1"
-            android:ellipsize="end" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/emergency_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="1"
             android:padding="10dp"
             android:text="Emergency Level: "
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:maxLines="1"
-            android:ellipsize="end" />
+            android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>
 

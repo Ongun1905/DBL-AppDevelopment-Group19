@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -36,10 +37,10 @@ public class HomeScreenGov extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.acitivity_government_home_screen);
 
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,23 +49,10 @@ public class HomeScreenGov extends AppCompatActivity {
 
                 switch (item.getItemId()) {
 
-                    case R.id.contact:
-                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.home:
                         return true;
 
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.search:
                         startActivity(new Intent(getApplicationContext(), SearchScreen.class));
@@ -87,6 +75,7 @@ public class HomeScreenGov extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyAdapter(items);
         recyclerView.setAdapter(adapter);
+
 
         Button addButton = findViewById(R.id.button);
         addButton.setOnClickListener(new View.OnClickListener() {
