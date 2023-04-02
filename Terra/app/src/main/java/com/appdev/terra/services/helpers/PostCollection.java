@@ -8,6 +8,7 @@ import com.appdev.terra.models.PostModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -114,8 +115,8 @@ public class PostCollection {
         return verificationStatus;
     }
 
-    public Iterator<QualificationsEnum> getRequestedQualifications() {
-        return requestedQualifications.iterator();
+    public ArrayList<QualificationsEnum> getRequestedQualifications() {
+        return requestedQualifications.stream().collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
     public Collection<PostModel> getPosts() {

@@ -8,39 +8,28 @@ import java.util.List;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.appdev.terra.services.helpers.PostCollection;
 
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-    private List<ThreadPost> items;
+    private List<PostCollection> items;
+    private OnItemClickListener listener;
 
-    public MyAdapter(List<ThreadPost> items) {
+    public MyAdapter(List<PostCollection> items, OnItemClickListener listener) {
         this.items = items;
+        this.listener = listener;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_thread, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_collection_item, parent, false);
 
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.location.setText(items.get(position).getLocation());
-
-        CardView postCardView = holder.itemView.findViewById(R.id.postCardView);
-        String loc = items.get(position).getLocation();
-        postCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an intent to open the new UI page and pass necessary data
-                Intent intent = new Intent(holder.itemView.getContext(), PostThreadActivity.class);
-                intent.putExtra("post_id", loc);
-
-                // Start the new activity
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });
+        holder.bind(items.get(position), listener);
     }
 
     @Override
@@ -48,9 +37,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return items.size();
     }
 
-    public void setItems(List<ThreadPost> items) {
+    public void setItems(List<PostCollection> items) {
         this.items = items;
         notifyDataSetChanged();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(PostCollection item);
+    }
 }
