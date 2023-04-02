@@ -24,12 +24,8 @@ public class MyAdapterThread extends RecyclerView.Adapter<MyViewHolderThread> {
 
     @Override
     public void onBindViewHolder(MyViewHolderThread holder, int position) {
-        holder.location.setText(items.get(position).getLocation());
-        holder.level.setText(items.get(position).getLevel());
-//        ...
-
+        holder.bind(items.get(position));
     }
-
     @Override
     public int getItemCount() {
         return items.size();
