@@ -15,8 +15,10 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
+import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
+import com.appdev.terra.services.UpdatePostScreen;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreenGov extends AppCompatActivity {
+
+
     BottomNavigationView bottomNavigationView;
     private List<PostCollection> items = new ArrayList<>();
     private List<PostCollection> filteredItems = new ArrayList<>();
@@ -38,6 +42,9 @@ public class HomeScreen extends AppCompatActivity {
         public void onItemClick(PostCollection item) {
             // Open an activity based on this collection
             System.out.println("Clicked: " + item.getLocation().toString());
+            Intent intent = new Intent(getApplicationContext(), UpdatePostScreen.class);
+            intent.putExtra("geoId", PostModel.makeGeoId(item.getLatitude(), item.getLongitude()));
+            startActivity(intent);
         }
     });
     private ScrollView scrollView;
@@ -95,8 +102,6 @@ public class HomeScreen extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), SearchScreen.class));
                         overridePendingTransition(0,0);
                         return true;
-
-
                 }
                 return false;
             }
@@ -122,7 +127,7 @@ public class HomeScreen extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, NewPostActivity.class);
+                Intent intent = new Intent(HomeScreenGov.this, NewPostActivity.class);
                 startActivity(intent);
             }
         });
@@ -164,5 +169,13 @@ public class HomeScreen extends AppCompatActivity {
 
         // Update the RecyclerView with the filtered items list
         adapter.setItems(filteredItems);
+
+        // Scroll to the top of the ScrollView after updating the RecyclerView
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(View.FOCUS_UP);
+            }
+        });
     }
 }
