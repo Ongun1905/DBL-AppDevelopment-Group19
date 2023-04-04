@@ -45,6 +45,10 @@
             android:exported="false"
             android:screenOrientation="sensor"/>
         <activity
+            android:name=".services.UpdatePostScreen"
+            android:exported="false"
+            android:screenOrientation="sensor"/>
+        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:screenOrientation="sensor"/>
@@ -61,6 +65,15 @@
         <activity
             android:name=".NewPostActivity"
             android:label="New Post"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="sensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".PostThreadActivity"
+            android:label="Thread"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="sensor">
             <meta-data

@@ -4,10 +4,15 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.appdev.terra.enums.StatusEnum;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SpinnerUtils {
     public static void populateStatusSpinner(Context context, Spinner spinner) {
         // Define your status options as an array
-        String[] statusOptions = {"Urgent (Life or Death)", "In Need of Help (Secondary Resources Needed)", "Resolved"};
+        ArrayList<String> statusOptions = Arrays.stream(StatusEnum.values()).map(StatusEnum::toString).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
 
         // Create an ArrayAdapter to populate the Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, statusOptions);

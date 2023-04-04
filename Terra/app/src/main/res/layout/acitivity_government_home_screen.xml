@@ -9,60 +9,50 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/round_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="+"
-        android:textColor="#FFFFFF"
-        android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.917"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.885" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"/>
 
     <android.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="2dp"
-        app:layout_constraintHorizontal_bias="0.5"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="bla bla bla"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        app:layout_constraintHorizontal_bias="0.5">
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            android:layout_height="match_parent" />
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationViewAuthority"
+        android:id="@+id/bottomNavigationView"
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+
         android:background="#C6C6C6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:itemIconTint="@color/nav_color"
-        app:itemTextColor="@color/nav_color"
-        app:menu="@menu/bottom_navigation_menu_authority" />
+        app:menu="@menu/bottom_navigation_menu" />
 
 
 
