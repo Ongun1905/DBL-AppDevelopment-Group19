@@ -24,6 +24,8 @@ public class AuthorityLoginScreen extends AppCompatActivity {
     EditText username;
     EditText authToken;
 
+    AccountService accountService;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,10 @@ public class AuthorityLoginScreen extends AppCompatActivity {
         buttonBack = (ImageButton) findViewById(R.id.authority_back_button);
         buttonLoginAuthority = (Button) findViewById(R.id.login_button_authority);
 
-        username = findViewById(R.id.editTextTextEmailAddress);
-        authToken = findViewById(R.id.editTextTextPassword);
+        username = (EditText) findViewById(R.id.editTextTextEmailAddress);
+        authToken = (EditText) findViewById(R.id.editTextTextPassword);
+
+        accountService = new AccountService();
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,12 +50,10 @@ public class AuthorityLoginScreen extends AppCompatActivity {
         });
 
         buttonLoginAuthority.setOnClickListener(new View.OnClickListener() {
-
-            AccountService accountService = new AccountService();
             @Override
             public void onClick(View view) {
                 if (!username.getText().toString().matches("") && !authToken.getText().toString().matches("")) {
-                    accountService.validateToken(username.getText().toString().trim(), authToken.getText().toString().trim(), new IFirestoreCallback<AuthTokenModel>() {
+                    accountService.validateToken(username.getText().toString(), authToken.getText().toString(), new IFirestoreCallback<AuthTokenModel>() {
                         @Override
                         public void onCallback(AuthTokenModel model, boolean loginSuccess, String message) {
                             if (!loginSuccess) {

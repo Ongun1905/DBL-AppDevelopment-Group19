@@ -22,6 +22,7 @@ public class UserLoginScreen extends AppCompatActivity {
 
     EditText keyInput;
     EditText password;
+    AccountService accountService;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -32,13 +33,15 @@ public class UserLoginScreen extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.user_login_button);
         backButton = (ImageButton) findViewById(R.id.user_back_button);
 
-        keyInput = findViewById(R.id.editTextTextEmailAddress2);
-        password = findViewById(R.id.editTextTextPassword2);
+        keyInput = (EditText) findViewById(R.id.editTextTextEmailAddress2);
+        password = (EditText) findViewById(R.id.editTextTextPassword2);
+
+        accountService = new AccountService();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
-            AccountService accountService = new AccountService();
             @Override
             public void onClick(View view) {
+
                 if (!keyInput.getText().toString().matches("") && !password.getText().toString().matches("")) {
                     accountService.login(Long.valueOf(keyInput.getText().toString()), password.getText().toString(), new IFirestoreCallback<UserModel>() {
                         @Override

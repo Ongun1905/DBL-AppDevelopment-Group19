@@ -17,8 +17,15 @@ public class AccountService {
 
     public static UserModel logedInUserModel;
     public static boolean isAuthorized = false;
+    UserService userService;
+    AuthTokenService authTokenService;
 
-    UserService userService = new UserService();
+    public AccountService() {
+        userService = new UserService();
+        authTokenService = new AuthTokenService();
+    }
+
+
     public void login(Long phoneNumber, String password, IFirestoreCallback firestoreCallback) {
         userService.get(phoneNumber, new IFirestoreCallback<UserModel>() {
             @Override
@@ -40,7 +47,7 @@ public class AccountService {
 
     }
 
-    AuthTokenService authTokenService = new AuthTokenService();
+
     // Only for authorized users
     public void validateToken(String username, String token, IFirestoreCallback firestoreCallback) {
         authTokenService.get(username, new IFirestoreCallback<AuthTokenModel>() {
