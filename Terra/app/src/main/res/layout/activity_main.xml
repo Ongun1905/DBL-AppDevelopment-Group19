@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Hello World!"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -29,14 +19,20 @@
 
     <Button
         android:id="@+id/sos_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Emergency button"
+        android:layout_width="265dp"
+        android:layout_height="265dp"
+        android:background="@drawable/sosbackgroundbutton"
+        android:fontFamily="@font/montserrat_black"
+        android:text="sos"
+        android:textColor="#FFFFFF"
+        android:textSize="96sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.461"
         tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/home"
         android:layout_width="wrap_content"
@@ -44,21 +40,22 @@
         android:text="Home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sos_button"
+        app:layout_constraintVertical_bias="0.23"
         tools:ignore="MissingConstraints" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        android:layout_width="0dp"
-        android:layout_height="71dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="#C6C6C6"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemIconTint="@color/nav_color"
+        app:itemTextColor="@color/nav_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

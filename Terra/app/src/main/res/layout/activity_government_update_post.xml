@@ -6,14 +6,14 @@
     android:id="@+id/add_friend_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewPostActivity" >
+    tools:context=".services.UpdatePostScreen" >
 
     <RelativeLayout
         android:id="@+id/rel_layout"
-        android:layout_width="413dp"
-        android:layout_height="616dp"
+        android:layout_width="411dp"
+        android:layout_height="589dp"
         android:padding="15dp"
-        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintBottom_toTopOf="@id/verify_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,22 +23,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_black"
-            android:text="New post details:"
+            android:text="Post details:"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/autocomplete_fragment"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/postdetails"
-            tools:layout="@layout/individual_contact" />
 
         <EditText
             android:id="@+id/numberOfVictims"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/autocomplete_fragment"
+            android:layout_below="@id/postdetails"
             android:fontFamily="@font/montserrat_medium"
             android:hint="Possible number of victims"
             android:importantForAutofill="no"
@@ -86,63 +78,44 @@
             android:id="@+id/checkboxes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/requirementsTextView">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <!--        <CheckBox-->
-        <!--            android:id="@+id/foodCheckBox"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@id/requirementsTextView"-->
-        <!--            android:minHeight="48dp"-->
-        <!--            android:text="Food" />-->
-
-        <!--        <CheckBox-->
-        <!--            android:id="@+id/waterCheckBox"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@id/foodCheckBox"-->
-        <!--            android:minHeight="48dp"-->
-        <!--            android:text="Water" />-->
-
-        <!--        <CheckBox-->
-        <!--            android:id="@+id/powerToolsCheckBox"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@id/waterCheckBox"-->
-        <!--            android:minHeight="48dp"-->
-        <!--            android:text="Power Tools" />-->
-
-        <!--        <CheckBox-->
-        <!--            android:id="@+id/transportCheckBox"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_below="@id/powerToolsCheckBox"-->
-        <!--            android:minHeight="48dp"-->
-        <!--            android:text="Transport" />-->
+            android:layout_below="@id/requirementsTextView" />
     </RelativeLayout>
 
     <Button
-        android:id="@+id/submitButton"
+        android:id="@+id/verify_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/rel_layout"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        android:text="Submit"
+        android:layout_height="40dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/montserrat_black"
+        android:text="Verify"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"/>
+        android:textSize="15dp"
+        app:layout_constraintTop_toBottomOf="@id/rel_layout"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/reject_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/verify_button"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/montserrat_black"
+        android:text="Reject"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintTop_toBottomOf="@id/verify_button" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#C6C6C6"
+        app:itemIconTint="@color/nav_color"
+        app:itemTextColor="@color/nav_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu_authority" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
