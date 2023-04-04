@@ -8,7 +8,7 @@
     tools:context=".HomeScreen">
 
     <Button
-        android:id="@+id/new_post_button"
+        android:id="@+id/user_new_post_button"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/round_button"
@@ -32,9 +32,9 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="410dp"
-        android:layout_height="524dp"
+        android:layout_height="525dp"
         android:contentDescription="bla bla bla"
-        app:layout_constraintBottom_toTopOf="@+id/citizen_button"
+        app:layout_constraintBottom_toTopOf="@+id/user_new_post_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView">

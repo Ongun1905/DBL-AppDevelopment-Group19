@@ -21,6 +21,7 @@
         android:text="User Profile"
         android:textSize="34sp"
         android:textStyle="bold"
+        android:fontFamily="@font/montserrat_black"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ProfileImage"
@@ -47,18 +48,19 @@
         android:layout_marginTop="5dp"
         android:background="#00039DDA"
         android:text="User ID:"
+        android:fontFamily="@font/montserrat_black"
         app:layout_constraintEnd_toEndOf="@+id/Title"
         app:layout_constraintStart_toStartOf="@+id/Title"
         app:layout_constraintTop_toBottomOf="@+id/Title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/checkboxes"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="411dp"
+        android:layout_height="517dp"
+        app:layout_constraintBottom_toTopOf="@id/SaveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView20"
-        app:layout_constraintBottom_toTopOf="@id/SaveButton" >
+        app:layout_constraintTop_toBottomOf="@id/textView20">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -242,17 +244,25 @@
         android:id="@+id/SaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/montserrat_black"
         android:text="Save"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"/>
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#C6C6C6"
+        app:itemIconTint="@color/nav_color"
+        app:itemTextColor="@color/nav_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

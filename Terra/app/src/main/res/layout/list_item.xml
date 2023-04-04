@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="(Location of Accident)"
+                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:maxLines="1"
@@ -59,6 +60,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:maxLines="1"
+                    android:fontFamily="@font/montserrat_black"
                     android:ellipsize="end" />
 
                 <ImageView
@@ -78,6 +80,7 @@
                 android:layout_marginTop="50dp"
                 android:padding="10dp"
                 android:text="Emergency Level: "
+                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:maxLines="1"
@@ -89,6 +92,7 @@
                 android:layout_marginTop="70dp"
                 android:padding="10dp"
                 android:text="Requirements: "
+                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:maxLines="5"
@@ -100,6 +104,7 @@
                 android:layout_marginTop="90dp"
                 android:padding="10dp"
                 android:text="Verification by the Government: "
+                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:maxLines="1"
@@ -111,6 +116,7 @@
                 android:layout_marginTop="110dp"
                 android:padding="10dp"
                 android:text="Short description: "
+                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:maxLines="10"
