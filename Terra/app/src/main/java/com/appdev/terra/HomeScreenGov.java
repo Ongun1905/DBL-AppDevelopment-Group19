@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -56,7 +57,7 @@ public class HomeScreenGov extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.acitivity_government_home_screen);
 
         locationService = new LocationService(
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE),
@@ -64,10 +65,11 @@ public class HomeScreenGov extends AppCompatActivity {
                 this
         );
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
-        Button addButton = findViewById(R.id.button);
+
+        Button addButton = findViewById(R.id.authority_new_post_button);
 
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
@@ -80,26 +82,13 @@ public class HomeScreenGov extends AppCompatActivity {
 
                 switch (item.getItemId()) {
 
-                    case R.id.contact:
-                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.home:
                         return true;
 
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
+                        startActivity(new Intent(getApplicationContext(), AuthoritySearchScreen.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

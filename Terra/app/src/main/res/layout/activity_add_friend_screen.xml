@@ -13,17 +13,9 @@
         android:layout_height="0dp"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        app:layout_constraintTop_toTopOf="parent" >
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            app:layout_constraintBottom_toBottomOf="@id/add_friend_header"
-            app:layout_constraintEnd_toStartOf="@id/add_friend_header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/add_friend_header" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="192dp">
 
         <TextView
             android:id="@+id/add_friend_header"
@@ -37,6 +29,7 @@
             android:text="Add Friend"
             android:textSize="34sp"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat_black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +42,7 @@
             android:text="Contact:"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:fontFamily="@font/montserrat_black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/add_friend_header" />
 
@@ -58,11 +52,12 @@
             android:layout_height="52dp"
             android:background="#779A9691"
             android:ems="10"
+            android:fontFamily="@font/montserrat_medium"
             android:inputType="textPersonName"
             android:padding="10dp"
-            android:text="John Doe"
             android:textColor="#000000"
             android:textSize="24sp"
+            android:hint="Contact"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contact_header"
@@ -70,10 +65,11 @@
 
         <TextView
             android:id="@+id/or_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="92dp"
+            android:layout_height="76dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
+            android:fontFamily="@font/montserrat_black"
             android:text="OR"
             android:textSize="48sp"
             android:textStyle="bold|italic"
@@ -86,6 +82,7 @@
             android:id="@+id/user_id_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_black"
             android:text="UserID:"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -100,9 +97,10 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:padding="10dp"
-            android:text="34rnhju345dfnk"
             android:textColor="#000000"
             android:textSize="24sp"
+            android:hint="UserID"
+            android:fontFamily="@font/montserrat_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/user_id_header"
@@ -110,22 +108,44 @@
 
         <Button
             android:id="@+id/copy_link_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="192dp"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:background="@drawable/round_button"
+            android:fontFamily="@font/montserrat_black"
             android:text="Copy Link"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
             app:layout_constraintStart_toStartOf="@id/user_id_input_field"
             app:layout_constraintTop_toBottomOf="@+id/user_id_input_field" />
 
         <Button
             android:id="@+id/add_contact_button"
-            android:layout_width="100dp"
-            android:layout_height="60dp"
             android:text="ADD"
+            android:layout_width="113dp"
+            android:layout_height="58dp"
+            android:background="@drawable/round_button"
+            android:fontFamily="@font/montserrat_black"
+            android:textColor="#FFFFFF"
+            android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/copy_link_button" />
+
+        <ImageButton
+            android:id="@+id/add_friend_back_button"
+            android:layout_width="74dp"
+            android:layout_height="50dp"
+            android:contentDescription="backButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.002"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/baseline_arrow_back_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -133,6 +153,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#C6C6C6"
+        app:itemIconTint="@color/nav_color"
+        app:itemTextColor="@color/nav_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

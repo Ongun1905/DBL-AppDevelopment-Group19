@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -46,6 +47,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private LocationService locationService;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +62,7 @@ public class HomeScreen extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
-        Button addButton = findViewById(R.id.button);
+        Button addButton = findViewById(R.id.user_new_post_button);
 
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
@@ -95,7 +97,6 @@ public class HomeScreen extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), SearchScreen.class));
                         overridePendingTransition(0,0);
                         return true;
-
 
                 }
                 return false;
