@@ -19,7 +19,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
@@ -96,10 +98,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button sendButton = (Button) findViewById(R.id.button);
+        Button sendButton = (Button) findViewById(R.id.sos_button);
         Button sosButton = (Button) findViewById(R.id.sos_button);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
@@ -124,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
 
 //                postService.get(PostModel.makeGeoId(userLocationOption.get()), new IFirestoreCallback<PostModel>() {
 //                    @Override
@@ -156,6 +160,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Spinner locationSpinner = findViewById(R.id.location_spinner);
+        SpinnerUtils.populateLocationSpinner(this, locationSpinner,locationService.getGeoPoint().get().toString());
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedLocation = parent.getItemAtPosition(position).toString();
+                if (selectedLocation.equals("Another location")) {
+                    Toast.makeText(getApplicationContext(), "If you want to create a post with another location pLease use the + button in the feed page.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle nothing selected
+            }
+        });
+
+
         sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,9 +193,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 PostModel post = PostModel.sosPost(userLocationOption.get());
                 postService.add(post, new IFirestoreCallback<PostModel>() {});
             }
         });
+
+
     }
 }
