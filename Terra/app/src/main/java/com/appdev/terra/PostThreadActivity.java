@@ -111,7 +111,7 @@ public class PostThreadActivity extends AppCompatActivity {
         adapter = new MyAdapterThread(items);
         recyclerView.setAdapter(adapter);
 
-        Button addButton = findViewById(R.id.button);
+        Button addButton = findViewById(R.id.user_new_post_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
