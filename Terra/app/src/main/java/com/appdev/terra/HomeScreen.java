@@ -42,6 +42,8 @@ public class HomeScreen extends AppCompatActivity {
             // Open an activity based on this collection
             System.out.println("Clicked: " + item.getLocation().toString());
             Intent intent = new Intent(getApplicationContext(), PostThreadActivity.class);
+            intent.putExtra("latitude", item.getLatitude());
+            intent.putExtra("longitude", item.getLongitude());
             intent.putExtra("geoId", PostModel.makeGeoId(item.getLatitude(), item.getLongitude()));
             startActivity(intent);
 

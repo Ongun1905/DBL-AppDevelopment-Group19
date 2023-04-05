@@ -2,6 +2,8 @@ package com.appdev.terra.models;
 
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
+import com.appdev.terra.services.PostService;
+import com.appdev.terra.services.UserService;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -22,44 +24,52 @@ public class PostModel {
     public HashMap<String, Boolean> qualifications = new HashMap<>();
     public boolean verified;
 
+    public final String userId;
+
     public PostModel(
             String title, String description,
             Timestamp postedAt, GeoPoint location, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications
     ) {
-        this(title, description, postedAt, location, status, qualifications, false);
+        this(title, description, postedAt, location, status, qualifications, false, UserService.getUserId());
+    }
+
+    public PostModel(
+            String title, String description,
+            Timestamp postedAt, double latitude, double longitude, StatusEnum status,
+            HashMap<QualificationsEnum, Boolean> qualifications
+    ) {
+        this(title, description, postedAt, latitude, longitude, status, qualifications, false, UserService.getUserId());
+    }
+
+    public PostModel(
+            String title, String description,
+            Timestamp postedAt, GeoPoint location, StatusEnum status,
+            HashMap<QualificationsEnum, Boolean> qualifications, String userId
+    ) {
+        this(title, description, postedAt, location, status, qualifications, false, userId);
     }
 
     public PostModel(
             String title, String description, Timestamp postedAt,
             double latitude, double longitude, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications
+            HashMap<QualificationsEnum, Boolean> qualifications, String userId
     ) {
-        this(title, description, postedAt, latitude, longitude, status, qualifications, false);
+        this(title, description, postedAt, latitude, longitude, status, qualifications, false, userId);
     }
 
     private PostModel(
             String title, String description,
             Timestamp postedAt, GeoPoint location, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified
+            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified, String userId
     ) {
-        this.geoId = makeGeoId(location.getLatitude(), location.getLongitude());
-        this.title = title;
-        this.description = description;
-        this.postedAt = postedAt;
-        this.location = location;
-        this.status = status;
-        this.verified = verified;
-
-        qualifications.forEach((qualification, selected) -> {
-            this.qualifications.put(qualification.toString(), selected);
-        });
+        this(title, description, postedAt, location.getLatitude(), location.getLongitude(), status, qualifications, verified, userId);
     }
 
     private PostModel(
             String title, String description, Timestamp postedAt,
             double latitude, double longitude, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified
+            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified, String userId
     ) {
         this.geoId = makeGeoId(latitude, longitude);
         this.title = title;
@@ -68,13 +78,14 @@ public class PostModel {
         this.location = new GeoPoint(latitude, longitude);
         this.status = status;
         this.verified = verified;
+        this.userId = userId;
 
         qualifications.forEach((qualification, selected) -> {
             this.qualifications.put(qualification.toString(), selected);
         });
     }
 
-    public static PostModel fromHashMap(HashMap<String, Object> map) {
+    public static PostModel fromHashMap(HashMap<String, Object> map, String userId) {
         HashMap<QualificationsEnum, Boolean> qualifications = new HashMap<>();
         HashMap<String, Boolean> qualificationsStrings = (HashMap<String, Boolean>) map.get("qualifications");
 
@@ -89,7 +100,8 @@ public class PostModel {
                 (GeoPoint)                  map.get("location"),
                 StatusEnum.valueOf((String) map.get("status")),
                 qualifications,
-                (boolean)                   map.get("verified")
+                (boolean)                   map.get("verified"),
+                userId
         );
     }
 
@@ -111,7 +123,8 @@ public class PostModel {
                 latitude,
                 longitude,
                 StatusEnum.WAITING,
-                requirements
+                requirements,
+                UserService.getUserId()
         );
     }
 
