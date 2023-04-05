@@ -3,13 +3,11 @@ package com.appdev.terra;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -24,7 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostThreadActivity extends AppCompatActivity {
+public class PostThreadActivityGov extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
@@ -33,7 +31,7 @@ public class PostThreadActivity extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapterThread adapter;
+    private MyAdapterThreadGov adapter;
     private ScrollView scrollView;
 
 
@@ -44,9 +42,9 @@ public class PostThreadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.acitivity_government_home_screen);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
 
@@ -56,35 +54,19 @@ public class PostThreadActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
 
-                    case R.id.contact:
-                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.home:
                         return true;
 
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
+                        startActivity(new Intent(getApplicationContext(), AuthoritySearchScreen.class));
                         overridePendingTransition(0,0);
                         return true;
-
-
                 }
                 return false;
             }
         });
-
         //a/ Add request for location permissions
         // Request location
         ActivityCompat.requestPermissions( this,
@@ -108,14 +90,14 @@ public class PostThreadActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapterThread(items);
+        adapter = new MyAdapterThreadGov(this, items);
         recyclerView.setAdapter(adapter);
 
-        Button addButton = findViewById(R.id.user_new_post_button);
+        Button addButton = findViewById(R.id.authority_new_post_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PostThreadActivity.this, NewPostActivity.class);
+                Intent intent = new Intent(PostThreadActivityGov.this, NewPostActivity.class);
                 startActivity(intent);
             }
         });
