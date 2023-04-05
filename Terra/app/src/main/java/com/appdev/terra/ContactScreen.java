@@ -23,6 +23,7 @@ import android.Manifest;
 import android.widget.Toast;
 
 import com.appdev.terra.models.UserModel;
+import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.UserService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -140,12 +141,6 @@ public class ContactScreen extends AppCompatActivity {
     }
 
     private void setUpContactList() {
-        String[] contactListNames = getResources().getStringArray(R.array.contact_list_names);
-        String[] contactListStatus = getResources().getStringArray(R.array.contact_list_status);
-
-        for (int i=0; i<contactListNames.length; i++) {
-            contactLists.add(new ContactList(contactListNames[i], contactListStatus[i],profilePicture));
-        }
 
         for (ContactList contact : PossibleContactListAdapter.AddedContactList) {
             contactLists.add(contact);
@@ -161,17 +156,17 @@ public class ContactScreen extends AppCompatActivity {
             UserModel userModel = iterator.next();
             boolean cont = true;
             for (ContactList contact : PossibleContactListAdapter.AddedContactList) {
-                if(contact.contactName.equals(userModel.name)) {
+                if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
                     cont = false;
                 }
             }
             for (PossibleContactList contact : PossibleContactListAdapter.DeletedContactList) {
-                if(contact.contactName.equals(userModel.name)) {
+                if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
                     cont = false;
                 }
             }
             if (cont) {
-                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture));
+                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber))));
             } else {
                 iterator.remove();
             }
@@ -257,6 +252,15 @@ public class ContactScreen extends AppCompatActivity {
 
     }
 
+    private void MatchContacts() {
+        AccountService accountService = new AccountService();
+        for (UserModel userModel : accountService.logedInUserModel.contacts){
+            contactLists.add(new ContactList(userModel.name,"Sample Status", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber))));
+
+        }
+
+    }
+
 
     private String phoneNumberFormatter(String number) {
         String newNumber = "";
@@ -271,8 +275,4 @@ public class ContactScreen extends AppCompatActivity {
         }
         return newNumber;
     }
-
-
-
-
 }
