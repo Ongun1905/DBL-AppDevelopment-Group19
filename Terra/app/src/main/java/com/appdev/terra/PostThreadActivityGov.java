@@ -17,7 +17,12 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
+import com.appdev.terra.models.PostModel;
+import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.PostService;
+import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +31,17 @@ public class PostThreadActivityGov extends AppCompatActivity {
 
 
     BottomNavigationView bottomNavigationView;
-    private List<Post> items = new ArrayList<>();
-    private List<Post> filteredItems = new ArrayList<>();
+    private List<PostModel> items = new ArrayList<>();
+    private List<PostModel> filteredItems = new ArrayList<>();
 
     private SearchView searchView;
     private RecyclerView recyclerView;
     private MyAdapterThreadGov adapter;
     private ScrollView scrollView;
+
+    private PostCollection posts;
+
+    private PostService postService = new PostService();
 
 
     public static final int REQUEST_LOCATION = 1;
@@ -46,6 +55,8 @@ public class PostThreadActivityGov extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        Bundle extras = getIntent().getExtras();
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -67,25 +78,25 @@ public class PostThreadActivityGov extends AppCompatActivity {
                 return false;
             }
         });
-        //a/ Add request for location permissions
-        // Request location
+
         ActivityCompat.requestPermissions( this,
                 new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
+        postService.getPostCollection(
+                PostModel.makeGeoId(
+                        extras.getDouble("latitude"),
+                        extras.getDouble("longitude")
+                ), new IFirestoreCallback<PostCollection>() {
+                    @Override
+                    public void onCallback(PostCollection collection) {
+                        IFirestoreCallback.super.onCallback(collection);
 
-        //a/
+                        items.addAll(collection.getPosts());
 
-        for (int i = 5; i <= 9; i++) {
-            boolean reqmet = true;
-            if ((i==6) || (i==8)){
-                reqmet = false;
-            }
-
-            Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i, "Requirements:"+i,true, reqmet );
-            items.add(post);
-        }
-
-
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+        );
 
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
@@ -131,8 +142,8 @@ public class PostThreadActivityGov extends AppCompatActivity {
         filteredItems.clear();
 
         // Loop through the original items list and add the items that match the query
-        for (Post post : items) {
-            if (post.getPostText().toLowerCase().contains(query.toLowerCase())) {
+        for (PostModel post : items) {
+            if (post.title.toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(post);
             }
         }

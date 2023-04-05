@@ -17,32 +17,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class PostCollection {
+public class PostCollection implements Serializable {
     private GeoPoint location;
 //    public String locationName;
 
     private StatusEnum accidentStatus;
-    private VerificationEnum verificationStatus;
-    private HashSet<QualificationsEnum> requestedQualifications;
 
     private HashMap<String, PostModel> posts;
 
     public PostCollection(GeoPoint location, StatusEnum accidentStatus) {
         this.location = location;
         this.accidentStatus = accidentStatus;
-
-        this.verificationStatus = VerificationEnum.AWAITING_VERIFICATION;
-        this.requestedQualifications = new HashSet<>();
         this.posts = new HashMap<>();
     }
 
-    public PostCollection(GeoPoint location, StatusEnum accidentStatus,
-                          VerificationEnum verificationStatus, HashSet<QualificationsEnum> requestedQualifications,
-                          HashMap<String, PostModel> posts) {
+    public PostCollection(GeoPoint location, StatusEnum accidentStatus, HashMap<String, PostModel> posts) {
         this.location = location;
         this.accidentStatus = accidentStatus;
-        this.verificationStatus = verificationStatus;
-        this.requestedQualifications = requestedQualifications;
         this.posts = posts;
     }
 
@@ -57,8 +48,6 @@ public class PostCollection {
         return new PostCollection(
                 (GeoPoint) document.getGeoPoint("location"),
                 StatusEnum.valueOf(document.getString("accidentStatus")),
-                VerificationEnum.valueOf(document.getString("verificationStatus")),
-                QualificationsEnum.decodeQualifications(document.getString("requestedQualifications")),
                 postsMap
         );
     }
@@ -68,8 +57,6 @@ public class PostCollection {
 
         result.put("location", location);
         result.put("accidentStatus", accidentStatus);
-        result.put("verificationStatus", verificationStatus);
-        result.put("requestedQualifications", QualificationsEnum.encodeQualifications(requestedQualifications));
         result.put("posts", posts);
 
         return result;
@@ -111,13 +98,7 @@ public class PostCollection {
         return accidentStatus;
     }
 
-    public VerificationEnum getVerificationStatus() {
-        return verificationStatus;
-    }
-
-    public ArrayList<QualificationsEnum> getRequestedQualifications() {
-        return requestedQualifications.stream().collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
-    }
+    public HashMap<String, PostModel> getPostsMap() { return posts; }
 
     public Collection<PostModel> getPosts() {
         return posts.values();
