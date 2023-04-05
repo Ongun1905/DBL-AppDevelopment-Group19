@@ -33,16 +33,10 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:maxLines="1"
-                android:ellipsize="end" />
+                android:ellipsize="end"
+                tools:ignore="ExtraText" />
 
-            <ImageView
-                android:id="@+id/image_view"
-                android:visibility='gone'
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/red_plus_sign">
-            </ImageView>
+
             
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,6 +58,8 @@
                     android:ellipsize="end" />
 
                 <ImageView
+                    android:id="@+id/image_view"
+                    android:visibility='gone'
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"

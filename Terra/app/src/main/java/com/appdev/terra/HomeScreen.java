@@ -16,8 +16,10 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
+import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
+import com.appdev.terra.services.UpdatePostScreen;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -39,6 +41,10 @@ public class HomeScreen extends AppCompatActivity {
         public void onItemClick(PostCollection item) {
             // Open an activity based on this collection
             System.out.println("Clicked: " + item.getLocation().toString());
+            Intent intent = new Intent(getApplicationContext(), PostThreadActivity.class);
+            intent.putExtra("geoId", PostModel.makeGeoId(item.getLatitude(), item.getLongitude()));
+            startActivity(intent);
+
         }
     });
     private ScrollView scrollView;
