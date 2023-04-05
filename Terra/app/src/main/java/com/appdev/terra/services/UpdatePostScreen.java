@@ -17,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appdev.terra.ContactScreen;
 import com.appdev.terra.MainActivity;
 import com.appdev.terra.MyAdapter;
-import com.appdev.terra.Post;
 import com.appdev.terra.ProfileScreen;
 import com.appdev.terra.R;
 import com.appdev.terra.SearchScreen;
 import com.appdev.terra.SpinnerUtils;
+import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class UpdatePostScreen extends AppCompatActivity {
-    private Post post;
+    private PostModel post;
     BottomNavigationView bottomNavigationView;
     private PostService postService = new PostService();
     private RecyclerView recyclerView;

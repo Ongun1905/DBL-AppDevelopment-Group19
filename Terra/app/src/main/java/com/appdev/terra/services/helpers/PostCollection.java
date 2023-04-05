@@ -1,6 +1,5 @@
 package com.appdev.terra.services.helpers;
 
-import com.appdev.terra.Post;
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.enums.VerificationEnum;

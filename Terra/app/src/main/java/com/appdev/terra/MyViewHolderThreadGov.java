@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.Post;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.UpdatePostScreen;
 
