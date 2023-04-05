@@ -7,12 +7,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import com.appdev.terra.models.UserModel;
+import com.appdev.terra.services.AccountService;
+import com.appdev.terra.services.IServices.IFirestoreCallback;
 
 public class UserLoginScreen extends AppCompatActivity {
 
     Button loginButton;
     ImageButton backButton;
+
+    EditText keyInput;
+    EditText password;
+    AccountService accountService;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,11 +33,33 @@ public class UserLoginScreen extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.user_login_button);
         backButton = (ImageButton) findViewById(R.id.user_back_button);
 
+        keyInput = (EditText) findViewById(R.id.editTextTextEmailAddress2);
+        password = (EditText) findViewById(R.id.editTextTextPassword2);
+
+        accountService = new AccountService();
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserLoginScreen.this,HomeScreen.class);
-                startActivity(intent);
+
+                if (!keyInput.getText().toString().matches("") && !password.getText().toString().matches("")) {
+                    accountService.login(Long.valueOf(keyInput.getText().toString()), password.getText().toString(), new IFirestoreCallback<UserModel>() {
+                        @Override
+                        public void onCallback(UserModel model, boolean loginSuccess, String message) {
+                            if (!loginSuccess) {
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                System.out.println(message);
+                            } else {
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(UserLoginScreen.this,HomeScreen.class);
+                                startActivity(intent);
+                                System.out.println(message);
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(UserLoginScreen.this, "Please input your credentials.", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

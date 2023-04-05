@@ -71,8 +71,11 @@ public class UserService implements IDatabaseService<UserModel> {
     }
 
     public void get(Long phoneNumber, IFirestoreCallback firestoreCallback) {
-        usersRef.whereEqualTo("phoneNmbr", phoneNumber).get().addOnCompleteListener(task -> {
+        usersRef.whereEqualTo("mobileNmbr", phoneNumber).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                if (task.getResult().size() == 0) {
+                    firestoreCallback.onCallback(null);
+                } else {
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 if (document.exists()) {
                     UserModel model = new UserModel();
@@ -97,6 +100,7 @@ public class UserService implements IDatabaseService<UserModel> {
                 } else {
                     System.out.println("Document doesn't exist!");
                 }
+              }
             } else {
                 System.out.println("Task failed!");
             }

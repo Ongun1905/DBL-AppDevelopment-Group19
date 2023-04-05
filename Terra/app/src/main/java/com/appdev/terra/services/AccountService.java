@@ -1,5 +1,6 @@
 package com.appdev.terra.services;
 
+import com.appdev.terra.models.AuthTokenModel;
 import com.appdev.terra.models.RegisterModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
@@ -9,81 +10,60 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class AccountService {
 
-    private FirebaseFirestore db;
-    private CollectionReference usersRef;
-    private CollectionReference tokenRef;
-
-    public static String logedInUserId;
+    public static UserModel logedInUserModel;
+    public static boolean isAuthorized = false;
+    UserService userService;
+    AuthTokenService authTokenService;
 
     public AccountService() {
-        db = FirebaseFirestore.getInstance();
-        usersRef = db.collection("Users");
-        tokenRef = db.collection("AuthTokens");
+        userService = new UserService();
+        authTokenService = new AuthTokenService();
     }
 
-    UserService userService = new UserService();
+
     public void login(Long phoneNumber, String password, IFirestoreCallback firestoreCallback) {
         userService.get(phoneNumber, new IFirestoreCallback<UserModel>() {
             @Override
-            public void onCallback(UserModel model) {
-                if (password == model.password) {
-                    firestoreCallback.onCallback(model, true, "Login sucessful!");
-                    logedInUserId = model.id;
+            public void onCallback(UserModel model, boolean loginSuccess, String message) {
+                if (model == null) {
+                    firestoreCallback.onCallback(model, false, "The user doesn't exist!");
                 } else {
-                    firestoreCallback.onCallback(model, false, "Password doesn't match!");
-                }
-            }
-        });
-    }
-
-    public void register(RegisterModel model, IFirestoreCallback firestoreCallback) {
-        userService.get(model.phoneNumber, new IFirestoreCallback<UserModel>() {
-            @Override
-            public void onCallback(UserModel model1) {
-                if (model1 == null) {
-                    if (model.password == model.confirmPassword ) {
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("address", model.address);
-                        user.put("mobileNmbr", model.phoneNumber);
-                        user.put("name", model.name);
-                        user.put("surname", model.surname);
-                        user.put("password", model.password);
-
-                        usersRef.document().set(user).addOnCompleteListener(task -> {
-                            System.out.println("User added");
-                            firestoreCallback.onCallback(model, true, "Register Successful!");
-                        });
+                    if (password.equals(model.password)) {
+                        logedInUserModel = model;
+                        isAuthorized = false;
+                        firestoreCallback.onCallback(model, true, "Login sucessful!");
                     } else {
-                        firestoreCallback.onCallback(model, false, "Confirm password and password doesn't match!");
+                        firestoreCallback.onCallback(model, false, "Incorrect password!");
                     }
-                } else {
-                    firestoreCallback.onCallback(model, false, "A user with the same number exists!");
                 }
             }
         });
+
+
     }
+
 
     // Only for authorized users
     public void validateToken(String username, String token, IFirestoreCallback firestoreCallback) {
-        tokenRef.whereEqualTo("username", username).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult().getDocuments().get(0);
-                if (document.exists()) {
-                    if (document.getString("token") == token) {
-                        firestoreCallback.onCallback(true, "Successful login.");
-                    } else {
-                        firestoreCallback.onCallback(false, "Invalid access token!");
-                    }
+        authTokenService.get(username, new IFirestoreCallback<AuthTokenModel>() {
+            @Override
+            public void onCallback(AuthTokenModel model, boolean loginSuccess, String message) {
+                System.out.println(model.token + model.username);
+                if (model == null) {
+                    firestoreCallback.onCallback(model,false, "User with the username not found!");
                 } else {
-                    firestoreCallback.onCallback(false, "User with the username not found!");
-                    System.out.println("Document doesn't exist!");
+                    if (token.equals(model.token)) {
+                        isAuthorized = true;
+                        firestoreCallback.onCallback(model, true, "Login sucessful!");
+                    } else {
+                        firestoreCallback.onCallback(model, false, "Invalid access token!");
+                    }
                 }
-            } else {
-                System.out.println("Task failed!");
             }
         });
     }
