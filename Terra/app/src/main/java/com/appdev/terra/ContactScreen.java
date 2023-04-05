@@ -271,8 +271,4 @@ public class ContactScreen extends AppCompatActivity {
         }
         return newNumber;
     }
-
-
-
-
 }
