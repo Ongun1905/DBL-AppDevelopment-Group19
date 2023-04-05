@@ -19,7 +19,9 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
@@ -96,65 +98,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button sendButton = (Button) findViewById(R.id.button);
         Button sosButton = (Button) findViewById(R.id.sos_button);
 
-        sendButton.setOnClickListener(new View.OnClickListener() {
+
+        Spinner locationSpinner = findViewById(R.id.location_spinner);
+        SpinnerUtils.populateLocationSpinner(this, locationSpinner,locationService.getGeoPoint().get().toString());
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-
-                if (userLocationOption == null) {
-                    Toast.makeText(getApplicationContext(), "Location permissions not granted!", Toast.LENGTH_SHORT).show();
-                    return;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedLocation = parent.getItemAtPosition(position).toString();
+                if (selectedLocation.equals("Another location")) {
+                    Toast.makeText(getApplicationContext(), "If you want to create a post with another location pLease use the + button in the feed page.", Toast.LENGTH_LONG).show();
                 }
+            }
 
-                if (!userLocationOption.isPresent()) {
-                    Toast.makeText(getApplicationContext(), "Unable to retrieve location!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                postService.getNearbyPostCollections(userLocationOption.get(), new IFirestoreCallback<PostCollection>() {
-                    @Override
-                    public void onCallback(ArrayList<PostCollection> collections) {
-                        IFirestoreCallback.super.onCallback(collections);
-
-                        for (PostCollection collection : collections) {
-                            System.out.println(collection.getLocation());
-                        }
-                    }
-                });
-
-//                postService.get(PostModel.makeGeoId(userLocationOption.get()), new IFirestoreCallback<PostModel>() {
-//                    @Override
-//                    public void onCallback(PostModel model) {
-//                        IFirestoreCallback.super.onCallback(model);
-//
-//                        System.out.println("Found a post! It has as description:\n" + model.description);
-//                    }
-//                });
-
-//                postService.remove(PostModel.makeGeoId(userLocationOption.get()), new IFirestoreCallback<PostModel>() {
-//                    @Override
-//                    public void onCallback(PostModel model) {
-//                        IFirestoreCallback.super.onCallback(model);
-//
-//                        System.out.println("Removed post with description:\n" + model.description);
-//                    }
-//                });
-
-//                postService.getAllPosts(new IFirestoreCallback<PostModel>() {
-//                    @Override
-//                    public void onCallback(ArrayList<PostModel> models) {
-//                        IFirestoreCallback.super.onCallback(models);
-//
-//                        for (PostModel model : models) {
-//                            System.out.println(model.description);
-//                        }
-//                    }
-//                });
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle nothing selected
             }
         });
+
 
         sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,9 +134,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 PostModel post = PostModel.sosPost(userLocationOption.get());
                 postService.add(post, new IFirestoreCallback<PostModel>() {});
             }
         });
+
+
     }
 }
