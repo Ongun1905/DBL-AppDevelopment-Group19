@@ -39,6 +39,8 @@ public class MyAdapterThreadGov extends RecyclerView.Adapter<MyViewHolderThreadG
                 // Start the UpdatePostScreen activity with the post data
                 Intent intent = new Intent(holder.itemView.getContext(), UpdatePostScreen.class);
                 // TODO: add relevant fields to the intent
+                intent.putExtra("geoPointId", item.geoId);
+                intent.putExtra("userId", item.userId);
                 holder.itemView.getContext().startActivity(intent);
             }
         });

@@ -41,7 +41,7 @@ public class PostCollection implements Serializable {
         HashMap<String, Object> _postsMap = (HashMap<String, Object>) document.getData().get("posts");
         HashMap<String, PostModel> postsMap = new HashMap<>();
         _postsMap.forEach((k, v) -> {
-            postsMap.put(k, PostModel.fromHashMap((HashMap<String, Object>) v));
+            postsMap.put(k, PostModel.fromHashMap((HashMap<String, Object>) v, k));
         });
 
         return new PostCollection(
