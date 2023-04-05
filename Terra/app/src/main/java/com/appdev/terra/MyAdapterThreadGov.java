@@ -8,16 +8,18 @@ import java.util.List;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.UpdatePostScreen;
 
 
 public class MyAdapterThreadGov extends RecyclerView.Adapter<MyViewHolderThreadGov> {
-    private List<Post> items;
+    private List<PostModel> items;
     private Context context;
 
-    public MyAdapterThreadGov(Context context, List<Post> items) {
+    public MyAdapterThreadGov(Context context, List<PostModel> items) {
         this.context = context;
         this.items = items;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -29,14 +31,15 @@ public class MyAdapterThreadGov extends RecyclerView.Adapter<MyViewHolderThreadG
 
     @Override
     public void onBindViewHolder(MyViewHolderThreadGov holder, int position) {
-        Post item = items.get(position);
+        PostModel item = items.get(position);
+
         holder.bind(item);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the UpdatePostScreen activity with the post data
                 Intent intent = new Intent(holder.itemView.getContext(), UpdatePostScreen.class);
-                intent.putExtra("post", item.getUsername()); //id can be implemented here later
+                // TODO: add relevant fields to the intent
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -47,7 +50,7 @@ public class MyAdapterThreadGov extends RecyclerView.Adapter<MyViewHolderThreadG
         return items.size();
     }
 
-    public void setItems(List<Post> items) {
+    public void setItems(List<PostModel> items) {
         this.items = items;
         notifyDataSetChanged();
     }
