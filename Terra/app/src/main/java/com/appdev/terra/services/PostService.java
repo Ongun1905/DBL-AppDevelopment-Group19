@@ -59,15 +59,20 @@ public class PostService implements IDatabaseService<PostModel> {
                 return;
             }
 
-            PostCollection collection = PostCollection.fromFirebaseDocument(document);
-            PostModel post = collection.getPostWithId(userId);
+            this.getPostCollection(geoPointId, new IFirestoreCallback<PostCollection>() {
+                @Override
+                public void onCallback(PostCollection collection) {
+                    IFirestoreCallback.super.onCallback(collection);
+                    PostModel post = collection.getPostWithId(userId);
 
-            if (post == null) {
-                System.out.println("User didn't have a post in this location!");
-                return;
-            }
+                    if (post == null) {
+                        System.out.println("User didn't have a post in this location!");
+                        return;
+                    }
 
-            firestoreCallback.onCallback(post);
+                    firestoreCallback.onCallback(post);
+                }
+            });
         });
     }
 
@@ -190,7 +195,7 @@ public class PostService implements IDatabaseService<PostModel> {
     }
 
     // returns all the nearby posts if exists
-    private void getNearbyPosts(GeoPoint location, IFirestoreCallback firestoreCallback) {
+    public void getNearbyPosts(GeoPoint location, IFirestoreCallback firestoreCallback) {
         getAllPosts(new IFirestoreCallback<PostModel>() {
             @Override
             public void onCallback(ArrayList<PostModel> models) {
@@ -230,6 +235,27 @@ public class PostService implements IDatabaseService<PostModel> {
 
                 firestoreCallback.onCallback(postCollections);
             }
+        });
+    }
+
+
+    public void getPostCollection(String geoPointId, IFirestoreCallback firestoreCallback) {
+        postsRef.whereEqualTo(FieldPath.documentId(), geoPointId).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                System.out.println("Task failed!");
+                return;
+            }
+
+            DocumentSnapshot document = task.getResult().getDocuments().get(0);
+
+            if (!document.exists()) {
+                System.out.println("Document doesn't exist!");
+                return;
+            }
+
+            PostCollection collection = PostCollection.fromFirebaseDocument(document);
+
+            firestoreCallback.onCallback(collection);
         });
     }
 }
