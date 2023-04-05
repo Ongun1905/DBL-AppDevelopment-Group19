@@ -2,14 +2,11 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -19,35 +16,58 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
+import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.PostService;
+import com.appdev.terra.services.helpers.LocationService;
+import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class HomeScreen extends AppCompatActivity {
-
-
     BottomNavigationView bottomNavigationView;
-    private List<Post> items = new ArrayList<>();
-    private List<Post> filteredItems = new ArrayList<>();
+    private List<PostCollection> items = new ArrayList<>();
+    private List<PostCollection> filteredItems = new ArrayList<>();
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapter adapter;
+    private MyAdapter adapter = new MyAdapter(items, new MyAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(PostCollection item) {
+            // Open an activity based on this collection
+            System.out.println("Clicked: " + item.getLocation().toString());
+        }
+    });
     private ScrollView scrollView;
 
+    private PostService postService = new PostService();
 
-    public static final int REQUEST_LOCATION = 1;
-    // Should keep track of location data
-    LocationManager locationManager;
+    private LocationService locationService;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        locationService = new LocationService(
+                (LocationManager) getSystemService(Context.LOCATION_SERVICE),
+                this,
+                this
+        );
+
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        Button addButton = findViewById(R.id.user_new_post_button);
+
+        scrollView = findViewById(R.id.scrollView2);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -78,32 +98,28 @@ public class HomeScreen extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
 
-
                 }
                 return false;
             }
         });
 
-    //a/ Add request for location permissions
-        // Request location
-        ActivityCompat.requestPermissions( this,
-                new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
 
-
-    //a/
-
-        for (int i = 1; i <= 50; i++) {
-            Post post = new Post("Post " + i, "Username " + i, "Location " + i, "Level " + i);
-            items.add(post);
+        if (userLocationOption == null) {
+            System.out.println("Failed to get location for post feed!");
+        } else if (userLocationOption.isPresent()) {
+            postService.getNearbyPostCollections(userLocationOption.get(), new IFirestoreCallback<PostCollection>() {
+                @Override
+                public void onCallback(ArrayList<PostCollection> models) {
+                    IFirestoreCallback.super.onCallback(models);
+                    for (PostCollection collection : models) {
+                        items.add(collection);
+                    }
+                    adapter.setItems(items);
+                }
+            });
         }
 
-        scrollView = findViewById(R.id.scrollView2);
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(items);
-        recyclerView.setAdapter(adapter);
-
-        Button addButton = findViewById(R.id.button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,9 +157,9 @@ public class HomeScreen extends AppCompatActivity {
         filteredItems.clear();
 
         // Loop through the original items list and add the items that match the query
-        for (Post post : items) {
-            if (post.getPostText().toLowerCase().contains(query.toLowerCase())) {
-                filteredItems.add(post);
+        for (PostCollection collection : items) {
+            if (collection.getLocation().toString().contains(query.toLowerCase())) {
+                filteredItems.add(collection);
             }
         }
 

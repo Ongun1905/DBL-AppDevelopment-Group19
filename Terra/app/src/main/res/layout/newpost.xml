@@ -1,109 +1,148 @@
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_friend_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewPostActivity">
+    tools:context=".NewPostActivity" >
 
-    <TextView
-        android:id="@+id/postdetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New post details:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+    <RelativeLayout
+        android:id="@+id/rel_layout"
+        android:layout_width="413dp"
+        android:layout_height="616dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <fragment android:id="@+id/autocomplete_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        android:layout_below="@id/postdetails" />
+        <TextView
+            android:id="@+id/postdetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_black"
+            android:text="New post details:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <!--<EditText
-        android:id="@+id/locationEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/postdetails"
-        android:hint="Location"
-        android:minHeight="48dp" />-->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/postdetails"
+            tools:layout="@layout/individual_contact" />
 
-    <EditText
-        android:id="@+id/numberOfVictims"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/autocomplete_fragment"
-        android:hint="Possible number of victims"
-        android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/numberOfVictims"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/autocomplete_fragment"
+            android:fontFamily="@font/montserrat_medium"
+            android:hint="Possible number of victims"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:minHeight="48dp" />
 
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/numberOfVictims"
-        android:hint="Description (Information on the accident)"
-        android:minHeight="48dp" />
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/numberOfVictims"
+            android:fontFamily="@font/montserrat_medium"
+            android:hint="Description (Information on the accident)"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:minHeight="48dp" />
 
-    <TextView
-        android:id="@+id/statusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/description"
-        android:text="Status:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:fontFamily="@font/montserrat_black"
+            android:text="Status:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <Spinner
-        android:id="@+id/statusSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="Choose the severity of the accident"
-        android:layout_below="@id/statusTextView"
-        android:minHeight="48dp" />
+        <Spinner
+            android:id="@+id/statusSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/statusTextView"
+            android:contentDescription="Choose the severity of the accident"
+            android:minHeight="48dp" />
 
-    <TextView
-        android:id="@+id/requirementsTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/statusSpinner"
-        android:text="Requirements:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        <TextView
+            android:id="@+id/requirementsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/statusSpinner"
+            android:fontFamily="@font/montserrat_black"
+            android:text="Requirements:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <CheckBox
-        android:id="@+id/foodCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/requirementsTextView"
-        android:minHeight="48dp"
-        android:text="Food" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/checkboxes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/requirementsTextView">
 
-    <CheckBox
-        android:id="@+id/waterCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/foodCheckBox"
-        android:minHeight="48dp"
-        android:text="Water" />
+        </androidx.recyclerview.widget.RecyclerView>
 
-    <CheckBox
-        android:id="@+id/powerToolsCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/waterCheckBox"
-        android:minHeight="48dp"
-        android:text="Power Tools" />
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/foodCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/requirementsTextView"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Food" />-->
 
-    <CheckBox
-        android:id="@+id/transportCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/powerToolsCheckBox"
-        android:minHeight="48dp"
-        android:text="Transport" />
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/waterCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/foodCheckBox"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Water" />-->
+
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/powerToolsCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/waterCheckBox"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Power Tools" />-->
+
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/transportCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/powerToolsCheckBox"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Transport" />-->
+    </RelativeLayout>
 
     <Button
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/transportCheckBox"
-        android:text="Submit"/>
-</RelativeLayout>
+        app:layout_constraintTop_toBottomOf="@id/rel_layout"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        android:text="Submit"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/montserrat_black"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"/>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#C6C6C6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
 
+</androidx.constraintlayout.widget.ConstraintLayout>

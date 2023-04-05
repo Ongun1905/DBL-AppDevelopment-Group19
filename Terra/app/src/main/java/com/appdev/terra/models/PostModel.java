@@ -5,6 +5,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public class PostModel {
     // 6 characters, 2 decimals: ???.??
@@ -41,6 +42,16 @@ public class PostModel {
         this.status = status;
     }
 
+    public static PostModel fromHashMap(HashMap<String, Object> map) {
+        return new PostModel(
+                (String)     map.get("title"),
+                (String)     map.get("description"),
+                (Timestamp)  map.get("postedAt"),
+                (GeoPoint)   map.get("location"),
+                StatusEnum.valueOf((String) map.get("status"))
+        );
+    }
+
     public static PostModel sosPost(GeoPoint location) {
         return PostModel.sosPost(location.getLatitude(), location.getLongitude());
     }
@@ -61,5 +72,9 @@ public class PostModel {
 
     public static String makeGeoId(double latitude, double longitude) {
         return String.format(GEO_POINT_INDEX_FORMAT, latitude, longitude);
+    }
+
+    public static String makeGeoId(GeoPoint location) {
+        return String.format(GEO_POINT_INDEX_FORMAT, location.getLatitude(), location.getLongitude());
     }
 }
