@@ -23,5 +23,19 @@ public class SpinnerUtils {
         // Set the adapter for the Spinner
         spinner.setAdapter(adapter);
     }
+
+    public static void populateLocationSpinner(Context context, Spinner spinner, String currentLocation) {
+        // Define the status options as an array
+        String[] statusOptions = {currentLocation, "Another location"};
+
+        // Create an ArrayAdapter to populate the Spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, statusOptions);
+
+        // Set the drop-down layout style for the Spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set the adapter for the Spinner
+        spinner.setAdapter(adapter);
+    }
 }
 
