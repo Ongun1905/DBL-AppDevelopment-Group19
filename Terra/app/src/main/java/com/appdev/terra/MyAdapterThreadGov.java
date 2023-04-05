@@ -19,7 +19,6 @@ public class MyAdapterThreadGov extends RecyclerView.Adapter<MyViewHolderThreadG
     public MyAdapterThreadGov(Context context, List<PostModel> items) {
         this.context = context;
         this.items = items;
-        notifyDataSetChanged();
     }
 
     @Override
