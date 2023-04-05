@@ -9,13 +9,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AddFriendScreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
-    Button buttonBack;
+    ImageButton buttonBack;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -26,7 +27,7 @@ public class AddFriendScreen extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.contact);
 
-        buttonBack = (Button) findViewById(R.id.back_button);
+        buttonBack = (ImageButton) findViewById(R.id.add_friend_back_button);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -10,24 +10,27 @@
 
     <RelativeLayout
         android:id="@+id/rel_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="413dp"
+        android:layout_height="616dp"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/submitButton"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/postdetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_black"
             android:text="New post details:"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_below="@id/postdetails"
             tools:layout="@layout/individual_contact" />
 
@@ -36,26 +39,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/autocomplete_fragment"
+            android:fontFamily="@font/montserrat_medium"
             android:hint="Possible number of victims"
-            android:minHeight="48dp"
+            android:importantForAutofill="no"
             android:inputType="number"
-            android:importantForAutofill="no" />
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/numberOfVictims"
+            android:fontFamily="@font/montserrat_medium"
             android:hint="Description (Information on the accident)"
-            android:minHeight="48dp"
+            android:importantForAutofill="no"
             android:inputType="text"
-            android:importantForAutofill="no" />
+            android:minHeight="48dp" />
 
         <TextView
             android:id="@+id/statusTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/description"
+            android:fontFamily="@font/montserrat_black"
             android:text="Status:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -63,8 +69,8 @@
             android:id="@+id/statusSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="Choose the severity of the accident"
             android:layout_below="@id/statusTextView"
+            android:contentDescription="Choose the severity of the accident"
             android:minHeight="48dp" />
 
         <TextView
@@ -72,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/statusSpinner"
+            android:fontFamily="@font/montserrat_black"
             android:text="Requirements:"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
@@ -83,37 +90,37 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
-<!--        <CheckBox-->
-<!--            android:id="@+id/foodCheckBox"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/requirementsTextView"-->
-<!--            android:minHeight="48dp"-->
-<!--            android:text="Food" />-->
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/foodCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/requirementsTextView"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Food" />-->
 
-<!--        <CheckBox-->
-<!--            android:id="@+id/waterCheckBox"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/foodCheckBox"-->
-<!--            android:minHeight="48dp"-->
-<!--            android:text="Water" />-->
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/waterCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/foodCheckBox"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Water" />-->
 
-<!--        <CheckBox-->
-<!--            android:id="@+id/powerToolsCheckBox"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/waterCheckBox"-->
-<!--            android:minHeight="48dp"-->
-<!--            android:text="Power Tools" />-->
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/powerToolsCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/waterCheckBox"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Power Tools" />-->
 
-<!--        <CheckBox-->
-<!--            android:id="@+id/transportCheckBox"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/powerToolsCheckBox"-->
-<!--            android:minHeight="48dp"-->
-<!--            android:text="Transport" />-->
+        <!--        <CheckBox-->
+        <!--            android:id="@+id/transportCheckBox"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@id/powerToolsCheckBox"-->
+        <!--            android:minHeight="48dp"-->
+        <!--            android:text="Transport" />-->
     </RelativeLayout>
 
     <Button
@@ -122,7 +129,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/rel_layout"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        android:text="Submit"/>
+        android:text="Submit"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/montserrat_black"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
