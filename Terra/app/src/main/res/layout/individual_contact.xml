@@ -36,7 +36,7 @@
                 app:srcCompat="@drawable/baseline_person_24" />
 
             <TextView
-                android:id="@+id/contact_list_name"
+                android:id="@+id/status_variable_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -51,22 +51,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
-                android:text="Status: "
-                android:fontFamily="@font/montserrat_black"
-                app:layout_constraintTop_toBottomOf="@id/contact_list_name"
-                app:layout_constraintBottom_toBottomOf="@id/user_icon"
-                app:layout_constraintStart_toEndOf="@id/user_icon" />
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="288dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/user_icon"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/status_variable_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:text="Safe"
-                android:fontFamily="@font/montserrat_medium"
-                app:layout_constraintTop_toTopOf="@id/status_fixed_text"
-                app:layout_constraintBottom_toBottomOf="@id/status_fixed_text"
-                app:layout_constraintStart_toEndOf="@+id/status_fixed_text" />
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="4dp"
+                android:text="Status"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/status_variable_text"
+                app:layout_constraintHorizontal_bias="0.047"
+                app:layout_constraintStart_toEndOf="@+id/user_icon"
+                app:layout_constraintTop_toBottomOf="@+id/contact_list_name"
+                app:layout_constraintVertical_bias="0.916" />
+
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

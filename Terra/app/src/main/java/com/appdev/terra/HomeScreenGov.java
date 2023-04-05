@@ -38,12 +38,12 @@ public class HomeScreenGov extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapter adapter = new MyAdapter(items, new MyAdapter.OnItemClickListener() {
+    private MyAdapterGov adapter = new MyAdapterGov(items, new MyAdapterGov.OnItemClickListener() {
         @Override
         public void onItemClick(PostCollection item) {
             // Open an activity based on this collection
             System.out.println("Clicked: " + item.getLocation().toString());
-            Intent intent = new Intent(getApplicationContext(), UpdatePostScreen.class);
+            Intent intent = new Intent(getApplicationContext(), PostThreadActivityGov.class);
             intent.putExtra("geoId", PostModel.makeGeoId(item.getLatitude(), item.getLongitude()));
             startActivity(intent);
         }
