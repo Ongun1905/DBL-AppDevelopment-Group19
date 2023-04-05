@@ -1,25 +1,29 @@
 package com.appdev.terra;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.view.View;
 import java.util.List;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.appdev.terra.models.PostModel;
 
 
 public class MyAdapterThread extends RecyclerView.Adapter<MyViewHolderThread> {
-    private List<Post> items;
+    private List<PostModel> items;
+    private Context context;
 
-    public MyAdapterThread(List<Post> items) {
+    public MyAdapterThread(Context context, List<PostModel> items) {
         this.items = items;
+        this.context = context;
     }
 
     @Override
     public MyViewHolderThread onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
 
-        return new MyViewHolderThread(view);
+        return new MyViewHolderThread(view, context);
     }
 
     @Override
@@ -31,7 +35,7 @@ public class MyAdapterThread extends RecyclerView.Adapter<MyViewHolderThread> {
         return items.size();
     }
 
-    public void setItems(List<Post> items) {
+    public void setItems(List<PostModel> items) {
         this.items = items;
         notifyDataSetChanged();
     }

@@ -128,7 +128,7 @@ public class PostService implements IDatabaseService<PostModel> {
 
                     PostCollection collection = PostCollection.fromFirebaseDocument(document);
 
-                    collection.addPost(userId, model);
+                    collection.addPost(model.userId, model);
 
                     postsRef.document(model.geoId).set(collection.toFirebasePostCollection()).addOnCompleteListener(t -> {
                         System.out.println("Post added");
