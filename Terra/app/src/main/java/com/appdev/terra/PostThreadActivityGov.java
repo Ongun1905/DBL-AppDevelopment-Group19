@@ -42,9 +42,9 @@ public class PostThreadActivityGov extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+        setContentView(R.layout.acitivity_government_home_screen);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.home);
 
 
@@ -54,35 +54,19 @@ public class PostThreadActivityGov extends AppCompatActivity {
 
                 switch (item.getItemId()) {
 
-                    case R.id.contact:
-                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.home:
                         return true;
 
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
 
                     case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
+                        startActivity(new Intent(getApplicationContext(), AuthoritySearchScreen.class));
                         overridePendingTransition(0,0);
                         return true;
-
-
                 }
                 return false;
             }
         });
-
         //a/ Add request for location permissions
         // Request location
         ActivityCompat.requestPermissions( this,
@@ -109,7 +93,7 @@ public class PostThreadActivityGov extends AppCompatActivity {
         adapter = new MyAdapterThreadGov(this, items);
         recyclerView.setAdapter(adapter);
 
-        Button addButton = findViewById(R.id.user_new_post_button);
+        Button addButton = findViewById(R.id.authority_new_post_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
