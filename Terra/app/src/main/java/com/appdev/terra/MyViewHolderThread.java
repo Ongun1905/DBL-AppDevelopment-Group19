@@ -34,6 +34,7 @@ public class MyViewHolderThread extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: WUT??????????????????????????
                 // Start the UpdatePostScreen activity with the post data
                 Intent intent = new Intent(context, UpdatePostScreen.class);
                 // TODO: Add all post data to the intent
