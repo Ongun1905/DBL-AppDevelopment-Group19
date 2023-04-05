@@ -29,7 +29,8 @@ public class AccountService {
     public void login(Long phoneNumber, String password, IFirestoreCallback firestoreCallback) {
         userService.get(phoneNumber, new IFirestoreCallback<UserModel>() {
             @Override
-            public void onCallback(UserModel model, boolean loginSuccess, String message) {
+            public void onCallback(UserModel model) {
+                System.out.println("bok");
                 if (model == null) {
                     firestoreCallback.onCallback(model, false, "The user doesn't exist!");
                 } else {
@@ -52,7 +53,7 @@ public class AccountService {
     public void validateToken(String username, String token, IFirestoreCallback firestoreCallback) {
         authTokenService.get(username, new IFirestoreCallback<AuthTokenModel>() {
             @Override
-            public void onCallback(AuthTokenModel model, boolean loginSuccess, String message) {
+            public void onCallback(AuthTokenModel model) {
                 System.out.println(model.token + model.username);
                 if (model == null) {
                     firestoreCallback.onCallback(model,false, "User with the username not found!");
