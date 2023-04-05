@@ -8,12 +8,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.appdev.terra.models.UserModel;
+import com.appdev.terra.services.AccountService;
+import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.UserService;
 
 import java.util.ArrayList;
 
 public class PossibleContactListAdapter extends RecyclerView.Adapter<PossibleContactListAdapter.MyViewHolder> {
+    UserService userService = new UserService();
+
 
     Context context;
     static ArrayList<PossibleContactList> PossibleContactLists;
@@ -52,6 +60,8 @@ public class PossibleContactListAdapter extends RecyclerView.Adapter<PossibleCon
         return PossibleContactLists.size();
     }
 
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;
@@ -76,21 +86,39 @@ public class PossibleContactListAdapter extends RecyclerView.Adapter<PossibleCon
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-
+            System.out.println(PossibleContactLists.get(position).phoneNumber+"  anan");
             switch (v.getId()) {
+
                 case R.id.button3: // Add button
                     System.out.println("I have been pressed");
+                    userService.get(AccountService.logedInUserModel.id, new IFirestoreCallback<UserModel>() {
+                        @Override
+                        public void onCallback(UserModel model) {
+                            UserModel newModel = model;
+                            System.out.println(PossibleContactLists.get(position).phoneNumber + "  anan");
+                            userService.get(PossibleContactLists.get(position).id, new IFirestoreCallback<UserModel>() {
+                                @Override
+                                public void onCallback(UserModel personToBeAdded) {
+                                    newModel.contactIds.add(personToBeAdded.id);
 
-                    ContactList addedContact = new ContactList(PossibleContactLists.get(position).contactName, PossibleContactLists.get(position).status, PossibleContactLists.get(position).image,PossibleContactLists.get(position).phoneNumber);
-                    AddedContactList.add(addedContact);
-                    PossibleContactLists.remove(position);
+                                    userService.update(newModel, new IFirestoreCallback<UserModel>() {
+                                        @Override
+                                        public void onCallback(UserModel model1) {
+                                            for (String i : model1.contactIds) {
+                                                System.out.println(i);
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+
                     notifyDataSetChanged();
                     break;
                 case R.id.button4: // Delete button
 
-                    PossibleContactList deletedContact = new PossibleContactList(PossibleContactLists.get(position).contactName, PossibleContactLists.get(position).status, PossibleContactLists.get(position).image, PossibleContactLists.get(position).phoneNumber);
-                    DeletedContactList.add(deletedContact);
-                    PossibleContactLists.remove(position);
+
                     notifyDataSetChanged();
                     break;
             }
@@ -100,4 +128,7 @@ public class PossibleContactListAdapter extends RecyclerView.Adapter<PossibleCon
     public interface OnItemClickListener {
         void onAddClick(int position);
     }
+
+
 }
+
