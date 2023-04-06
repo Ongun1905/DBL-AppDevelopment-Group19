@@ -54,7 +54,9 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
 
     @Override
     public void onBindViewHolder(CheckBoxViewHolder holder, int position) {
-        checkBoxes.put(qualifications[position], holder.bind(qualifications[position].toString(), listener));
+        CheckBox newCB = holder.bind(qualifications[position].toString(), listener);
+        newCB.setChecked(checkBoxes.get(qualifications[position]).isChecked());
+        checkBoxes.put(qualifications[position], newCB);
     }
 
     @Override
@@ -75,14 +77,19 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
 
     public HashMap<QualificationsEnum, Boolean> getQualifications() {
         HashMap<QualificationsEnum, Boolean> result = new HashMap<>();
+        printBools();
         checkBoxes.forEach((qualification, selected) -> {
-            result.put(qualification, selected.isSelected());
+            result.put(qualification, selected.isChecked());
         });
         return result;
     }
     
     public void printBools() {
-        System.out.println(checkBoxes);
+        System.out.println("[");
+        checkBoxes.forEach((q, s) -> {
+            System.out.println(q + ": " + s.isChecked());
+        });
+        System.out.println("]");
     }
 
 
