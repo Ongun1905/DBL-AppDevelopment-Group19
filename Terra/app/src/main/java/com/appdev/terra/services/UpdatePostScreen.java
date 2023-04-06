@@ -69,7 +69,7 @@ public class UpdatePostScreen extends AppCompatActivity {
 
         Spinner statusSpinner = findViewById(R.id.statusSpinner);
         SpinnerUtils.populateStatusSpinner(this, statusSpinner);
-
+//
         Bundle extras = getIntent().getExtras();
         String geoPointId = extras.getString("geoPointId");
         String userId = extras.getString("userId");
@@ -84,6 +84,22 @@ public class UpdatePostScreen extends AppCompatActivity {
         recyclerView = findViewById(R.id.checkboxes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        // Get the post that was just clicked
+        postService.getPostCollection(geoPointId, new IFirestoreCallback<PostCollection>() {
+            @Override
+            public void onCallback(PostCollection collection) {
+                IFirestoreCallback.super.onCallback(collection);
+
+                post = collection.getPostWithId(userId);
+
+                post.qualifications.forEach((qualificationString, selected) -> {
+                    adapter.setQualificationBoolean(QualificationsEnum.valueOf(qualificationString), selected);
+                });
+
+                description.setText(post.description);
+            }
+        });
 
         Button verifyButton = findViewById(R.id.verify_button);
 
@@ -117,24 +133,6 @@ public class UpdatePostScreen extends AppCompatActivity {
                         return true;
                 }
                 return false;
-            }
-        });
-
-        // Get the post that was just clicked
-        postService.getPostCollection(geoPointId, new IFirestoreCallback<PostCollection>() {
-            @Override
-            public void onCallback(PostCollection collection) {
-                IFirestoreCallback.super.onCallback(collection);
-
-                post = collection.getPostWithId(userId);
-
-                post.qualifications.forEach((qualificationString, selected) -> {
-                    if (selected) {
-                        adapter.setQualificationBoolean(QualificationsEnum.valueOf(qualificationString), true);
-                    }
-                });
-
-                description.setText(post.description);
             }
         });
 

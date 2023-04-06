@@ -40,24 +40,7 @@ public class UserService implements IDatabaseService<UserModel> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 if (document.exists()) {
-                    UserModel model = new UserModel();
-                    model.id = document.getId();
-                    model.name = document.getString("name");
-                    model.address = document.getGeoPoint("address");
-                    model.surname = document.getString("surname");
-                    model.password = document.getString("password");
-                    model.phoneNumber = document.getLong("mobileNmbr");
-                    model.contactIds = (ArrayList<String>) document.get("contacts");
-                    ArrayList<UserModel> friends = new ArrayList<>();
-                    for (String i : model.contactIds) {
-                        get(i, new IFirestoreCallback<UserModel>() {
-                            @Override
-                            public void onCallback(UserModel friend) {
-                                friends.add(friend);
-                            }
-                        });
-                    }
-                    model.contacts = friends;
+                    UserModel model = UserModel.fromFirebaseDocument(document);
                     firestoreCallback.onCallback(model);
                 } else {
                     System.out.println("Document doesn't exist!");
@@ -78,24 +61,7 @@ public class UserService implements IDatabaseService<UserModel> {
                 } else {
                 DocumentSnapshot document = task.getResult().getDocuments().get(0);
                 if (document.exists()) {
-                    UserModel model = new UserModel();
-                    model.id = document.getId();
-                    model.name = document.getString("name");
-                    model.address = document.getGeoPoint("address");
-                    model.surname = document.getString("surname");
-                    model.password = document.getString("password");
-                    model.phoneNumber = document.getLong("mobileNmbr");
-                    model.contactIds = (ArrayList<String>) document.get("contacts");
-                    ArrayList<UserModel> friends = new ArrayList<>();
-                    for (String i : model.contactIds) {
-                        get(i, new IFirestoreCallback<UserModel>() {
-                            @Override
-                            public void onCallback(UserModel friend) {
-                                friends.add(friend);
-                            }
-                        });
-                    }
-                    model.contacts = friends;
+                    UserModel model = UserModel.fromFirebaseDocument(document);
                     firestoreCallback.onCallback(model);
                 } else {
                     System.out.println("Document doesn't exist!");
@@ -114,24 +80,7 @@ public class UserService implements IDatabaseService<UserModel> {
                 if (task.isSuccessful()) {
                     ArrayList<UserModel> userModels = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        UserModel model = new UserModel();
-                        model.id = document.getId();
-                        model.name = document.getString("name");
-                        model.address = document.getGeoPoint("address");
-                        model.surname = document.getString("surname");
-                        model.password = document.getString("password");
-                        model.phoneNumber = document.getLong("mobileNmbr");
-                        model.contactIds = (ArrayList<String>) document.get("contacts");
-                        ArrayList<UserModel> friends = new ArrayList<>();
-                        for (String i : model.contactIds) {
-                            get(i, new IFirestoreCallback<UserModel>() {
-                                @Override
-                                public void onCallback(UserModel friend) {
-                                    friends.add(friend);
-                                }
-                            });
-                        }
-                        model.contacts = friends;
+                        UserModel model = UserModel.fromFirebaseDocument(document);
                         userModels.add(model);
                     }
                     firestoreCallback.onCallback(userModels);
@@ -155,6 +104,14 @@ public class UserService implements IDatabaseService<UserModel> {
         usersRef.document().set(user).addOnCompleteListener(task -> {
             System.out.println("User added");
             firestoreCallback.onCallback(model);
+        });
+    }
+
+    public void tryAdd(UserModel model) {
+        Map<String, Object> user = model.toFirebaseUserModel();
+
+        usersRef.document(model.id).set(user).addOnCompleteListener(task -> {
+            System.out.println("Successful?!");
         });
     }
 
