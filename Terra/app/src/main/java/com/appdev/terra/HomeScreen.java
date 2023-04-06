@@ -17,9 +17,11 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 
 import com.appdev.terra.models.PostModel;
+import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UpdatePostScreen;
+import com.appdev.terra.services.UserService;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
