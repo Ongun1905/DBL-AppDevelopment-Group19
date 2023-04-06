@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,7 @@ public class PostThreadActivityGov extends AppCompatActivity {
 
     private PostCollection posts;
 
-    private PostService postService = new PostService();
+    private PostService postService = new PostService("__GOV__");
 
 
     public static final int REQUEST_LOCATION = 1;
@@ -103,15 +101,6 @@ public class PostThreadActivityGov extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyAdapterThreadGov(this, items);
         recyclerView.setAdapter(adapter);
-
-        Button addButton = findViewById(R.id.authority_new_post_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(PostThreadActivityGov.this, NewPostActivity.class);
-                startActivity(intent);
-            }
-        });
 
         searchView = findViewById(R.id.searchView);
 

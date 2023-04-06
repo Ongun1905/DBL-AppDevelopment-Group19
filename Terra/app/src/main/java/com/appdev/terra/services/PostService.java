@@ -4,15 +4,12 @@ import android.location.Location;
 
 import androidx.annotation.NonNull;
 
-import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.models.PostModel;
-import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IDatabaseService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
@@ -22,9 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PostService implements IDatabaseService<PostModel> {
 
@@ -35,7 +30,7 @@ public class PostService implements IDatabaseService<PostModel> {
     public PostService() {
         db = FirebaseFirestore.getInstance();
         postsRef = db.collection("Posts");
-        userId = UserService.getUserId();
+        userId = AccountService.logedInUserModel.id;
     }
 
     public PostService(String userId) {
@@ -178,7 +173,7 @@ public class PostService implements IDatabaseService<PostModel> {
     }
 
     //checks if there are any nearby posts or not
-    private void nearbyPostsExists(GeoPoint location, IFirestoreCallback firestoreCallback) {
+    public void nearbyPostsExists(GeoPoint location, IFirestoreCallback firestoreCallback) {
         getAllPosts(new IFirestoreCallback<PostModel>() {
             @Override
             public void onCallback(ArrayList<PostModel> models) {
@@ -186,7 +181,7 @@ public class PostService implements IDatabaseService<PostModel> {
                 float[] results = new float[1];
                 Location.distanceBetween(location.getLatitude(), location.getLongitude(), model.location.getLatitude(), model.location.getLongitude(), results);
                 if (results[0] < 4000) {
-                    firestoreCallback.onCallback(true, "Nearby posts exist!");
+                    firestoreCallback.onCallback(true, "There are posts available near to your location! Please check nearby posts...");
                 }
             }
             firestoreCallback.onCallback(false, "No nearby posts exist!");
@@ -246,7 +241,14 @@ public class PostService implements IDatabaseService<PostModel> {
                 return;
             }
 
-            DocumentSnapshot document = task.getResult().getDocuments().get(0);
+            List<DocumentSnapshot> documents = task.getResult().getDocuments();
+
+            if (documents.size() == 0) {
+                System.out.println("No collection with nearby posts available!");
+                return;
+            }
+
+            DocumentSnapshot document = documents.get(0);
 
             if (!document.exists()) {
                 System.out.println("Document doesn't exist!");

@@ -37,5 +37,8 @@ public class ContactList {
         return status;
     }
 
+    public void setContactName(String newName){
+        contactName = newName;
+    }
 
 }

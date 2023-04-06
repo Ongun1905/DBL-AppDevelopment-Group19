@@ -3,40 +3,28 @@ package com.appdev.terra;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.appdev.terra.models.PostModel;
-import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
-import com.appdev.terra.services.UserService;
 import com.appdev.terra.services.helpers.LocationService;
-import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
-import android.Manifest;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.contact:
                         startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.sos:
@@ -79,17 +67,17 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.search:
                         startActivity(new Intent(getApplicationContext(), SearchScreen.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                 }
@@ -101,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Spinner locationSpinner = findViewById(R.id.location_spinner);
-        SpinnerUtils.populateLocationSpinner(this, locationSpinner,locationService.getGeoPoint().get().toString());
+        SpinnerUtils.populateLocationSpinner(this, locationSpinner, locationService.getGeoPoint().get().toString());
         locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -135,10 +123,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                 PostModel post = PostModel.sosPost(userLocationOption.get());
-                postService.add(post, new IFirestoreCallback<PostModel>() {});
+                postService.add(post, new IFirestoreCallback<PostModel>() {
+                });
+
+
             }
         });
-
 
     }
 }
