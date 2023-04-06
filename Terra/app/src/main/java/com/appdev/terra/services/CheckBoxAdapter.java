@@ -72,6 +72,14 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
         checkBoxes.get(qualification).setChecked(bool);
     }
 
+    public HashMap<QualificationsEnum, Boolean> getQualifications() {
+        HashMap<QualificationsEnum, Boolean> result = new HashMap<>();
+        checkBoxes.forEach((qualification, selected) -> {
+            result.put(qualification, selected.isSelected());
+        });
+        return result;
+    }
+
     public void printBools() {
         System.out.println(checkBoxes);
     }
