@@ -48,7 +48,7 @@ public class HomeScreenGov extends AppCompatActivity {
     });
     private ScrollView scrollView;
 
-    private PostService postService = new PostService();
+    private PostService postService = new PostService("__GOV__");
 
     private LocationService locationService;
 
@@ -65,9 +65,6 @@ public class HomeScreenGov extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.home);
-
-
-        Button addButton = findViewById(R.id.authority_new_post_button);
 
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
@@ -110,14 +107,6 @@ public class HomeScreenGov extends AppCompatActivity {
                 }
             });
         }
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreenGov.this, NewPostActivity.class);
-                startActivity(intent);
-            }
-        });
 
         searchView = findViewById(R.id.searchView);
 

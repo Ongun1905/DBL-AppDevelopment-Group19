@@ -39,7 +39,7 @@ import java.util.Optional;
 public class UpdatePostScreen extends AppCompatActivity {
     private PostModel post;
     BottomNavigationView bottomNavigationView;
-    private PostService postService = new PostService();
+    private PostService postService = new PostService("__GOV__");
     private RecyclerView recyclerView;
     private CheckBoxAdapter adapter;
     private StatusEnum status;

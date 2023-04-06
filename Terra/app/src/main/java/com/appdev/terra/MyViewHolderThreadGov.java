@@ -1,5 +1,6 @@
 package com.appdev.terra;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.models.PostModel;
+import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.UpdatePostScreen;
 
 public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
@@ -37,7 +40,6 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 // Start the UpdatePostScreen activity with the post data
                 Intent intent = new Intent(context, UpdatePostScreen.class);
-                // TODO: Add all post data to the intent
                 intent.putExtra("geoPointId", item.geoId);
                 intent.putExtra("userId", item.userId);
                 context.startActivity(intent);
@@ -48,18 +50,13 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
     public void bind(PostModel post) {
         this.item = post;
 
-        if (true) { // TODO: Check with user qualifications
-            imageView.setVisibility(View.VISIBLE);
-        } else {
-            imageView.setVisibility(View.GONE);
-        }
-
         username.setText("J U I N");
         location.setText(item.geoId);
         level.setText(item.status.toString());
         verifiedText.setText("Verified: " + item.verified);
         descriptionText.setText("Description: " + item.description);
         requirementsText.setText(item.getSelectedQuealifications().toString());
+        imageView.setVisibility(View.GONE);
     }
 }
 
