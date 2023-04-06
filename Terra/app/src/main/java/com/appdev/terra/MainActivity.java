@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Services
     PostService postService = new PostService();
-    private List<Post> items = new ArrayList<>();
 
     private LocationService locationService;
 

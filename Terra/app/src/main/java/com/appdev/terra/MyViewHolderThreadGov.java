@@ -8,17 +8,17 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.Post;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.UpdatePostScreen;
 
 public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
+    public PostModel item;
+
     public TextView username;
     public TextView location;
     public TextView level;
     public TextView verifiedText;
     public ImageView imageView;
-    public PostModel item;
     public TextView descriptionText;
     public TextView requirementsText;
 
@@ -38,6 +38,8 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
                 // Start the UpdatePostScreen activity with the post data
                 Intent intent = new Intent(context, UpdatePostScreen.class);
                 // TODO: Add all post data to the intent
+                intent.putExtra("geoPointId", item.geoId);
+                intent.putExtra("userId", item.userId);
                 context.startActivity(intent);
             }
         });
@@ -45,6 +47,7 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
 
     public void bind(PostModel post) {
         this.item = post;
+
         if (true) { // TODO: Check with user qualifications
             imageView.setVisibility(View.VISIBLE);
         } else {
@@ -57,7 +60,6 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
         verifiedText.setText("Verified: " + item.verified);
         descriptionText.setText("Description: " + item.description);
         requirementsText.setText(item.getSelectedQuealifications().toString());
-        // bind other views here
     }
 }
 
