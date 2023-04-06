@@ -90,6 +90,7 @@ public class UpdatePostScreen extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         Button verifyButton = findViewById(R.id.verify_button);
+        Button rejectButton = findViewById(R.id.reject_button);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -161,6 +162,35 @@ public class UpdatePostScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
                 verified = true;
+
+                if (userLocationOption == null) {
+                    System.out.println("Failed to get location for post feed!");
+                } else if (userLocationOption.isPresent()) {
+                    postService.add(new PostModel(
+                            "Edit Post",
+                            description.getText().toString(),
+                            Timestamp.now(),
+                            userLocationOption.get(),
+                            status,
+                            adapter.getQualifications(), verified
+                    ), new IFirestoreCallback() {
+                        @Override
+                        public void onCallback() {
+                            IFirestoreCallback.super.onCallback();
+
+                        }
+                    });
+                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        rejectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
+                verified = false;
 
                 if (userLocationOption == null) {
                     System.out.println("Failed to get location for post feed!");
