@@ -30,7 +30,7 @@ public class PostService implements IDatabaseService<PostModel> {
     public PostService() {
         db = FirebaseFirestore.getInstance();
         postsRef = db.collection("Posts");
-        userId = UserService.getUserId();
+        userId = AccountService.logedInUserModel.id;
     }
 
     public PostService(String userId) {

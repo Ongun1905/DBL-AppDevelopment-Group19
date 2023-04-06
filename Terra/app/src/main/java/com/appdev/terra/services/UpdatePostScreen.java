@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdev.terra.ContactScreen;
+import com.appdev.terra.HomeScreenGov;
 import com.appdev.terra.MainActivity;
 import com.appdev.terra.ProfileScreen;
 import com.appdev.terra.R;
@@ -44,6 +45,8 @@ public class UpdatePostScreen extends AppCompatActivity {
     private StatusEnum status;
     private LocationService locationService;
 
+    private boolean verified;
+
     EditText description;
 
     @Override
@@ -64,7 +67,7 @@ public class UpdatePostScreen extends AppCompatActivity {
 
         Spinner statusSpinner = findViewById(R.id.statusSpinner);
         SpinnerUtils.populateStatusSpinner(this, statusSpinner);
-
+//
         Bundle extras = getIntent().getExtras();
         String geoPointId = extras.getString("geoPointId");
         String userId = extras.getString("userId");
@@ -80,7 +83,24 @@ public class UpdatePostScreen extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        // Get the post that was just clicked
+        postService.getPostCollection(geoPointId, new IFirestoreCallback<PostCollection>() {
+            @Override
+            public void onCallback(PostCollection collection) {
+                IFirestoreCallback.super.onCallback(collection);
+
+                post = collection.getPostWithId(userId);
+
+                post.qualifications.forEach((qualificationString, selected) -> {
+                    adapter.setQualificationBoolean(QualificationsEnum.valueOf(qualificationString), selected);
+                });
+
+                description.setText(post.description);
+            }
+        });
+
         Button verifyButton = findViewById(R.id.verify_button);
+        Button rejectButton = findViewById(R.id.reject_button);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -114,25 +134,6 @@ public class UpdatePostScreen extends AppCompatActivity {
                 return false;
             }
         });
-
-        // Get the post that was just clicked
-        postService.getPostCollection(geoPointId, new IFirestoreCallback<PostCollection>() {
-            @Override
-            public void onCallback(PostCollection collection) {
-                IFirestoreCallback.super.onCallback(collection);
-
-                post = collection.getPostWithId(userId);
-
-                post.qualifications.forEach((qualificationString, selected) -> {
-                    if (selected) {
-                        adapter.setQualificationBoolean(QualificationsEnum.valueOf(qualificationString), true);
-                    }
-                });
-
-                description.setText(post.description);
-
-            }
-        });
         
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -151,23 +152,56 @@ public class UpdatePostScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
+                verified = true;
 
                 if (userLocationOption == null) {
                     System.out.println("Failed to get location for post feed!");
                 } else if (userLocationOption.isPresent()) {
                     postService.add(new PostModel(
-                            "New custom post!",
+                            "Edit Post",
                             description.getText().toString(),
                             Timestamp.now(),
                             userLocationOption.get(),
                             status,
-                            adapter.getQualifications()
+                            adapter.getQualifications(), verified
                     ), new IFirestoreCallback() {
                         @Override
                         public void onCallback() {
                             IFirestoreCallback.super.onCallback();
+
                         }
                     });
+                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        rejectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
+                verified = false;
+
+                if (userLocationOption == null) {
+                    System.out.println("Failed to get location for post feed!");
+                } else if (userLocationOption.isPresent()) {
+                    postService.add(new PostModel(
+                            "Edit Post",
+                            description.getText().toString(),
+                            Timestamp.now(),
+                            userLocationOption.get(),
+                            status,
+                            adapter.getQualifications(), verified
+                    ), new IFirestoreCallback() {
+                        @Override
+                        public void onCallback() {
+                            IFirestoreCallback.super.onCallback();
+
+                        }
+                    });
+                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                    startActivity(intent);
                 }
             }
         });

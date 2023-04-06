@@ -2,6 +2,7 @@ package com.appdev.terra.models;
 
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
+import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.UserService;
 import com.google.firebase.Timestamp;
@@ -31,7 +32,15 @@ public class PostModel {
             Timestamp postedAt, GeoPoint location, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications
     ) {
-        this(title, description, postedAt, location, status, qualifications, false, UserService.getUserId());
+        this(title, description, postedAt, location, status, qualifications, false, AccountService.logedInUserModel.id);
+    }
+
+    public PostModel(
+            String title, String description,
+            Timestamp postedAt, GeoPoint location, StatusEnum status,
+            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified
+    ) {
+        this(title, description, postedAt, location, status, qualifications, verified, UserService.getUserId());
     }
 
     public PostModel(
@@ -39,7 +48,7 @@ public class PostModel {
             Timestamp postedAt, double latitude, double longitude, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications
     ) {
-        this(title, description, postedAt, latitude, longitude, status, qualifications, false, UserService.getUserId());
+        this(title, description, postedAt, latitude, longitude, status, qualifications, false, AccountService.logedInUserModel.id);
     }
 
     public PostModel(
@@ -58,7 +67,7 @@ public class PostModel {
         this(title, description, postedAt, latitude, longitude, status, qualifications, false, userId);
     }
 
-    private PostModel(
+    public PostModel(
             String title, String description,
             Timestamp postedAt, GeoPoint location, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications, boolean verified, String userId
@@ -124,7 +133,7 @@ public class PostModel {
                 longitude,
                 StatusEnum.WAITING,
                 requirements,
-                UserService.getUserId()
+                AccountService.logedInUserModel.id
         );
     }
 
