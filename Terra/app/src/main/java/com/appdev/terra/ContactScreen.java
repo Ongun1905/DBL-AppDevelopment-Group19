@@ -30,6 +30,7 @@ import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.UserService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class ContactScreen extends AppCompatActivity  {
@@ -63,8 +64,6 @@ public class ContactScreen extends AppCompatActivity  {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.contact);
-
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -145,6 +144,9 @@ public class ContactScreen extends AppCompatActivity  {
 
     private void setUpContactList() {
         MatchContacts();
+        for (ContactList contact : PossibleContactListAdapter.AddedContactList) {
+            contactLists.add(contact);
+        }
     }
 
 
@@ -152,6 +154,7 @@ public class ContactScreen extends AppCompatActivity  {
 
     private void setUpPossibleContactList() {
         possibleContactLists.clear();
+        /*
         for (UserModel userModel : matchedUserModels) {
             boolean cont = true;
             for (ContactList contact : contactLists) {
@@ -166,7 +169,28 @@ public class ContactScreen extends AppCompatActivity  {
                 System.out.println(userModel.name + " is added to the possible ContactList");
             }
         }
+
+         */
+
+        Iterator<UserModel> iterator = matchedUserModels.iterator();
+        while (iterator.hasNext()) {
+            UserModel userModel = iterator.next();
+            boolean cont = true;
+            for (ContactList contact : contactLists) {
+                if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
+                    cont = false;
+                }
+            }
+
+            if (cont) {
+                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
+                System.out.println(userModel.name + " is added to the possible ContactList");
+            } else {
+                iterator.remove();
+            }
+        }
     }
+
 
 
     private void requestContactPermission() {
@@ -263,15 +287,23 @@ public class ContactScreen extends AppCompatActivity  {
 
     private void MatchContacts() {
         contactLists.clear();
+
+        /*
         userService.get(AccountService.logedInUserModel.id, new IFirestoreCallback<UserModel>() {
             @Override
             public void onCallback(UserModel model) {
+                System.out.println("noName");
                 for (UserModel userModel : model.contacts){
                     contactLists.add(new ContactList(userModel.name,"Sample Status", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
+                    System.out.println(userModel.name);
                 }
             }
         });
+*/
 
+        for (UserModel userModel : AccountService.logedInUserModel.contacts) {
+            contactLists.add(new ContactList(userModel.name,"Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
+        }
     }
 
 
@@ -289,4 +321,3 @@ public class ContactScreen extends AppCompatActivity  {
         return newNumber;
     }
 }
-

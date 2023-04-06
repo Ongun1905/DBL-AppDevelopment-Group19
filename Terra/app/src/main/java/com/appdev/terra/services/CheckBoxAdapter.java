@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
     private HashMap<QualificationsEnum, CheckBox> checkBoxes = new HashMap<>();
@@ -82,7 +83,7 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
         });
         return result;
     }
-
+    
     public void printBools() {
         System.out.println("[");
         checkBoxes.forEach((q, s) -> {
@@ -90,6 +91,7 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
         });
         System.out.println("]");
     }
+
 
     public interface OnCheckBoxClickListener {
         void onItemClick(CheckBox checkBox);
