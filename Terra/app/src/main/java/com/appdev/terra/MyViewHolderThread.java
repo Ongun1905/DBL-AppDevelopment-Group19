@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.models.PostModel;
+import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.UpdatePostScreen;
 
 public class MyViewHolderThread extends RecyclerView.ViewHolder {
@@ -34,7 +36,22 @@ public class MyViewHolderThread extends RecyclerView.ViewHolder {
 
     public void bind(PostModel post) {
         this.item = post;
-        if (true) { // TODO: Check with user qualifications
+
+        System.out.println(post.qualifications);
+
+        boolean shouldShowCross = false;
+
+        for (QualificationsEnum qualification : QualificationsEnum.values()) {
+            if (
+                    post.qualifications.get(qualification.toString())
+                    && AccountService.logedInUserModel.qualifications.get(qualification)
+            ) {
+                shouldShowCross = true;
+                break;
+            }
+        }
+
+        if (shouldShowCross) {
             imageView.setVisibility(View.VISIBLE);
         } else {
             imageView.setVisibility(View.GONE);

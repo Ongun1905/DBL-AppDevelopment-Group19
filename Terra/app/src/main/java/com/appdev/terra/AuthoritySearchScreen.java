@@ -29,7 +29,7 @@ public class AuthoritySearchScreen extends AppCompatActivity {
 
     private TextView sheltersLabel, resourcesLabel, sheltersList, resourcesList;
 
-    private PostService postService = new PostService();
+    private PostService postService = new PostService("__GOV__");
 
     private LocationService locationService;
 

@@ -40,7 +40,7 @@ public class PostModel {
             Timestamp postedAt, GeoPoint location, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications, boolean verified
     ) {
-        this(title, description, postedAt, location, status, qualifications, verified, UserService.getUserId());
+        this(title, description, postedAt, location, status, qualifications, verified, AccountService.logedInUserModel.id);
     }
 
     public PostModel(
