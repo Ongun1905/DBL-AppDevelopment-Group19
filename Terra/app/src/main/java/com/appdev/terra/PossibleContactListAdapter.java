@@ -82,7 +82,6 @@ public class PossibleContactListAdapter extends RecyclerView.Adapter<PossibleCon
             addButton.setOnClickListener(this);
 
         }
-
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
