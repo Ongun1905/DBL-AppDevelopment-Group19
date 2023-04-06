@@ -36,6 +36,14 @@ public class PostModel {
 
     public PostModel(
             String title, String description,
+            Timestamp postedAt, GeoPoint location, StatusEnum status,
+            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified
+    ) {
+        this(title, description, postedAt, location, status, qualifications, verified, UserService.getUserId());
+    }
+
+    public PostModel(
+            String title, String description,
             Timestamp postedAt, double latitude, double longitude, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications
     ) {
@@ -58,7 +66,7 @@ public class PostModel {
         this(title, description, postedAt, latitude, longitude, status, qualifications, false, userId);
     }
 
-    private PostModel(
+    public PostModel(
             String title, String description,
             Timestamp postedAt, GeoPoint location, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications, boolean verified, String userId
