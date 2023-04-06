@@ -1,20 +1,13 @@
 package com.appdev.terra.services.helpers;
 
-import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
-import com.appdev.terra.enums.VerificationEnum;
 import com.appdev.terra.models.PostModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 public class PostCollection implements Serializable {
     private GeoPoint location;
