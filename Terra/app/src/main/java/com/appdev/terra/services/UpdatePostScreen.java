@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdev.terra.ContactScreen;
+import com.appdev.terra.HomeScreenGov;
 import com.appdev.terra.MainActivity;
 import com.appdev.terra.MyAdapter;
 import com.appdev.terra.ProfileScreen;
@@ -158,11 +159,12 @@ public class UpdatePostScreen extends AppCompatActivity {
             public void onClick(View v) {
                 Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
 
+
                 if (userLocationOption == null) {
                     System.out.println("Failed to get location for post feed!");
                 } else if (userLocationOption.isPresent()) {
                     postService.add(new PostModel(
-                            "New custom post!",
+                            "Edit Post",
                             description.getText().toString(),
                             Timestamp.now(),
                             userLocationOption.get(),
@@ -172,8 +174,11 @@ public class UpdatePostScreen extends AppCompatActivity {
                         @Override
                         public void onCallback() {
                             IFirestoreCallback.super.onCallback();
+
                         }
                     });
+                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                    startActivity(intent);
                 }
             }
         });
