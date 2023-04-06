@@ -2,6 +2,7 @@ package com.appdev.terra;
 
 import static java.lang.Character.isDigit;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -30,7 +32,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ContactScreen extends AppCompatActivity {
+
+public class ContactScreen extends AppCompatActivity  {
 
     public static ArrayList<ContactList>  contactLists = new ArrayList<>();
 
@@ -42,7 +45,7 @@ public class ContactScreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Button buttonAddFriend;
 
-    private PossibleContactListAdapter possibleContactListAdapter  = new PossibleContactListAdapter(this, possibleContactLists);;
+    private PossibleContactListAdapter possibleContactListAdapter  = new PossibleContactListAdapter((Context) this, possibleContactLists);
     private RecyclerView recyclerView2;
 
     final int PERMISSIONS_REQUEST_READ_CONTACTS = 100;
@@ -51,7 +54,7 @@ public class ContactScreen extends AppCompatActivity {
 
     ArrayList<String> phoneNumbersMatched = new ArrayList<>();
 
-    UserService UserService = new UserService();
+    UserService userService = new UserService();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -96,7 +99,7 @@ public class ContactScreen extends AppCompatActivity {
             }
         });
 
-
+        MatchContacts();
 
         buttonAddFriend = (Button) findViewById(R.id.add_friend);
 
@@ -108,7 +111,6 @@ public class ContactScreen extends AppCompatActivity {
 
             }
         });
-        //Getting contact permission from User
         requestContactPermission();
 
         MatchUsersPhoneNumbers();
@@ -141,37 +143,55 @@ public class ContactScreen extends AppCompatActivity {
     }
 
     private void setUpContactList() {
-
+        MatchContacts();
         for (ContactList contact : PossibleContactListAdapter.AddedContactList) {
             contactLists.add(contact);
-
         }
-
-
     }
 
+
+
+
     private void setUpPossibleContactList() {
+        possibleContactLists.clear();
+        /*
+        for (UserModel userModel : matchedUserModels) {
+            boolean cont = true;
+            for (ContactList contact : contactLists) {
+                if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
+                    cont = false;
+                    break;
+                }
+            }
+
+            if (cont) {
+                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)), userModel.id));
+                System.out.println(userModel.name + " is added to the possible ContactList");
+            }
+        }
+
+         */
+
         Iterator<UserModel> iterator = matchedUserModels.iterator();
         while (iterator.hasNext()) {
             UserModel userModel = iterator.next();
             boolean cont = true;
-            for (ContactList contact : PossibleContactListAdapter.AddedContactList) {
+            for (ContactList contact : contactLists) {
                 if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
                     cont = false;
                 }
             }
-            for (PossibleContactList contact : PossibleContactListAdapter.DeletedContactList) {
-                if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
-                    cont = false;
-                }
-            }
+
             if (cont) {
-                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber))));
+                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
+                System.out.println(userModel.name + " is added to the possible ContactList");
             } else {
                 iterator.remove();
             }
         }
     }
+
+
 
     private void requestContactPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -232,33 +252,58 @@ public class ContactScreen extends AppCompatActivity {
             @Override
             public void onCallback(ArrayList<UserModel> userModels) {
                 for (UserModel userModel : userModels) {
-                    System.out.println(Long.toString(userModel.phoneNumber)+"from db");
+                    System.out.println(Long.toString(userModel.phoneNumber) + "from db");
 
-                    possibleContactListAdapter.notifyDataSetChanged();
-                    for (String phoneNumber : phoneNumbers){
-                        if (phoneNumberFormatter(phoneNumber).equals(Long.toString(userModel.phoneNumber))){
-                            System.out.println(phoneNumberFormatter(phoneNumber)+" is compared to"+Long.toString(userModel.phoneNumber));
-                            matchedUserModels.add(userModel);
+                    for (String phoneNumber : phoneNumbers) {
+                        if (phoneNumberFormatter(phoneNumber).equals(Long.toString(userModel.phoneNumber))) {
+                            System.out.println(phoneNumberFormatter(phoneNumber) + " is compared to" + Long.toString(userModel.phoneNumber));
 
+                            boolean isDuplicate = false;
+                            boolean isSelf = false;
+                            for (UserModel matchedUserModel : matchedUserModels) {
+                                if (matchedUserModel.id.equals(userModel.id)) {
+                                    isDuplicate = true;
+                                    break;
+                                }
+                                if (AccountService.logedInUserModel.id.equals(userModel.id)) {
+                                    isSelf = true;
+                                }
+                                else {
+                                    isSelf = false;
+                                }
+                            }
+
+                            if (!isDuplicate && !isSelf) {
+                                matchedUserModels.add(userModel);
+                            }
                         }
                     }
-
-
                 }
                 setUpPossibleContactList();
+                possibleContactListAdapter.notifyDataSetChanged();
             }
-
         });
-
     }
 
     private void MatchContacts() {
-        AccountService accountService = new AccountService();
-        for (UserModel userModel : accountService.logedInUserModel.contacts){
-            contactLists.add(new ContactList(userModel.name,"Sample Status", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber))));
+        contactLists.clear();
 
+        /*
+        userService.get(AccountService.logedInUserModel.id, new IFirestoreCallback<UserModel>() {
+            @Override
+            public void onCallback(UserModel model) {
+                System.out.println("noName");
+                for (UserModel userModel : model.contacts){
+                    contactLists.add(new ContactList(userModel.name,"Sample Status", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
+                    System.out.println(userModel.name);
+                }
+            }
+        });
+*/
+
+        for (UserModel userModel : AccountService.logedInUserModel.contacts) {
+            contactLists.add(new ContactList(userModel.name,"Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
         }
-
     }
 
 
