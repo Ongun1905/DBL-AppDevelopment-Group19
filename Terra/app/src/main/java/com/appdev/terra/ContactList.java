@@ -6,12 +6,12 @@ public class ContactList {
     String status;
     String location;
     int image;
-    String id;
 
     String phoneNumber;
+    String id;
 
 
-    public ContactList(String contactName, String status, int image, String phoneNumber, String id) {
+    public ContactList(String contactName, String status, int image, String phoneNumber,String id) {
         this.contactName = contactName;
         this.status = status;
         this.location = location;
