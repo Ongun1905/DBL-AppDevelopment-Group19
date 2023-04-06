@@ -7,12 +7,17 @@ public class ContactList {
     String location;
     int image;
 
+    String phoneNumber;
+    String id;
 
-    public ContactList(String contactName, String status, int image) {
+
+    public ContactList(String contactName, String status, int image, String phoneNumber,String id) {
         this.contactName = contactName;
         this.status = status;
         this.location = location;
         this.image = image;
+        this.phoneNumber = phoneNumber;
+        this.id = id;
     }
 
 

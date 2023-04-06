@@ -41,7 +41,6 @@ public class MyViewHolderGov extends RecyclerView.ViewHolder {
         header.setText(item.getLocation().toString());
         nrPosts.setText("" + item.getNrPosts());
         status.setText(item.getAccidentStatus().toString());
-        reqQualifications.setText(item.getRequestedQualifications().toString());
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
