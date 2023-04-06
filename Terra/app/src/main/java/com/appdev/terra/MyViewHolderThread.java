@@ -30,17 +30,6 @@ public class MyViewHolderThread extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.image_view);
         descriptionText = itemView.findViewById(R.id.description_text);
         requirementsText = itemView.findViewById(R.id.requirements_text);
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: WUT??????????????????????????
-                // Start the UpdatePostScreen activity with the post data
-                Intent intent = new Intent(context, UpdatePostScreen.class);
-                // TODO: Add all post data to the intent
-                context.startActivity(intent);
-            }
-        });
     }
 
     public void bind(PostModel post) {

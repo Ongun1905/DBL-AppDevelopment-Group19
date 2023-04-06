@@ -1,6 +1,8 @@
 package com.appdev.terra.services;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MenuItem;
@@ -26,13 +28,18 @@ import com.appdev.terra.R;
 import com.appdev.terra.SearchScreen;
 import com.appdev.terra.SpinnerUtils;
 import com.appdev.terra.enums.QualificationsEnum;
+import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
+import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class UpdatePostScreen extends AppCompatActivity {
     private PostModel post;
@@ -40,6 +47,8 @@ public class UpdatePostScreen extends AppCompatActivity {
     private PostService postService = new PostService();
     private RecyclerView recyclerView;
     private CheckBoxAdapter adapter;
+    private StatusEnum status;
+    private LocationService locationService;
 
     EditText description;
 
@@ -50,6 +59,12 @@ public class UpdatePostScreen extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.home);
+
+        locationService = new LocationService(
+                (LocationManager) getSystemService(Context.LOCATION_SERVICE),
+                this,
+                this
+        );
 
         description = findViewById(R.id.description);
 
@@ -124,29 +139,42 @@ public class UpdatePostScreen extends AppCompatActivity {
 
             }
         });
+        
+        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                status = StatusEnum.valueOf((String) parent.getItemAtPosition(position));
+            }
 
-//        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                String selectedLocation = parent.getItemAtPosition(position).toString();
-//                if (selectedLocation.equals("Another location")) {
-//                    Toast.makeText(getApplicationContext(), "If you want to create a post with another location pLease use the + button in the feed page.", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                // Handle nothing selected
-//            }
-//        });
-
-
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle nothing selected
+            }
+        });
 
 
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.printBools();
+                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
+
+                if (userLocationOption == null) {
+                    System.out.println("Failed to get location for post feed!");
+                } else if (userLocationOption.isPresent()) {
+                    postService.add(new PostModel(
+                            "New custom post!",
+                            description.getText().toString(),
+                            Timestamp.now(),
+                            userLocationOption.get(),
+                            status,
+                            adapter.getQualifications()
+                    ), new IFirestoreCallback() {
+                        @Override
+                        public void onCallback() {
+                            IFirestoreCallback.super.onCallback();
+                        }
+                    });
+                }
             }
         });
     }
