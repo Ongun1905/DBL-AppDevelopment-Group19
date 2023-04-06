@@ -81,14 +81,14 @@ public class PossibleContactListAdapter extends RecyclerView.Adapter<PossibleCon
                 case R.id.button3: // Add button
                     System.out.println("I have been pressed");
 
-                    ContactList addedContact = new ContactList(PossibleContactLists.get(position).contactName, PossibleContactLists.get(position).status, PossibleContactLists.get(position).image,PossibleContactLists.get(position).phoneNumber);
+                    ContactList addedContact = new ContactList(PossibleContactLists.get(position).contactName, PossibleContactLists.get(position).status, PossibleContactLists.get(position).image,PossibleContactLists.get(position).phoneNumber, "T'Challa");
                     AddedContactList.add(addedContact);
                     PossibleContactLists.remove(position);
                     notifyDataSetChanged();
                     break;
                 case R.id.button4: // Delete button
 
-                    PossibleContactList deletedContact = new PossibleContactList(PossibleContactLists.get(position).contactName, PossibleContactLists.get(position).status, PossibleContactLists.get(position).image, PossibleContactLists.get(position).phoneNumber);
+                    PossibleContactList deletedContact = new PossibleContactList(PossibleContactLists.get(position).contactName, PossibleContactLists.get(position).status, PossibleContactLists.get(position).image, PossibleContactLists.get(position).phoneNumber, "T'Challa");
                     DeletedContactList.add(deletedContact);
                     PossibleContactLists.remove(position);
                     notifyDataSetChanged();

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
     private HashMap<QualificationsEnum, CheckBox> checkBoxes = new HashMap<>();
@@ -73,24 +72,17 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
         checkBoxes.get(qualification).setChecked(bool);
     }
 
-    public Map<String, Boolean> getQualifications(List<CheckBox> checkBoxes) {
-        Map<String, Boolean> qualifications = new HashMap<>();
-        for (QualificationsEnum qualification : QualificationsEnum.values()) {
-            qualifications.put(qualification.toString(), false);
-        }
-        for (CheckBox checkBox : checkBoxes) {
-            if (checkBox.isChecked()) {
-                qualifications.put(checkBox.getTag().toString(), true);
-            }
-        }
-        return qualifications;
+    public HashMap<QualificationsEnum, Boolean> getQualifications() {
+        HashMap<QualificationsEnum, Boolean> result = new HashMap<>();
+        checkBoxes.forEach((qualification, selected) -> {
+            result.put(qualification, selected.isSelected());
+        });
+        return result;
     }
-
 
     public void printBools() {
         System.out.println(checkBoxes);
     }
-
 
     public interface OnCheckBoxClickListener {
         void onItemClick(CheckBox checkBox);
