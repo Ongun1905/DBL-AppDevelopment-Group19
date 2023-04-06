@@ -18,14 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.CheckBoxAdapter;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.LocationService;
-import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -36,9 +34,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Optional;
 
 public class NewPostActivity extends AppCompatActivity {

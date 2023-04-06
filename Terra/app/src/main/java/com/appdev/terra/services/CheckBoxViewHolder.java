@@ -2,14 +2,11 @@ package com.appdev.terra.services;
 
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.MyAdapter;
 import com.appdev.terra.R;
-import com.appdev.terra.services.helpers.PostCollection;
 
 public class CheckBoxViewHolder extends RecyclerView.ViewHolder {
     public CheckBox checkBox;
