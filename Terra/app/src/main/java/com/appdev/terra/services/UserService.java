@@ -169,6 +169,10 @@ public class UserService implements IDatabaseService<UserModel> {
                     System.out.println("User updated!");
                     firestoreCallback.onCallback(model);
                 });
+
+
+
+
     }
 
     @Override
