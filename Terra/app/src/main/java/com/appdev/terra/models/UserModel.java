@@ -18,7 +18,6 @@ public class UserModel {
     public ArrayList<UserModel> contacts;
     public String password;
     public Map<String, Boolean> checkBoxes;
-    public Map<String, Boolean> qualifications;
 
     public UserModel() {
         checkBoxes = new HashMap<>();

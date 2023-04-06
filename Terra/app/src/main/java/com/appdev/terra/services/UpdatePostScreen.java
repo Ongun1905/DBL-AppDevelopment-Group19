@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -119,8 +121,25 @@ public class UpdatePostScreen extends AppCompatActivity {
                 });
 
                 description.setText(post.description);
+
             }
         });
+
+        statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedLocation = parent.getItemAtPosition(position).toString();
+                if (selectedLocation.equals("Another location")) {
+                    Toast.makeText(getApplicationContext(), "If you want to create a post with another location pLease use the + button in the feed page.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle nothing selected
+            }
+        });
+
 
 
 
