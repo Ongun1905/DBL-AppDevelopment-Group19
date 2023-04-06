@@ -175,5 +175,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             }
         });
     }
+
+
 }
 
