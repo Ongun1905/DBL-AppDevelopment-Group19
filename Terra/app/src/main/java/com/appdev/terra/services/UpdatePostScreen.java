@@ -177,54 +177,32 @@ public class UpdatePostScreen extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
                 startActivity(intent);
-
-//                if (userLocationOption == null) {
-//                    System.out.println("Failed to get location for post feed!");
-//                } else if (userLocationOption.isPresent()) {
-//                    postService.add(new PostModel(
-//                            "Edit Post",
-//                            description.getText().toString(),
-//                            Timestamp.now(),
-//                            userLocationOption.get(),
-//                            status,
-//                            adapter.getQualifications(), verified
-//                    ), new IFirestoreCallback() {
-//                        @Override
-//                        public void onCallback() {
-//                            IFirestoreCallback.super.onCallback();
-//
-//                        }
-//                    });
-//                }
             }
         });
 
         rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-                verified = false;
+                PostModel updatedPost = new PostModel(
+                        post.title,
+                        description.getText().toString(),
+                        Timestamp.now(),
+                        post.location,
+                        status,
+                        adapter.getQualifications(),
+                        true,
+                        post.userId
+                );
 
-                if (userLocationOption == null) {
-                    System.out.println("Failed to get location for post feed!");
-                } else if (userLocationOption.isPresent()) {
-                    postService.add(new PostModel(
-                            "Edit Post",
-                            description.getText().toString(),
-                            Timestamp.now(),
-                            userLocationOption.get(),
-                            status,
-                            adapter.getQualifications(), verified
-                    ), new IFirestoreCallback() {
-                        @Override
-                        public void onCallback() {
-                            IFirestoreCallback.super.onCallback();
+                postService.update(updatedPost, new IFirestoreCallback() {
+                    @Override
+                    public void onCallback() {
+                        IFirestoreCallback.super.onCallback();
+                    }
+                });
 
-                        }
-                    });
-                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                startActivity(intent);
             }
         });
     }
