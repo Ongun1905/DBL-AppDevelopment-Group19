@@ -51,6 +51,8 @@ public class UpdatePostScreen extends AppCompatActivity {
     private StatusEnum status;
     private LocationService locationService;
 
+    private boolean verified;
+
     EditText description;
 
     @Override
@@ -158,7 +160,7 @@ public class UpdatePostScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-
+                verified = true;
 
                 if (userLocationOption == null) {
                     System.out.println("Failed to get location for post feed!");
@@ -169,7 +171,7 @@ public class UpdatePostScreen extends AppCompatActivity {
                             Timestamp.now(),
                             userLocationOption.get(),
                             status,
-                            adapter.getQualifications()
+                            adapter.getQualifications(), verified
                     ), new IFirestoreCallback() {
                         @Override
                         public void onCallback() {
