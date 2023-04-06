@@ -123,6 +123,10 @@ public class PostModel {
 
         HashMap<QualificationsEnum, Boolean> requirements = new HashMap<>();
 
+        for (QualificationsEnum qualification : QualificationsEnum.values()) {
+            requirements.put(qualification, false);
+        }
+
         return new PostModel(
                 "[SOS] New emergency!!",
                 "Emergency reported through use of the SOS button. " +

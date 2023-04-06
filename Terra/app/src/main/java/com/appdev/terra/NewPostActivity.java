@@ -27,6 +27,7 @@ import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -121,6 +122,7 @@ public class NewPostActivity extends AppCompatActivity {
         //Initialize the SDK
         String apiKey = "AIzaSyBbjGgg9-D0FK4rhhGaf6jm-CvEhqjVfKc";
         Places.initialize(getApplicationContext(), apiKey);
+        final LatLng[] selectedLocation = {null};
 
         //Create a new Places client instance
         PlacesClient placesClient = Places.createClient(this);
@@ -136,8 +138,8 @@ public class NewPostActivity extends AppCompatActivity {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                selectedLocation[0] = place.getLatLng();
+                System.out.println(selectedLocation);
             }
 
             @Override
@@ -174,7 +176,7 @@ public class NewPostActivity extends AppCompatActivity {
                             "New custom post!",
                             description.getText().toString(),
                             Timestamp.now(),
-                            userLocationOption.get(),
+                            new GeoPoint(selectedLocation[0].latitude, selectedLocation[0].longitude),
                             status,
                             adapter.getQualifications()
                     ), new IFirestoreCallback() {
