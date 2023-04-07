@@ -46,6 +46,10 @@ public class ContactList {
     public void setContactName(String newName){
         contactName = newName;
     }
+
+    public void setStatus(String newStatus){
+        status = newStatus;
+    }
     public boolean isChangedStatus() {
         return changedStatus;
     }
