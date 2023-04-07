@@ -1,6 +1,11 @@
 package com.appdev.terra;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +19,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdev.terra.models.PostModel;
@@ -71,6 +77,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
         Button contactButton;
 
+        ConstraintLayout conLay;
+
         PostService postService= new PostService();
 
         Boolean isClickable;
@@ -86,7 +94,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             editButton = itemView.findViewById(R.id.edit_button);
             contactButton = itemView.findViewById(R.id.button);
             isClickable = false;
-
+            conLay = itemView.findViewById(R.id.conLay);
+            if (conLay.getBackground() instanceof ColorDrawable) {
+                ColorDrawable colorDrawable = (ColorDrawable) conLay.getBackground();
+                int backgroundColor = colorDrawable.getColor();
+                if (backgroundColor == Color.parseColor("#FFEF5B5B")){
+                    textViewStatus.setText("DANGER");                }
+            }
 
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,7 +123,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                             isClickable = true;
                             postModel = model;
                             contactButton.getBackground().setAlpha(76);
-
+                            conLay.setBackgroundColor(Color.parseColor("#FFEF5B5B"));
+                            textViewStatus.setText("DANGER");
 
                             contactButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -137,7 +152,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         View popupView = inflater.inflate(R.layout.activity_status_popup, null);
 
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true;
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
 
@@ -145,9 +160,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         userText.setText(user.contactName);
 
         TextView locationText = popupView.findViewById(R.id.LocationText);
-        locationText.setText((CharSequence) model.location);
+        locationText.setText((CharSequence) model.getTitle(context));
 
-
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
 
     }
@@ -173,7 +188,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             public void onClick(View v) {
                 for (ContactList contact: contactLists ) {
                     if (contact.phoneNumber.equals(user.phoneNumber)) {
-                        System.out.println("ss");
                         contact.setChangedStatus(true);
                         contact.setChangedName(String.valueOf(editText.getText()));
                         changedContactTracker.changedContacts.add(contact);
@@ -181,6 +195,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 }
                 adapter.notifyDataSetChanged();
                 popupWindow.dismiss();
+
             }
         });
     }

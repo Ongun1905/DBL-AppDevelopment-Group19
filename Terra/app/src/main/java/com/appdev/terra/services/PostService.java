@@ -122,7 +122,10 @@ public class PostService implements IDatabaseService<PostModel> {
                     }
 
                     PostCollection collection = PostCollection.fromFirebaseDocument(document);
-
+                    PostModel model = collection.getPostWithId(userId);
+                    if (model != null) {
+                        firestoreCallback.onCallback(model, "The post already exists, post overwritten.");
+                    }
                     collection.addPost(model.userId, model);
 
                     postsRef.document(model.geoId).set(collection.toFirebasePostCollection()).addOnCompleteListener(t -> {
