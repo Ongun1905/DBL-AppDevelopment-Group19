@@ -1,8 +1,6 @@
 package com.appdev.terra;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.view.View;
 import java.util.List;
 import android.view.LayoutInflater;

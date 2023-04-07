@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,8 +11,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appdev.terra.ContactScreen;
 import com.appdev.terra.HomeScreenGov;
 import com.appdev.terra.MainActivity;
-import com.appdev.terra.MyAdapter;
 import com.appdev.terra.ProfileScreen;
 import com.appdev.terra.R;
 import com.appdev.terra.SearchScreen;
@@ -38,14 +34,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 public class UpdatePostScreen extends AppCompatActivity {
     private PostModel post;
     BottomNavigationView bottomNavigationView;
-    private PostService postService = new PostService();
+    private PostService postService = new PostService("__GOV__");
     private RecyclerView recyclerView;
     private CheckBoxAdapter adapter;
     private StatusEnum status;
@@ -157,58 +151,50 @@ public class UpdatePostScreen extends AppCompatActivity {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-                verified = true;
+                PostModel updatedPost = new PostModel(
+                        description.getText().toString(),
+                        Timestamp.now(),
+                        post.location,
+                        status,
+                        adapter.getQualifications(),
+                        true,
+                        post.userId
+                );
 
-                if (userLocationOption == null) {
-                    System.out.println("Failed to get location for post feed!");
-                } else if (userLocationOption.isPresent()) {
-                    postService.add(new PostModel(
-                            "Edit Post",
-                            description.getText().toString(),
-                            Timestamp.now(),
-                            userLocationOption.get(),
-                            status,
-                            adapter.getQualifications(), verified
-                    ), new IFirestoreCallback() {
-                        @Override
-                        public void onCallback() {
-                            IFirestoreCallback.super.onCallback();
+                postService.update(updatedPost, new IFirestoreCallback() {
+                    @Override
+                    public void onCallback() {
+                        IFirestoreCallback.super.onCallback();
+                    }
+                });
 
-                        }
-                    });
-                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                startActivity(intent);
             }
         });
 
         rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-                verified = false;
+                PostModel updatedPost = new PostModel(
+                        description.getText().toString(),
+                        Timestamp.now(),
+                        post.location,
+                        status,
+                        adapter.getQualifications(),
+                        true,
+                        post.userId
+                );
 
-                if (userLocationOption == null) {
-                    System.out.println("Failed to get location for post feed!");
-                } else if (userLocationOption.isPresent()) {
-                    postService.add(new PostModel(
-                            "Edit Post",
-                            description.getText().toString(),
-                            Timestamp.now(),
-                            userLocationOption.get(),
-                            status,
-                            adapter.getQualifications(), verified
-                    ), new IFirestoreCallback() {
-                        @Override
-                        public void onCallback() {
-                            IFirestoreCallback.super.onCallback();
+                postService.update(updatedPost, new IFirestoreCallback() {
+                    @Override
+                    public void onCallback() {
+                        IFirestoreCallback.super.onCallback();
+                    }
+                });
 
-                        }
-                    });
-                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                startActivity(intent);
             }
         });
     }

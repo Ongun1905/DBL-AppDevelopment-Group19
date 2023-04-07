@@ -5,21 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.MainActivity;
-import com.appdev.terra.MyViewHolder;
 import com.appdev.terra.R;
 import com.appdev.terra.enums.QualificationsEnum;
-import com.appdev.terra.services.helpers.PostCollection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
     private HashMap<QualificationsEnum, CheckBox> checkBoxes = new HashMap<>();

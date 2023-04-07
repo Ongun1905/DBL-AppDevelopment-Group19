@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/rel_layout"
-        android:layout_width="411dp"
+        android:layout_width="390dp"
         android:layout_height="589dp"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/verify_button"
@@ -84,19 +84,21 @@
     <Button
         android:id="@+id/verify_button"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/montserrat_black"
         android:text="Verify"
         android:textColor="#FFFFFF"
         android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/reject_button"
         app:layout_constraintTop_toBottomOf="@id/rel_layout"
+        tools:ignore="TextSizeCheck"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/reject_button"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_below="@id/verify_button"
         android:background="@drawable/round_button"
         android:fontFamily="@font/montserrat_black"

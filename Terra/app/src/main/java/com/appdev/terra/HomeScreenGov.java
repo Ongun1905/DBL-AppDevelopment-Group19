@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -16,10 +15,8 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
-import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
-import com.appdev.terra.services.UpdatePostScreen;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,7 +48,7 @@ public class HomeScreenGov extends AppCompatActivity {
     });
     private ScrollView scrollView;
 
-    private PostService postService = new PostService();
+    private PostService postService = new PostService("__GOV__");
 
     private LocationService locationService;
 
@@ -68,9 +65,6 @@ public class HomeScreenGov extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.home);
-
-
-        Button addButton = findViewById(R.id.authority_new_post_button);
 
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
@@ -114,14 +108,6 @@ public class HomeScreenGov extends AppCompatActivity {
             });
         }
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreenGov.this, NewPostActivity.class);
-                startActivity(intent);
-            }
-        });
-
         searchView = findViewById(R.id.searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -152,20 +138,12 @@ public class HomeScreenGov extends AppCompatActivity {
 
         // Loop through the original items list and add the items that match the query
         for (PostCollection collection : items) {
-            if (collection.getLocation().toString().contains(query.toLowerCase())) {
+            if (collection.getLocationName(this).toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(collection);
             }
         }
 
         // Update the RecyclerView with the filtered items list
         adapter.setItems(filteredItems);
-
-        // Scroll to the top of the ScrollView after updating the RecyclerView
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(View.FOCUS_UP);
-            }
-        });
     }
 }
