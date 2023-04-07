@@ -31,6 +31,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     private static ContactListAdapter adapter;
 
+
+
     public ContactListAdapter (Context context, ArrayList<ContactList> contactLists ) {
         this.context = context;
         this.contactLists = contactLists;
@@ -47,11 +49,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ContactListAdapter.MyViewHolder holder, int position) {
-       holder.textViewName.setText(contactLists.get(position).getContactName());
-       holder.textViewStatus.setText(contactLists.get(position).getStatus());
-       holder.imageView.setImageResource(contactLists.get(position).getImage());
-
-
+        holder.textViewName.setText(contactLists.get(position).getContactName());
+        holder.textViewStatus.setText(contactLists.get(position).getStatus());
+        holder.imageView.setImageResource(contactLists.get(position).getImage());
+        if (contactLists.get(position).isChangedStatus()) {
+            holder.textViewName.setText(contactLists.get(position).getChangedName());
+        }
     }
 
     @Override
@@ -167,7 +170,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 for (ContactList contact: contactLists ) {
                     if (contact.phoneNumber.equals(user.phoneNumber)) {
                         System.out.println("ss");
-                        contact.setContactName(String.valueOf(editText.getText()));
+                        contact.setChangedStatus(true);
+                        contact.setChangedName(String.valueOf(editText.getText()));
+                        changedContactTracker.changedContacts.add(contact);
                     }
                 }
                 adapter.notifyDataSetChanged();

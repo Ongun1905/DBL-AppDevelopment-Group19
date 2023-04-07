@@ -113,6 +113,7 @@ public class PossibleContactListAdapter extends RecyclerView.Adapter<PossibleCon
                             });
                         }
                     });
+                    addButton.setEnabled(false);
 
 
                     notifyDataSetChanged();
