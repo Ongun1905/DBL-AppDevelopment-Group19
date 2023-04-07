@@ -173,7 +173,6 @@ public class NewPostActivity extends AppCompatActivity {
                     System.out.println("Failed to get location for post feed!");
                 } else if (userLocationOption.isPresent()) {
                     postServive.add(new PostModel(
-                            "New custom post!",
                             description.getText().toString(),
                             Timestamp.now(),
                             new GeoPoint(selectedLocation[0].latitude, selectedLocation[0].longitude),

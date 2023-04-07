@@ -1,5 +1,9 @@
 package com.appdev.terra.services.helpers;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.enums.VerificationEnum;
@@ -7,6 +11,7 @@ import com.appdev.terra.models.PostModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,11 +19,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class PostCollection implements Serializable {
     private GeoPoint location;
-//    public String locationName;
 
     private StatusEnum accidentStatus;
 
@@ -101,5 +106,20 @@ public class PostCollection implements Serializable {
 
     public Collection<PostModel> getPosts() {
         return posts.values();
+    }
+
+    public String getLocationName(Context context) {
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(this.location.getLatitude(), this.location.getLongitude(),1);
+
+            Address obj = addresses.get(0);
+            String add = obj.getAddressLine(0);
+
+            return add;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return this.location.toString();
+        }
     }
 }

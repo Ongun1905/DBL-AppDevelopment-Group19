@@ -158,7 +158,6 @@ public class UpdatePostScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PostModel updatedPost = new PostModel(
-                        post.title,
                         description.getText().toString(),
                         Timestamp.now(),
                         post.location,
@@ -184,7 +183,6 @@ public class UpdatePostScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PostModel updatedPost = new PostModel(
-                        post.title,
                         description.getText().toString(),
                         Timestamp.now(),
                         post.location,

@@ -15,7 +15,6 @@
         android:text="+"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.92"
@@ -31,8 +30,8 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="410dp"
-        android:layout_height="525dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:contentDescription="bla bla bla"
         app:layout_constraintBottom_toTopOf="@+id/user_new_post_button"
         app:layout_constraintEnd_toEndOf="parent"

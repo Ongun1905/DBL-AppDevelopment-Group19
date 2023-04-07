@@ -54,20 +54,7 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
     public void bind(PostModel post) {
         this.item = post;
 
-        location.setText(item.location.toString());
-
-        Geocoder geocoder = new Geocoder(this.itemView.getContext(), Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(item.location.getLatitude(), item.location.getLongitude(),1);
-
-            Address obj = addresses.get(0);
-            String add = obj.getAddressLine(0);
-
-            location.setText(add);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        location.setText(post.getTitle(this.itemView.getContext()));
         level.setText(item.status.toString());
         verifiedText.setText("Verified: " + item.verified);
         descriptionText.setText("Description: " + item.description);

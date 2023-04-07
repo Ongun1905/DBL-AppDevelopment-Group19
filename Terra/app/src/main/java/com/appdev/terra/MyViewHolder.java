@@ -42,19 +42,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final PostCollection item, final MyAdapter.OnItemClickListener listener) {
-        header.setText(item.getLocation().toString());
-
-        Geocoder geocoder = new Geocoder(this.itemView.getContext(), Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(item.getLatitude(), item.getLongitude(),1);
-
-            Address obj = addresses.get(0);
-            String add = obj.getAddressLine(0);
-
-            header.setText(add);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        header.setText(item.getLocationName(this.itemView.getContext()));
 
         nrPosts.setText(item.getNrPosts() + " post(s) for this accident");
 
