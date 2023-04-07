@@ -104,10 +104,22 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 public void onCallback(ArrayList<PostModel> models) {
                     for (PostModel model : models) {
                        System.out.println( model.userId+" is compare too"+ contactLists.get(getAdapterPosition()).id);
-                        if (model.userId == contactLists.get(getAdapterPosition()).id) {
+                        if (model.userId.equals(contactLists.get(getAdapterPosition()).id)) {
+                            System.out.println("succes match");
                             isClickable = true;
-                            model = postModel;
+                            postModel = model;
                             contactButton.getBackground().setAlpha(76);
+
+
+                            contactButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (isClickable) {
+                                        showPopupWindowActivity(v,contactLists.get(getAdapterPosition()), adapter, postModel);
+                                    }
+
+                                }
+                            });
 
                         }
                     }
@@ -116,15 +128,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             });
 
 
-            contactButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isClickable) {
-                        showPopupWindowActivity(v,contactLists.get(getAdapterPosition()), adapter, postModel);
-                    }
 
-                }
-            });
         }
     }
 
