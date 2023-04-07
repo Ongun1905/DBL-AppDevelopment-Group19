@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -174,13 +175,15 @@ public class NewPostActivity extends AppCompatActivity {
                             new GeoPoint(selectedLocation[0].latitude, selectedLocation[0].longitude),
                             status,
                             adapter.getQualifications()
-                    ), new IFirestoreCallback() {
+                    ), new IFirestoreCallback<PostModel>() {
                         @Override
-                        public void onCallback() {
-                            IFirestoreCallback.super.onCallback();
+                        public void onCallback(PostModel model1, String message) {
+                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                         }
                     });
                 }
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                startActivity(intent);
             }
         });
     }
