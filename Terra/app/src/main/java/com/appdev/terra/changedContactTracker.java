@@ -7,7 +7,7 @@ public class changedContactTracker {
 
     static ArrayList<ContactList> changedContacts = new ArrayList<ContactList>();
 
-    static  ArrayList<ContactList> changedNames = new ArrayList<ContactList>();
+
 
     private changedContactTracker(){
 

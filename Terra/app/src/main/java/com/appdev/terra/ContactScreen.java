@@ -368,6 +368,9 @@ public class ContactScreen extends AppCompatActivity  {
             for (int i = 0; i < contactLists.size(); i++) {
                 ContactList contact = contactLists.get(i);
                 if (contact.phoneNumber.equals(cContact.phoneNumber)) {
+                    if (contact.status.equals("DANGER")){
+                        cContact.setStatus("DANGER");
+                    }
                     contactLists.set(i, cContact);
                     break;
                 }
