@@ -3,6 +3,8 @@ package com.appdev.terra;
 import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,10 +16,13 @@ import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.UpdatePostScreen;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
     public PostModel item;
 
-    public TextView username;
     public TextView location;
     public TextView level;
     public TextView verifiedText;
@@ -27,7 +32,6 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
 
     public MyViewHolderThreadGov(View itemView, Context context) {
         super(itemView);
-        username = itemView.findViewById(R.id.username_text);
         location = itemView.findViewById(R.id.location_text);
         level = itemView.findViewById(R.id.emergency_text);
         verifiedText = itemView.findViewById(R.id.verified_text);
@@ -50,8 +54,20 @@ public class MyViewHolderThreadGov extends RecyclerView.ViewHolder {
     public void bind(PostModel post) {
         this.item = post;
 
-        username.setText("J U I N");
-        location.setText(item.geoId);
+        location.setText(item.location.toString());
+
+        Geocoder geocoder = new Geocoder(this.itemView.getContext(), Locale.getDefault());
+        try {
+            List<Address> addresses = geocoder.getFromLocation(item.location.getLatitude(), item.location.getLongitude(),1);
+
+            Address obj = addresses.get(0);
+            String add = obj.getAddressLine(0);
+
+            location.setText(add);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         level.setText(item.status.toString());
         verifiedText.setText("Verified: " + item.verified);
         descriptionText.setText("Description: " + item.description);

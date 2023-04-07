@@ -24,48 +24,23 @@
                 android:id="@+id/post_collection_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:padding="10dp"
-                android:fontFamily="@font/montserrat_medium"
                 android:text="Post header placeholder"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:maxLines="1"
+                android:maxLines="2"
+                android:fontFamily="@font/montserrat_medium"
                 android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/post_collection_nr_posts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="bottom"
                 android:padding="10dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:text="Number of victims: 415"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-            <TextView
-                android:id="@+id/post_collection_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:padding="10dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Accident status: Urgent"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:maxLines="1"
-                android:ellipsize="end" />
-
-            <TextView
-                android:id="@+id/post_collection_req_qualifications"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:padding="10dp"
-                android:fontFamily="@font/montserrat_medium"
-                android:text="Required qualifications: Food, Shelter"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:maxLines="1"

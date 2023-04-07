@@ -23,18 +23,6 @@
             android:layout_margin="5dp"
             card_view:cardCornerRadius="4dp">
 
-            <TextView
-                android:id="@+id/location_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="(Location of Accident)"
-                android:fontFamily="@font/montserrat_black"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                tools:ignore="ExtraText" />
 
 
             
@@ -44,18 +32,18 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/username_text"
+                    android:id="@+id/location_text"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginTop="30dp"
+                    android:layout_height="match_parent"
                     android:padding="10dp"
-                    android:text="Username:"
+                    android:text="(Location of Accident)"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:maxLines="1"
+                    android:textSize="16sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:fontFamily="@font/montserrat_black"
-                    android:ellipsize="end" />
+                    tools:ignore="ExtraText" />
 
                 <ImageView
                     android:id="@+id/image_view"
@@ -76,11 +64,12 @@
                 android:layout_marginTop="50dp"
                 android:padding="10dp"
                 android:text="Emergency Level: "
-                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:maxLines="1"
+                android:fontFamily="@font/montserrat_black"
                 android:ellipsize="end" />
+
             <TextView
                 android:id="@+id/requirements_text"
                 android:layout_width="match_parent"
@@ -88,34 +77,36 @@
                 android:layout_marginTop="70dp"
                 android:padding="10dp"
                 android:text="Requirements: "
-                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:maxLines="5"
+                android:maxLines="2"
+                android:fontFamily="@font/montserrat_black"
                 android:ellipsize="end" />
+
             <TextView
                 android:id="@+id/verified_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="90dp"
+                android:layout_marginTop="110dp"
                 android:padding="10dp"
                 android:text="Verification by the Government: "
-                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:maxLines="1"
+                android:fontFamily="@font/montserrat_black"
                 android:ellipsize="end" />
+
             <TextView
                 android:id="@+id/description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="130dp"
                 android:padding="10dp"
                 android:text="Short description: "
-                android:fontFamily="@font/montserrat_black"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:maxLines="10"
+                android:maxLines="3"
+                android:fontFamily="@font/montserrat_black"
                 android:ellipsize="end" />
 
 
