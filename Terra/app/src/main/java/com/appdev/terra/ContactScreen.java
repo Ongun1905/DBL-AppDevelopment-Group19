@@ -31,14 +31,17 @@ import com.appdev.terra.services.UserService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class ContactScreen extends AppCompatActivity  {
 
     public static ArrayList<ContactList>  contactLists = new ArrayList<>();
 
+    ArrayList<String> phoneNumberList = new ArrayList<String>();
     static ArrayList<PossibleContactList> possibleContactLists = new ArrayList<PossibleContactList>();
 
+    private ContactListAdapter adapter;
     static ArrayList<UserModel>  matchedUserModels = new ArrayList<>();
     static int profilePicture = R.drawable.baseline_person_24;
 
@@ -55,6 +58,8 @@ public class ContactScreen extends AppCompatActivity  {
     ArrayList<String> phoneNumbersMatched = new ArrayList<>();
 
     UserService userService = new UserService();
+
+    RecyclerView recyclerView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -99,7 +104,6 @@ public class ContactScreen extends AppCompatActivity  {
             }
         });
 
-        MatchContacts();
 
         buttonAddFriend = (Button) findViewById(R.id.add_friend);
 
@@ -115,14 +119,13 @@ public class ContactScreen extends AppCompatActivity  {
 
         MatchUsersPhoneNumbers();
 
-        RecyclerView recyclerView = findViewById(R.id.contact_list_view);
-
-
-        setUpContactList();
+         recyclerView = findViewById(R.id.contact_list_view);
 
 
 
-        ContactListAdapter adapter = new ContactListAdapter(this, contactLists);
+
+
+        adapter = new ContactListAdapter(this, contactLists);
 
 
         recyclerView.setAdapter(adapter);
@@ -140,12 +143,20 @@ public class ContactScreen extends AppCompatActivity  {
         printPhoneNumbers(phoneNumbers);
         System.out.println(phoneNumberFormatter("(612) 345-678")+"is a formatted number");
         System.out.println(phoneNumberFormatter("+31 6 35310622 ")+"is a formatted number");
+        MatchContacts();
+        adapter = new ContactListAdapter(this, contactLists);
+
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     private void setUpContactList() {
-        MatchContacts();
         for (ContactList contact : PossibleContactListAdapter.AddedContactList) {
-            contactLists.add(contact);
+            if (!phoneNumbers.contains(contact.phoneNumber)) {
+                contactLists.add(contact);
+            }
         }
     }
 
@@ -154,42 +165,34 @@ public class ContactScreen extends AppCompatActivity  {
 
     private void setUpPossibleContactList() {
         possibleContactLists.clear();
-        /*
-        for (UserModel userModel : matchedUserModels) {
-            boolean cont = true;
-            for (ContactList contact : contactLists) {
-                if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
-                    cont = false;
-                    break;
-                }
-            }
-
-            if (cont) {
-                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)), userModel.id));
-                System.out.println(userModel.name + " is added to the possible ContactList");
-            }
-        }
-
-         */
 
         Iterator<UserModel> iterator = matchedUserModels.iterator();
         while (iterator.hasNext()) {
             UserModel userModel = iterator.next();
             boolean cont = true;
+
+            // Check if userModel is already in contactLists
             for (ContactList contact : contactLists) {
-                if(contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
+                if (contact.phoneNumber.equals(phoneNumberFormatter(Long.toString(userModel.phoneNumber)))) {
                     cont = false;
+                    break;
                 }
             }
 
+            // Check if userModel is the logged-in user
+            if (AccountService.logedInUserModel.id.equals(userModel.id)) {
+                cont = false;
+            }
+
             if (cont) {
-                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
+                possibleContactLists.add(new PossibleContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)), userModel.id));
                 System.out.println(userModel.name + " is added to the possible ContactList");
             } else {
                 iterator.remove();
             }
         }
     }
+
 
 
 
@@ -288,21 +291,52 @@ public class ContactScreen extends AppCompatActivity  {
     private void MatchContacts() {
         contactLists.clear();
 
-        /*
         userService.get(AccountService.logedInUserModel.id, new IFirestoreCallback<UserModel>() {
+
             @Override
             public void onCallback(UserModel model) {
-                System.out.println("noName");
-                for (UserModel userModel : model.contacts){
-                    contactLists.add(new ContactList(userModel.name,"Sample Status", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
-                    System.out.println(userModel.name);
+
+                AtomicInteger counter = new AtomicInteger(model.contactIds.size());
+
+                for (String contactId : model.contactIds) {
+                    userService.get(contactId, new IFirestoreCallback<UserModel>() {
+
+                        @Override
+                        public void onCallback(UserModel model1) {
+                            UserModel userModel = model1;
+                            System.out.println(userModel.name + " is added to the  ContactList");
+                            contactLists.add(new ContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)), userModel.id));
+                            if (!phoneNumberList.contains(Long.toString(userModel.phoneNumber))) {
+                                phoneNumberList.add(Long.toString(userModel.phoneNumber));
+                            }
+
+                            if (counter.decrementAndGet() == 0) {
+
+                                updateContactList();
+                                adapter = new ContactListAdapter(ContactListAdapter.context, contactLists);
+
+
+                                recyclerView.setAdapter(adapter);
+                                checkChanged();
+
+                                setUpPossibleContactList();
+                                possibleContactListAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }
+
+                if (model.contactIds.isEmpty()) {
+                    setUpPossibleContactList();
+                    possibleContactListAdapter.notifyDataSetChanged();
                 }
             }
         });
-*/
 
         for (UserModel userModel : AccountService.logedInUserModel.contacts) {
-            contactLists.add(new ContactList(userModel.name,"Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)),userModel.id));
+            if (!phoneNumbers.contains(Long.toString(userModel.phoneNumber))) {
+                contactLists.add(new ContactList(userModel.name, "Unavailable", profilePicture, phoneNumberFormatter(Long.toString(userModel.phoneNumber)), userModel.id));
+            }
         }
     }
 
@@ -321,7 +355,25 @@ public class ContactScreen extends AppCompatActivity  {
         return newNumber;
     }
 
+    private void updateContactList() {
+        ContactListAdapter.contactLists = contactLists;
+    }
+
     private void postLinker() {
 
     }
+
+    private void checkChanged() {
+        for (ContactList cContact : changedContactTracker.changedContacts) {
+            for (int i = 0; i < contactLists.size(); i++) {
+                ContactList contact = contactLists.get(i);
+                if (contact.phoneNumber.equals(cContact.phoneNumber)) {
+                    contactLists.set(i, cContact);
+                    break;
+                }
+            }
+        }
+        changedContactTracker.changedContacts.clear();
+    }
+
 }

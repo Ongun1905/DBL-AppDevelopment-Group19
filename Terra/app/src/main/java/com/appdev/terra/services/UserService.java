@@ -38,6 +38,7 @@ public class UserService implements IDatabaseService<UserModel> {
                 if (document.exists()) {
                     UserModel model = UserModel.fromFirebaseDocument(document);
                     firestoreCallback.onCallback(model);
+                    System.out.println("Fetched UserModel contacts size: " + model.contactIds.size());
                 } else {
                     System.out.println("Document doesn't exist!");
                 }

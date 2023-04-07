@@ -31,6 +31,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     private static ContactListAdapter adapter;
 
+
+
     public ContactListAdapter (Context context, ArrayList<ContactList> contactLists ) {
         this.context = context;
         this.contactLists = contactLists;
@@ -47,11 +49,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ContactListAdapter.MyViewHolder holder, int position) {
-       holder.textViewName.setText(contactLists.get(position).getContactName());
-       holder.textViewStatus.setText(contactLists.get(position).getStatus());
-       holder.imageView.setImageResource(contactLists.get(position).getImage());
-
-
+        holder.textViewName.setText(contactLists.get(position).getContactName());
+        holder.textViewStatus.setText(contactLists.get(position).getStatus());
+        holder.imageView.setImageResource(contactLists.get(position).getImage());
+        if (contactLists.get(position).isChangedStatus()) {
+            holder.textViewName.setText(contactLists.get(position).getChangedName());
+        }
     }
 
     @Override
@@ -101,10 +104,22 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 public void onCallback(ArrayList<PostModel> models) {
                     for (PostModel model : models) {
                        System.out.println( model.userId+" is compare too"+ contactLists.get(getAdapterPosition()).id);
-                        if (model.userId == contactLists.get(getAdapterPosition()).id) {
+                        if (model.userId.equals(contactLists.get(getAdapterPosition()).id)) {
+                            System.out.println("succes match");
                             isClickable = true;
-                            model = postModel;
+                            postModel = model;
                             contactButton.getBackground().setAlpha(76);
+
+
+                            contactButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (isClickable) {
+                                        showPopupWindowActivity(v,contactLists.get(getAdapterPosition()), adapter, postModel);
+                                    }
+
+                                }
+                            });
 
                         }
                     }
@@ -113,15 +128,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             });
 
 
-            contactButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isClickable) {
-                        showPopupWindowActivity(v,contactLists.get(getAdapterPosition()), adapter, postModel);
-                    }
 
-                }
-            });
         }
     }
 
@@ -167,7 +174,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 for (ContactList contact: contactLists ) {
                     if (contact.phoneNumber.equals(user.phoneNumber)) {
                         System.out.println("ss");
-                        contact.setContactName(String.valueOf(editText.getText()));
+                        contact.setChangedStatus(true);
+                        contact.setChangedName(String.valueOf(editText.getText()));
+                        changedContactTracker.changedContacts.add(contact);
                     }
                 }
                 adapter.notifyDataSetChanged();

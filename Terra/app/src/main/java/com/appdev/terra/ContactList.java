@@ -10,6 +10,10 @@ public class ContactList {
     String phoneNumber;
     String id;
 
+    boolean changedStatus;
+
+     String changedName;
+
 
     public ContactList(String contactName, String status, int image, String phoneNumber,String id) {
         this.contactName = contactName;
@@ -18,6 +22,8 @@ public class ContactList {
         this.image = image;
         this.phoneNumber = phoneNumber;
         this.id = id;
+        changedStatus = false;
+        changedName = contactName;
     }
 
 
@@ -39,6 +45,21 @@ public class ContactList {
 
     public void setContactName(String newName){
         contactName = newName;
+    }
+    public boolean isChangedStatus() {
+        return changedStatus;
+    }
+
+    public void setChangedStatus(boolean changedStatus) {
+        this.changedStatus = changedStatus;
+    }
+
+    public String getChangedName() {
+        return changedName;
+    }
+
+    public void setChangedName(String changedName) {
+        this.changedName = changedName;
     }
 
 }
