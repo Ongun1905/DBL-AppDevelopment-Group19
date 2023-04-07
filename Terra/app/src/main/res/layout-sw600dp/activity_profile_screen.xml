@@ -41,30 +41,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/user_avatar_svg" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="#00039DDA"
-        android:text="User ID:"
-        android:fontFamily="@font/montserrat_black"
-        app:layout_constraintEnd_toEndOf="@+id/Title"
-        app:layout_constraintStart_toStartOf="@+id/Title"
-        app:layout_constraintTop_toBottomOf="@+id/Title" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/checkboxes"
-        android:layout_width="386dp"
-        android:layout_height="630dp"
-        app:layout_constraintBottom_toTopOf="@id/SaveButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView20">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
-<!--    <ScrollView-->
+    <!--    <ScrollView-->
 <!--        android:id="@+id/scrollView2"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="0dp"-->
@@ -240,11 +217,37 @@
 <!--        </TableLayout>-->
 <!--    </ScrollView>-->
 
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#00039DDA"
+        android:fontFamily="@font/montserrat_black"
+        android:text="User ID:"
+        app:layout_constraintEnd_toEndOf="@+id/Title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/Title"
+        app:layout_constraintTop_toBottomOf="@+id/Title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/checkboxes"
+        android:layout_width="934dp"
+        android:layout_height="1479dp"
+        app:layout_constraintBottom_toTopOf="@id/SaveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.405"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView20"
+        app:layout_constraintVertical_bias="0.301">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <Button
         android:id="@+id/SaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/montserrat_black"
         android:text="Save"
@@ -252,9 +255,7 @@
         android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

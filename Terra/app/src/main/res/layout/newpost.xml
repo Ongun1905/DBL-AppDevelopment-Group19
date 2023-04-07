@@ -127,19 +127,23 @@
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/rel_layout"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        android:text="Submit"
         android:background="@drawable/round_button"
         android:fontFamily="@font/montserrat_black"
+        android:text="Submit"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"/>
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rel_layout" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#C6C6C6"
+        app:itemIconTint="@color/nav_color"
+        app:itemTextColor="@color/nav_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

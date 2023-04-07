@@ -10,11 +10,12 @@
 
     <RelativeLayout
         android:id="@+id/rel_layout"
-        android:layout_width="380dp"
-        android:layout_height="608dp"
+        android:layout_width="946dp"
+        android:layout_height="1447dp"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/verify_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

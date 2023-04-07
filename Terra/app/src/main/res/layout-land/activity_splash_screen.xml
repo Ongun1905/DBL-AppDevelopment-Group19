@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreen">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="785dp"
+        android:layout_height="411dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_gradient2" />
+
     <Button
         android:id="@+id/splash_citizen_button"
         android:layout_width="145dp"
@@ -15,11 +25,11 @@
         android:fontFamily="@font/montserrat_black"
         android:text="Citizen"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.653" />
+        app:layout_constraintVertical_bias="0.671" />
 
     <Button
         android:id="@+id/splash_authority_button"
@@ -30,22 +40,11 @@
         android:fontFamily="@font/montserrat_black"
         android:text="Goverment"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="396dp"
-        android:layout_height="852dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background_gradient2" />
+        app:layout_constraintTop_toBottomOf="@+id/splash_citizen_button" />
 
     <TextView
         android:id="@+id/textView"
@@ -55,9 +54,9 @@
         android:text="Terra"
         android:textColor="#FFFCFC"
         android:textSize="80sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.286" />
 </androidx.constraintlayout.widget.ConstraintLayout>

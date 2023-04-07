@@ -17,15 +17,15 @@
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintHorizontal_bias="0.976"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.906" />
+        app:layout_constraintVertical_bias="0.817" />
 
     <android.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_width="725dp"
+        android:layout_height="41dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,15 +33,15 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="402dp"
-        android:layout_height="632dp"
+        android:layout_width="728dp"
+        android:layout_height="240dp"
         android:contentDescription="bla bla bla"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434">
+        app:layout_constraintVertical_bias="0.274">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
