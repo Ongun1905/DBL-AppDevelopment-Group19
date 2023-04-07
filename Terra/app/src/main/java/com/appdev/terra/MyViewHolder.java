@@ -1,11 +1,17 @@
 package com.appdev.terra;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdev.terra.services.helpers.PostCollection;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
     private TextView header;
@@ -17,8 +23,6 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         header = itemView.findViewById(R.id.post_collection_header);
         nrPosts = itemView.findViewById(R.id.post_collection_nr_posts);
-        status = itemView.findViewById(R.id.post_collection_status);
-        reqQualifications = itemView.findViewById(R.id.post_collection_req_qualifications);
     }
 
     public void setHeader(CharSequence text) {
@@ -38,9 +42,9 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final PostCollection item, final MyAdapter.OnItemClickListener listener) {
-        header.setText(item.getLocation().toString());
-        nrPosts.setText("" + item.getNrPosts());
-        status.setText(item.getAccidentStatus().toString());
+        header.setText(item.getLocationName(this.itemView.getContext()));
+
+        nrPosts.setText(item.getNrPosts() + " post(s) for this accident");
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

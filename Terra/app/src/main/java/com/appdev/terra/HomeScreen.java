@@ -180,7 +180,7 @@ public class HomeScreen extends AppCompatActivity {
 
         // Loop through the original items list and add the items that match the query
         for (PostCollection collection : items) {
-            if (collection.getLocation().toString().contains(query.toLowerCase())) {
+            if (collection.getLocationName(this).toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(collection);
             }
         }

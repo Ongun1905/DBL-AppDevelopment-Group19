@@ -138,20 +138,12 @@ public class HomeScreenGov extends AppCompatActivity {
 
         // Loop through the original items list and add the items that match the query
         for (PostCollection collection : items) {
-            if (collection.getLocation().toString().contains(query.toLowerCase())) {
+            if (collection.getLocationName(this).toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(collection);
             }
         }
 
         // Update the RecyclerView with the filtered items list
         adapter.setItems(filteredItems);
-
-        // Scroll to the top of the ScrollView after updating the RecyclerView
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(View.FOCUS_UP);
-            }
-        });
     }
 }

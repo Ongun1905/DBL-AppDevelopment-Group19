@@ -132,7 +132,7 @@ public class PostThreadActivityGov extends AppCompatActivity {
 
         // Loop through the original items list and add the items that match the query
         for (PostModel post : items) {
-            if (post.title.toLowerCase().contains(query.toLowerCase())) {
+            if (post.description.toLowerCase().contains(query.toLowerCase())) {
                 filteredItems.add(post);
             }
         }

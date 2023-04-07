@@ -151,58 +151,50 @@ public class UpdatePostScreen extends AppCompatActivity {
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-                verified = true;
+                PostModel updatedPost = new PostModel(
+                        description.getText().toString(),
+                        Timestamp.now(),
+                        post.location,
+                        status,
+                        adapter.getQualifications(),
+                        true,
+                        post.userId
+                );
 
-                if (userLocationOption == null) {
-                    System.out.println("Failed to get location for post feed!");
-                } else if (userLocationOption.isPresent()) {
-                    postService.add(new PostModel(
-                            "Edit Post",
-                            description.getText().toString(),
-                            Timestamp.now(),
-                            userLocationOption.get(),
-                            status,
-                            adapter.getQualifications(), verified
-                    ), new IFirestoreCallback() {
-                        @Override
-                        public void onCallback() {
-                            IFirestoreCallback.super.onCallback();
+                postService.update(updatedPost, new IFirestoreCallback() {
+                    @Override
+                    public void onCallback() {
+                        IFirestoreCallback.super.onCallback();
+                    }
+                });
 
-                        }
-                    });
-                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                startActivity(intent);
             }
         });
 
         rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-                verified = false;
+                PostModel updatedPost = new PostModel(
+                        description.getText().toString(),
+                        Timestamp.now(),
+                        post.location,
+                        status,
+                        adapter.getQualifications(),
+                        true,
+                        post.userId
+                );
 
-                if (userLocationOption == null) {
-                    System.out.println("Failed to get location for post feed!");
-                } else if (userLocationOption.isPresent()) {
-                    postService.add(new PostModel(
-                            "Edit Post",
-                            description.getText().toString(),
-                            Timestamp.now(),
-                            userLocationOption.get(),
-                            status,
-                            adapter.getQualifications(), verified
-                    ), new IFirestoreCallback() {
-                        @Override
-                        public void onCallback() {
-                            IFirestoreCallback.super.onCallback();
+                postService.update(updatedPost, new IFirestoreCallback() {
+                    @Override
+                    public void onCallback() {
+                        IFirestoreCallback.super.onCallback();
+                    }
+                });
 
-                        }
-                    });
-                    Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getApplicationContext(), HomeScreenGov.class);
+                startActivity(intent);
             }
         });
     }
