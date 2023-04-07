@@ -107,31 +107,17 @@
             app:layout_wrapBehaviorInParent="included" />
 
         <Button
-            android:id="@+id/copy_link_button"
-            android:layout_width="192dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/round_button"
-            android:fontFamily="@font/montserrat_black"
-            android:text="Copy Link"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
-            app:layout_constraintStart_toStartOf="@id/user_id_input_field"
-            app:layout_constraintTop_toBottomOf="@+id/user_id_input_field" />
-
-        <Button
             android:id="@+id/add_contact_button"
-            android:text="ADD"
             android:layout_width="113dp"
             android:layout_height="58dp"
             android:background="@drawable/round_button"
             android:fontFamily="@font/montserrat_black"
+            android:text="ADD"
             android:textColor="#FFFFFF"
             android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/copy_link_button" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/add_friend_back_button"

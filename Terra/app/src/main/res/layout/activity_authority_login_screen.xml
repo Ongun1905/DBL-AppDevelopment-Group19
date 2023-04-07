@@ -30,7 +30,7 @@
         android:ems="10"
         android:fontFamily="@font/montserrat_black"
         android:hint="User ID"
-        android:inputType="textEmailAddress"
+        android:inputType="textPersonName"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

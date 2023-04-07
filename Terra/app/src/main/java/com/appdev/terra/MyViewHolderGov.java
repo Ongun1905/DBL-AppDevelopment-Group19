@@ -13,13 +13,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MyViewHolder extends RecyclerView.ViewHolder {
+public class MyViewHolderGov extends RecyclerView.ViewHolder {
     private TextView header;
     private TextView nrPosts;
     private TextView status;
     private TextView reqQualifications;
 
-    public MyViewHolder(View itemView) {
+    public MyViewHolderGov(View itemView) {
         super(itemView);
         header = itemView.findViewById(R.id.post_collection_header);
         nrPosts = itemView.findViewById(R.id.post_collection_nr_posts);
@@ -41,7 +41,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         reqQualifications.setText("Requested qualifications: " + text);
     }
 
-    public void bind(final PostCollection item, final MyAdapter.OnItemClickListener listener) {
+    public void bind(final PostCollection item, final MyAdapterGov.OnItemClickListener listener) {
         header.setText(item.getLocationName(this.itemView.getContext()));
 
         nrPosts.setText(item.getNrPosts() + " post(s) for this accident");

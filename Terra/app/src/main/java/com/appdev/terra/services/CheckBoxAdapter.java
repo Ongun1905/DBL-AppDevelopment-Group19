@@ -5,52 +5,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.MainActivity;
-import com.appdev.terra.MyViewHolder;
 import com.appdev.terra.R;
 import com.appdev.terra.enums.QualificationsEnum;
-import com.appdev.terra.services.helpers.PostCollection;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
-    private List<CheckBox> checkBoxes = new ArrayList<>();
+    private HashMap<QualificationsEnum, CheckBox> checkBoxes = new HashMap<>();
     private OnCheckBoxClickListener listener;
-    private final ArrayList<String> qualifications = Arrays.stream(QualificationsEnum.values())
-            .map(QualificationsEnum::toString)
-            .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    private final QualificationsEnum[] qualifications = QualificationsEnum.values();
 
     public CheckBoxAdapter(Context context, OnCheckBoxClickListener listener) {
         this.listener = listener;
-        for (int i = 0; i < QualificationsEnum.values().length; i++) {
-            checkBoxes.add(new CheckBox(context));
+
+        for (QualificationsEnum qualification : QualificationsEnum.values()) {
+            checkBoxes.put(qualification, new CheckBox(context));
         }
-//        notifyDataSetChanged();
     }
 
-    public CheckBoxAdapter(Context context, ArrayList<Boolean> checksList, OnCheckBoxClickListener listener) {
+    public CheckBoxAdapter(Context context, HashMap<QualificationsEnum, Boolean> checksList, OnCheckBoxClickListener listener) {
         this.listener = listener;
-        for (int i = 0; i < QualificationsEnum.values().length; i++) {
-            CheckBox newCB = new CheckBox(context);
-            newCB.setChecked(checksList.get(i));
-            checkBoxes.add(newCB);
-        }
-        notifyDataSetChanged();
-    }
 
-    public CheckBoxAdapter(Context context, String encodedQualifications, OnCheckBoxClickListener listener) {
-        this.listener = listener;
-        for (int i = 0; i < QualificationsEnum.values().length; i++) {
+        for (QualificationsEnum qualification : QualificationsEnum.values()) {
             CheckBox newCB = new CheckBox(context);
-            newCB.setChecked(encodedQualifications.charAt(i) == 'T');
-            checkBoxes.add(newCB);
+            newCB.setChecked(checksList.get(qualification));
+            checkBoxes.put(qualification, newCB);
         }
+
         notifyDataSetChanged();
     }
 
@@ -62,7 +46,9 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
 
     @Override
     public void onBindViewHolder(CheckBoxViewHolder holder, int position) {
-        checkBoxes.set(position, holder.bind(qualifications.get(position), listener));
+        CheckBox newCB = holder.bind(qualifications[position].toString(), listener);
+        newCB.setChecked(checkBoxes.get(qualifications[position]).isChecked());
+        checkBoxes.put(qualifications[position], newCB);
     }
 
     @Override
@@ -70,17 +56,34 @@ public class CheckBoxAdapter extends RecyclerView.Adapter<CheckBoxViewHolder> {
         return checkBoxes.size();
     }
 
-    public void setItems(List<CheckBox> checkBoxes) {
-        this.checkBoxes = checkBoxes;
+    public void setCheckBoxValues(HashMap<QualificationsEnum, Boolean> checksList) {
+        for (QualificationsEnum qualification : QualificationsEnum.values()) {
+            checkBoxes.get(qualification).setChecked(checksList.get(qualification));
+        }
         notifyDataSetChanged();
     }
 
-    public void printBools() {
-        for (CheckBox cb : checkBoxes) {
-            System.out.print(cb.isChecked() + ", ");
-        }
-        System.out.println();
+    public void setQualificationBoolean(QualificationsEnum qualification, Boolean bool) {
+        checkBoxes.get(qualification).setChecked(bool);
     }
+
+    public HashMap<QualificationsEnum, Boolean> getQualifications() {
+        HashMap<QualificationsEnum, Boolean> result = new HashMap<>();
+        printBools();
+        checkBoxes.forEach((qualification, selected) -> {
+            result.put(qualification, selected.isChecked());
+        });
+        return result;
+    }
+    
+    public void printBools() {
+        System.out.println("[");
+        checkBoxes.forEach((q, s) -> {
+            System.out.println(q + ": " + s.isChecked());
+        });
+        System.out.println("]");
+    }
+
 
     public interface OnCheckBoxClickListener {
         void onItemClick(CheckBox checkBox);

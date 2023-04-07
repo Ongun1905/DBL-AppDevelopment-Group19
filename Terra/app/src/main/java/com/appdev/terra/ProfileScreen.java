@@ -11,8 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 
+import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.CheckBoxAdapter;
+import com.appdev.terra.services.UserService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ProfileScreen extends AppCompatActivity {
@@ -20,6 +23,8 @@ public class ProfileScreen extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
     private CheckBoxAdapter adapter;
+
+    TextView userIdText;
 
 
     @Override
@@ -30,6 +35,8 @@ public class ProfileScreen extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
+        userIdText = findViewById(R.id.textView20);
+        userIdText.setText("User ID: " + AccountService.logedInUserModel.id);
         adapter = new CheckBoxAdapter(getApplicationContext(), new CheckBoxAdapter.OnCheckBoxClickListener() {
             @Override
             public void onItemClick(CheckBox checkBox) {
@@ -40,6 +47,10 @@ public class ProfileScreen extends AppCompatActivity {
         recyclerView = findViewById(R.id.checkboxes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        AccountService.logedInUserModel.qualifications.forEach((qualification, selected) -> {
+            adapter.setQualificationBoolean(qualification, selected);
+        });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -80,8 +91,8 @@ public class ProfileScreen extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Print the contents of the boolean array
-                adapter.printBools();
+                AccountService.logedInUserModel.qualifications = adapter.getQualifications();
+                (new UserService()).tryAdd(AccountService.logedInUserModel);
             }
         });
 
