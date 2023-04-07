@@ -17,6 +17,8 @@ public class AccountService {
 
     public static UserModel logedInUserModel;
     public static boolean isAuthorized = false;
+
+    public static boolean nearbyNotificationSent = false;
     UserService userService;
     AuthTokenService authTokenService;
 

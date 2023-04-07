@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,8 +11,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.appdev.terra.ContactScreen;
 import com.appdev.terra.HomeScreenGov;
 import com.appdev.terra.MainActivity;
-import com.appdev.terra.MyAdapter;
 import com.appdev.terra.ProfileScreen;
 import com.appdev.terra.R;
 import com.appdev.terra.SearchScreen;
@@ -38,8 +34,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 public class UpdatePostScreen extends AppCompatActivity {

@@ -320,4 +320,8 @@ public class ContactScreen extends AppCompatActivity  {
         }
         return newNumber;
     }
+
+    private void postLinker() {
+
+    }
 }

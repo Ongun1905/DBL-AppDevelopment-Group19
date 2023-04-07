@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/rel_layout"
-        android:layout_width="413dp"
+        android:layout_width="390dp"
         android:layout_height="616dp"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/submitButton"

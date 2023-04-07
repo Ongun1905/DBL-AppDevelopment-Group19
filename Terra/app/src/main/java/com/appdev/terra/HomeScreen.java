@@ -2,13 +2,23 @@ package com.appdev.terra;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -87,12 +97,12 @@ public class HomeScreen extends AppCompatActivity {
 
                     case R.id.contact:
                         startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.sos:
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.home:
@@ -100,12 +110,12 @@ public class HomeScreen extends AppCompatActivity {
 
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.search:
                         startActivity(new Intent(getApplicationContext(), SearchScreen.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
 
                 }
@@ -129,6 +139,8 @@ public class HomeScreen extends AppCompatActivity {
                 }
             });
         }
+
+        sendNearbyNotification();
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,4 +188,56 @@ public class HomeScreen extends AppCompatActivity {
         // Update the RecyclerView with the filtered items list
         adapter.setItems(filteredItems);
     }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Channel post";
+            String description = "Channel post Description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+    }
+
+    private void sendNearbyNotification() {
+        createNotificationChannel();
+        Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "CHANNEL_ID");
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        if (userLocationOption == null) {
+            System.out.println("Failed to get location for post feed!");
+        } else if (userLocationOption.isPresent()) {
+            if (!AccountService.nearbyNotificationSent){
+                postService.nearbyPostsExists(userLocationOption.get(), new IFirestoreCallback() {
+                    @Override
+                    public void onCallback(boolean result, String message) {
+                        if (result) {
+                            builder.setSmallIcon(R.drawable.ic_launcher_background)
+                                    .setContentTitle("Nearby Posts Exist!")
+                                    .setContentText("There are nearby posts available! Please check nearby posts...")
+                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(HomeScreen.this);
+                            int notificationId = 1;
+                            try {
+                                notificationManager.notify(notificationId, builder.build());
+                            } catch (SecurityException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }
+                });
+                AccountService.nearbyNotificationSent = true;
+            }
+
+        }
+    }
+
+
 }

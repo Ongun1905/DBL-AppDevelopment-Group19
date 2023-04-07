@@ -6,14 +6,12 @@ import android.location.Geocoder;
 
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
-import com.appdev.terra.enums.VerificationEnum;
 import com.appdev.terra.models.PostModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
