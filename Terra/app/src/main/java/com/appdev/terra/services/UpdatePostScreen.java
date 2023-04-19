@@ -66,8 +66,7 @@ public class UpdatePostScreen extends AppCompatActivity {
         description = findViewById(R.id.description);
 
         Spinner statusSpinner = findViewById(R.id.statusSpinner);
-        SpinnerUtils.populateStatusSpinner(this, statusSpinner);
-//
+
         Bundle extras = getIntent().getExtras();
         String geoPointId = extras.getString("geoPointId");
         String userId = extras.getString("userId");
@@ -96,6 +95,8 @@ public class UpdatePostScreen extends AppCompatActivity {
                 });
 
                 description.setText(post.description);
+
+                SpinnerUtils.populateStatusSpinnerWithInitialValue(getApplicationContext(), statusSpinner, post.status.toString());
             }
         });
 
