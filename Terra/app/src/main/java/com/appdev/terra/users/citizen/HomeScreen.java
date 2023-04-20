@@ -40,6 +40,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
+//    get the related posts feed when a thread is clicked
     private PostCollectionVHAdapter adapter = new PostCollectionVHAdapter(items, new PostCollectionVHAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(PostCollection item) {
@@ -81,7 +82,7 @@ public class HomeScreen extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-
+//      gets the posts of a certain thread
         if (userLocationOption == null) {
             System.out.println("Failed to get location for post feed!");
         } else if (userLocationOption.isPresent()) {
@@ -99,6 +100,7 @@ public class HomeScreen extends AppCompatActivity {
 
         sendNearbyNotification();
 
+//      opens new post page if the + button is clicked
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,6 +148,7 @@ public class HomeScreen extends AppCompatActivity {
         adapter.setItems(filteredItems);
     }
 
+//    creates a notification channel to be able to send notifications to the phone
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Channel post";
@@ -160,7 +163,7 @@ public class HomeScreen extends AppCompatActivity {
             }
         }
     }
-
+//     checks if there exist nearby posts to put in the feed and notifies you
     private void sendNearbyNotification() {
         createNotificationChannel();
         Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
