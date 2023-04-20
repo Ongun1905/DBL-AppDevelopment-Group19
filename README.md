@@ -9,7 +9,7 @@
 ## Third-Party Sources
 We do not have a third-party source used in the app that is unchanged. However, you can find the user scenario for the app down below.
 
-## User Scenario
+## Citizen User Scenario
 
 Maria is a citizen who lives in a city that is prone to earthquakes. One day, 
 while she is at home, she feels the ground shaking violently. She quickly realizes that it's an earthquake and tries to remember what she should do in such a situation. Then she remembers hearing about the Terra app and decides to download it to see if it can help her.
