@@ -18,19 +18,17 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.Manifest;
 import android.widget.Toast;
 
 import com.appdev.terra.R;
-import com.appdev.terra.users.shared.SearchScreen;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.UserService;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,7 +45,6 @@ public class ContactScreen extends AppCompatActivity  {
     static ArrayList<UserModel>  matchedUserModels = new ArrayList<>();
     static int profilePicture = R.drawable.baseline_person_24;
 
-    BottomNavigationView bottomNavigationView;
     Button buttonAddFriend;
 
     private PossibleContactListAdapter possibleContactListAdapter  = new PossibleContactListAdapter((Context) this, possibleContactLists);
@@ -69,43 +66,7 @@ public class ContactScreen extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_screen);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.contact);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.contact:
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                }
-                return false;
-            }
-        });
-
+        BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.contact);
 
         buttonAddFriend = (Button) findViewById(R.id.add_friend);
 

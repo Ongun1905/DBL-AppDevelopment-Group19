@@ -1,6 +1,5 @@
 package com.appdev.terra.users.government;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +9,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
@@ -19,16 +17,13 @@ import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.PostCollection;
+import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import com.appdev.terra.users.shared.utils.PostVHAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PostThreadActivityGov extends AppCompatActivity {
-
-
-    BottomNavigationView bottomNavigationView;
     private List<PostModel> items = new ArrayList<>();
     private List<PostModel> filteredItems = new ArrayList<>();
 
@@ -50,32 +45,9 @@ public class PostThreadActivityGov extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_government_home_screen);
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        BottomNavBarBuilder.setUpGovernmentNavBar(this, R.id.home);
 
         Bundle extras = getIntent().getExtras();
-
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-
-                    case R.id.home:
-                        return true;
-
-
-                    case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), AuthoritySearchScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
 
         ActivityCompat.requestPermissions( this,
                 new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);

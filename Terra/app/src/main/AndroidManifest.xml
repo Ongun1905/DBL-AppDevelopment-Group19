@@ -18,8 +18,13 @@
         android:theme="@style/Theme.Terra"
         tools:targetApi="31" >
         <activity
-            android:name=".users.government.AuthoritySearchScreen"
-            android:exported="false" />
+            android:name=".users.government.activities.GovernmentSearchScreen"
+            android:exported="false"
+            android:screenOrientation="sensor" />
+        <activity
+            android:name=".users.citizen.activities.CitizenSearchScreen"
+            android:exported="false"
+            android:screenOrientation="sensor" />
         <activity
             android:name=".users.government.AuthorityLoginScreen"
             android:exported="false" />
@@ -28,10 +33,6 @@
             android:exported="false" />
         <activity
             android:name=".users.citizen.AddFriendScreen"
-            android:exported="false"
-            android:screenOrientation="sensor" />
-        <activity
-            android:name=".users.shared.SearchScreen"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity

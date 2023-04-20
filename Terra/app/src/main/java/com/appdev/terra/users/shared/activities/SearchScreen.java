@@ -1,4 +1,4 @@
-package com.appdev.terra.users.government;
+package com.appdev.terra.users.shared.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
 import com.appdev.terra.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,32 +24,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AuthoritySearchScreen extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
+public abstract class SearchScreen extends AppCompatActivity {
     private List<PostCollection> nearbyAccidents;
     private RecyclerView nearbyAccidentsRecyclerView;
     private PostCollectionVHAdapter nearbyAccidentsAdapter;
-
     private TextView sheltersList, resourcesList;
-
-    private PostService postService = new PostService("__GOV__");
-
     private LocationService locationService;
+    protected PostService postService = new PostService("__GOV__");
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_authority_search_screen);
 
         locationService = new LocationService(
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE),
                 this,
                 this
         );
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
-        bottomNavigationView.setSelectedItemId(R.id.search);
 
         sheltersList = findViewById(R.id.shelters_list);
         resourcesList = findViewById(R.id.resources_list);
@@ -91,25 +84,5 @@ public class AuthoritySearchScreen extends AppCompatActivity {
             }
         });
         nearbyAccidentsRecyclerView.setAdapter(nearbyAccidentsAdapter);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), HomeScreenGov.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.search:
-                        return true;
-
-                }
-                return false;
-            }
-        });
-
     }
 }

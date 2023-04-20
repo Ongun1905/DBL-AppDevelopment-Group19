@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,18 +11,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.users.citizen.ContactScreen;
 import com.appdev.terra.users.shared.CheckBoxAdapter;
 import com.appdev.terra.services.PostService;
-import com.appdev.terra.users.citizen.MainActivity;
-import com.appdev.terra.users.citizen.ProfileScreen;
 import com.appdev.terra.R;
-import com.appdev.terra.users.shared.SearchScreen;
 import com.appdev.terra.users.shared.SpinnerUtils;
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
@@ -31,12 +25,11 @@ import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import com.google.firebase.Timestamp;
 
 public class UpdatePostScreen extends AppCompatActivity {
     private PostModel post;
-    BottomNavigationView bottomNavigationView;
     private PostService postService = new PostService("__GOV__");
     private RecyclerView recyclerView;
     private CheckBoxAdapter adapter;
@@ -52,8 +45,7 @@ public class UpdatePostScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_government_update_post);
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        BottomNavBarBuilder.setUpGovernmentNavBar(this, R.id.home);
 
         locationService = new LocationService(
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE),
@@ -100,39 +92,6 @@ public class UpdatePostScreen extends AppCompatActivity {
 
         Button verifyButton = findViewById(R.id.verify_button);
         Button rejectButton = findViewById(R.id.reject_button);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.contact:
-                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.home:
-                        return true;
-
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
         
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

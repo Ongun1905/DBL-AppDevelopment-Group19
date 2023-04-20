@@ -1,12 +1,10 @@
 package com.appdev.terra.users.citizen;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,19 +13,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.appdev.terra.R;
-import com.appdev.terra.users.shared.SearchScreen;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.UserService;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AddFriendScreen extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
-
     ImageButton buttonBack;
 
     EditText contactInputField;
@@ -40,9 +35,7 @@ public class AddFriendScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend_screen);
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.contact);
+        BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.contact);
 
         buttonBack = (ImageButton) findViewById(R.id.add_friend_back_button);
         contactInputField = findViewById(R.id.contact_input_field);
@@ -56,39 +49,6 @@ public class AddFriendScreen extends AppCompatActivity {
             }
         });
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.contact:
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(), HomeScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                    case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-
-                }
-                return false;
-            }
-        });
         Button addContactButton = findViewById(R.id.add_contact_button);
         addContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
