@@ -1,6 +1,5 @@
 package com.appdev.terra.users.government;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
@@ -18,8 +16,8 @@ import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
+import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
@@ -27,9 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class HomeScreenGov extends AppCompatActivity {
-
-
-    BottomNavigationView bottomNavigationView;
     private List<PostCollection> items = new ArrayList<>();
     private List<PostCollection> filteredItems = new ArrayList<>();
 
@@ -56,6 +51,7 @@ public class HomeScreenGov extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_government_home_screen);
+        BottomNavBarBuilder.setUpGovernmentNavBar(this, R.id.home);
 
         locationService = new LocationService(
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE),
@@ -63,33 +59,10 @@ public class HomeScreenGov extends AppCompatActivity {
                 this
         );
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
-        bottomNavigationView.setSelectedItemId(R.id.home);
-
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-
-                    case R.id.home:
-                        return true;
-
-
-                    case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), AuthoritySearchScreen.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
 
         Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
 
