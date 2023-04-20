@@ -1,13 +1,18 @@
-# DBL-AppDevelopment-Group19
+<div align="center">
+  <h1>DBL App Development - Group 19</h1>
+  <i>Terra-A companion for earthquake emergencies</i>
+</div>
+<br>
+<br>
 
 
-We do not have a third-party source used in the app that is unchanged. Therefore, this file will only include
-the user scenario for a citizen called Maria.
+## Third-Party Sources
+We do not have a third-party source used in the app that is unchanged. However, you can find the user scenario for the app down below.
 
+## User Scenario
 
 Maria is a citizen who lives in a city that is prone to earthquakes. One day, 
-while she is at home, she feels the ground shaking violently. She quickly realizes that it's an earthquake and tries to remember what she should do in such a situation. 
-Then she remembers hearing about the Terra app and decides to download it to see if it can help her.
+while she is at home, she feels the ground shaking violently. She quickly realizes that it's an earthquake and tries to remember what she should do in such a situation. Then she remembers hearing about the Terra app and decides to download it to see if it can help her.
 
 
 After downloading the app, Maria opens it and is prompted to choose between the citizen or government user type. 
