@@ -6,7 +6,7 @@
     android:id="@+id/add_friend_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".services.UpdatePostScreen" >
+    tools:context=".users.government.UpdatePostScreen" >
 
     <RelativeLayout
         android:id="@+id/rel_layout"

@@ -1,17 +1,8 @@
 package com.appdev.terra.services;
 
 import com.appdev.terra.models.AuthTokenModel;
-import com.appdev.terra.models.RegisterModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public class AccountService {
 

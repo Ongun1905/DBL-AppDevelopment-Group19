@@ -7,8 +7,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
-
 public class AuthTokenService implements IDatabaseService<AuthTokenModel> {
 
     private FirebaseFirestore db;

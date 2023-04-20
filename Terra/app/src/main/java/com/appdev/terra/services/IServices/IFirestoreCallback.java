@@ -1,7 +1,5 @@
 package com.appdev.terra.services.IServices;
 
-import com.appdev.terra.models.UserModel;
-
 import java.util.ArrayList;
 public interface IFirestoreCallback<T> {
     default void onCallback() {
