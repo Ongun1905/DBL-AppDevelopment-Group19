@@ -17,6 +17,9 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 
 import com.appdev.terra.R;
+import com.appdev.terra.enums.QualificationsEnum;
+import com.appdev.terra.services.AccountService;
+import com.appdev.terra.users.shared.utils.PostVHAdapter;
 import com.appdev.terra.users.shared.SearchScreen;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
@@ -25,6 +28,7 @@ import com.appdev.terra.services.helpers.PostCollection;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PostThreadActivity extends AppCompatActivity {
@@ -36,7 +40,7 @@ public class PostThreadActivity extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapterThread adapter;
+    private PostVHAdapter adapter;
     private ScrollView scrollView;
     private PostService postService = new PostService();
 
@@ -117,7 +121,20 @@ public class PostThreadActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapterThread(this, items);
+        adapter = new PostVHAdapter(items, new PostVHAdapter.PostVHUpdate() {
+            @Override
+            public void onClick(PostModel item) {
+                // Wow, such empty
+            }
+
+            @Override
+            public boolean shouldHaveRedCross(PostModel post) {
+                return Arrays.stream(QualificationsEnum.values()).anyMatch(q ->
+                        post.qualifications.get(q.toString())
+                        && AccountService.logedInUserModel.qualifications.get(q)
+                );
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         Button addButton = findViewById(R.id.user_new_post_button);

@@ -19,6 +19,7 @@ import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.PostCollection;
+import com.appdev.terra.users.shared.utils.PostVHAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class PostThreadActivityGov extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapterThreadGov adapter;
+    private PostVHAdapter adapter;
     private ScrollView scrollView;
 
     private PostCollection posts;
@@ -98,7 +99,21 @@ public class PostThreadActivityGov extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollView2);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapterThreadGov(this, items);
+        adapter = new PostVHAdapter(items, new PostVHAdapter.PostVHUpdate() {
+            @Override
+            public void onClick(PostModel post) {
+                // Start the UpdatePostScreen activity with the post data
+                Intent intent = new Intent(getApplicationContext(), UpdatePostScreen.class);
+                intent.putExtra("geoPointId", post.geoId);
+                intent.putExtra("userId", post.userId);
+                startActivity(intent);
+            }
+
+            @Override
+            public boolean shouldHaveRedCross(PostModel model) {
+                return false;
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         searchView = findViewById(R.id.searchView);

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.appdev.terra.users.citizen.MyAdapter;
+import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
 import com.appdev.terra.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,13 +24,12 @@ import java.util.List;
 import java.util.Optional;
 
 public class AuthoritySearchScreen extends AppCompatActivity {
-
     BottomNavigationView bottomNavigationView;
     private List<PostCollection> nearbyAccidents;
     private RecyclerView nearbyAccidentsRecyclerView;
-    private MyAdapter nearbyAccidentsAdapter;
+    private PostCollectionVHAdapter nearbyAccidentsAdapter;
 
-    private TextView sheltersLabel, resourcesLabel, sheltersList, resourcesList;
+    private TextView sheltersList, resourcesList;
 
     private PostService postService = new PostService("__GOV__");
 
@@ -51,8 +50,6 @@ public class AuthoritySearchScreen extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNavigationViewAuthority);
         bottomNavigationView.setSelectedItemId(R.id.search);
 
-        sheltersLabel = findViewById(R.id.shelters_label);
-        resourcesLabel = findViewById(R.id.resources_label);
         sheltersList = findViewById(R.id.shelters_list);
         resourcesList = findViewById(R.id.resources_list);
 
@@ -86,7 +83,7 @@ public class AuthoritySearchScreen extends AppCompatActivity {
         // Initialize the RecyclerViews for each section
         nearbyAccidentsRecyclerView = findViewById(R.id.nearbyAccidentsList);
         nearbyAccidentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        nearbyAccidentsAdapter = new MyAdapter(nearbyAccidents, new MyAdapter.OnItemClickListener() {
+        nearbyAccidentsAdapter = new PostCollectionVHAdapter(nearbyAccidents, new PostCollectionVHAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(PostCollection item) {
                 // Open an activity based on this collection
