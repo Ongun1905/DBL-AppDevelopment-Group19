@@ -55,8 +55,8 @@ public class NewPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        set the corresponding layout and the corresponding navigation bar
         setContentView(R.layout.newpost);
-
         BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.home);
 
         locationService = new LocationService(
@@ -68,6 +68,7 @@ public class NewPostActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         submitBtn = findViewById(R.id.submitButton);
 
+//        gets the input of the checkboxes
         adapter = new CheckBoxAdapter(getApplicationContext(), new CheckBoxAdapter.OnCheckBoxClickListener() {
             @Override
             public void onItemClick(CheckBox checkBox) {
@@ -104,12 +105,11 @@ public class NewPostActivity extends AppCompatActivity {
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
 
-
+// use spinner to select the status of the post
         Spinner statusSpinner = findViewById(R.id.statusSpinner);
         SpinnerUtils.populateStatusSpinner(this, statusSpinner);
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -124,6 +124,7 @@ public class NewPostActivity extends AppCompatActivity {
             }
         });
 
+// when submit button is pressed create a new post using post model
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
