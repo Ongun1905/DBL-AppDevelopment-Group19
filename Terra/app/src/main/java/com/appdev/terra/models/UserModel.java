@@ -1,15 +1,11 @@
 package com.appdev.terra.models;
 
 import com.appdev.terra.enums.QualificationsEnum;
-import com.appdev.terra.services.IServices.IFirestoreCallback;
-import com.appdev.terra.services.UserService;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class UserModel {
     public String id;

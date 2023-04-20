@@ -6,7 +6,7 @@
     android:id="@+id/add_friend_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddFriendScreen" >
+    tools:context=".users.citizen.AddFriendScreen" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
