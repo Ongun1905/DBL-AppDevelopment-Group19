@@ -19,7 +19,7 @@ import java.util.Locale;
 public class PostModel {
     // 6 characters, 2 decimals: ???.??
     private static final String GEO_POINT_INDEX_FORMAT = "[%06.2f, %06.2f]";
-
+//Fields of a PostModel
     public String geoId;
     public String description;
     public Timestamp postedAt;
@@ -30,36 +30,14 @@ public class PostModel {
 
     public final String userId;
 
+
+//  3 different constructors used for Postmodel because of different usage scenarios in other files
     public PostModel(
             String description,
             Timestamp postedAt, GeoPoint location, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications
     ) {
         this(description, postedAt, location, status, qualifications, false, AccountService.logedInUserModel.id);
-    }
-
-    public PostModel(
-            String description,
-            Timestamp postedAt, GeoPoint location, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified
-    ) {
-        this(description, postedAt, location, status, qualifications, verified, AccountService.logedInUserModel.id);
-    }
-
-    public PostModel(
-            String description,
-            Timestamp postedAt, double latitude, double longitude, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications
-    ) {
-        this(description, postedAt, latitude, longitude, status, qualifications, false, AccountService.logedInUserModel.id);
-    }
-
-    public PostModel(
-            String description,
-            Timestamp postedAt, GeoPoint location, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications, String userId
-    ) {
-        this(description, postedAt, location, status, qualifications, false, userId);
     }
 
     public PostModel(
@@ -96,6 +74,8 @@ public class PostModel {
         });
     }
 
+//Methods used to get a Post model created in certain scenarios or to get certain fields of a Post model
+// Gets a post from the database
     public static PostModel fromHashMap(HashMap<String, Object> map, String userId) {
         HashMap<QualificationsEnum, Boolean> qualifications = new HashMap<>();
         HashMap<String, Boolean> qualificationsStrings = (HashMap<String, Boolean>) map.get("qualifications");
@@ -114,7 +94,7 @@ public class PostModel {
                 userId
         );
     }
-
+//creates an automatic post when using the sos button with predefined fields
     public static PostModel sosPost(GeoPoint location) {
         return PostModel.sosPost(location.getLatitude(), location.getLongitude());
     }
@@ -140,15 +120,12 @@ public class PostModel {
                 AccountService.logedInUserModel.id
         );
     }
-
+//format the location into a GeoId
     public static String makeGeoId(double latitude, double longitude) {
         return String.format(GEO_POINT_INDEX_FORMAT, latitude, longitude);
     }
 
-    public static String makeGeoId(GeoPoint location) {
-        return String.format(GEO_POINT_INDEX_FORMAT, location.getLatitude(), location.getLongitude());
-    }
-
+//Get the location of post and put it as a title for the thread
     public String getTitle(Context context) {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
@@ -163,7 +140,7 @@ public class PostModel {
             return this.location.toString();
         }
     }
-
+//get the qualifications of a post
     public ArrayList<QualificationsEnum> getSelectedQuealifications() {
         ArrayList<QualificationsEnum> result = new ArrayList<>();
 
