@@ -18,6 +18,7 @@ import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
+import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
@@ -34,7 +35,7 @@ public class HomeScreenGov extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapterGov adapter = new MyAdapterGov(items, new MyAdapterGov.OnItemClickListener() {
+    private PostCollectionVHAdapter adapter = new PostCollectionVHAdapter(items, new PostCollectionVHAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(PostCollection item) {
             // Open an activity based on this collection

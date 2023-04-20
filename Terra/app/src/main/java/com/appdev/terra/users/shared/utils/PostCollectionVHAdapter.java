@@ -1,4 +1,4 @@
-package com.appdev.terra.users.government;
+package com.appdev.terra.users.shared.utils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
@@ -10,24 +10,26 @@ import com.appdev.terra.R;
 import com.appdev.terra.services.helpers.PostCollection;
 
 
-public class MyAdapterGov extends RecyclerView.Adapter<MyViewHolderGov> {
+public class PostCollectionVHAdapter extends RecyclerView.Adapter<PostCollectionViewHolder> {
     private List<PostCollection> items;
     private OnItemClickListener listener;
 
-    public MyAdapterGov(List<PostCollection> items, OnItemClickListener listener) {
+    public PostCollectionVHAdapter(List<PostCollection> items, OnItemClickListener listener) {
         this.items = items;
         this.listener = listener;
     }
 
     @Override
-    public MyViewHolderGov onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_collection_item, parent, false);
+    public PostCollectionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.post_collection_item, parent, false);
 
-        return new MyViewHolderGov(view);
+        return new PostCollectionViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolderGov holder, int position) {
+    public void onBindViewHolder(PostCollectionViewHolder holder, int position) {
         holder.bind(items.get(position), listener);
     }
 
