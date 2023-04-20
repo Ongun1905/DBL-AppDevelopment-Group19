@@ -10,6 +10,7 @@ import com.appdev.terra.services.PostService;
 public class CitizenSearchScreen extends SearchScreen {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        set up the navigation bar and the layout needed
         setContentView(R.layout.activity_search_screen);
         postService = new PostService();
         super.onCreate(savedInstanceState);

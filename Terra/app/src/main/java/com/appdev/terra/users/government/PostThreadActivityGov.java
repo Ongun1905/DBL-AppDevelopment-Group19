@@ -31,9 +31,6 @@ public class PostThreadActivityGov extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PostVHAdapter adapter;
     private ScrollView scrollView;
-
-    private PostCollection posts;
-
     private PostService postService = new PostService("__GOV__");
 
 
@@ -44,6 +41,7 @@ public class PostThreadActivityGov extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        set up the corresponding layout with the corresponding navigation bar
         setContentView(R.layout.acitivity_government_home_screen);
         BottomNavBarBuilder.setUpGovernmentNavBar(this, R.id.home);
 
@@ -88,6 +86,7 @@ public class PostThreadActivityGov extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
+//        deals with the search functionality of the feed
         searchView = findViewById(R.id.searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

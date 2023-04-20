@@ -36,17 +36,16 @@ public class UpdatePostScreen extends AppCompatActivity {
     private StatusEnum status;
     private LocationService locationService;
 
-    private boolean verified;
-
     EditText description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        set the layout of the corresponding page
         setContentView(R.layout.activity_government_update_post);
-
+//        set the corresponding navigation bar
         BottomNavBarBuilder.setUpGovernmentNavBar(this, R.id.home);
-
+//        get the attributes of the post into the specified fields
         locationService = new LocationService(
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE),
                 this,
@@ -105,7 +104,7 @@ public class UpdatePostScreen extends AppCompatActivity {
             }
         });
 
-
+//      Update post with the new attributes and verify after pressing verify button
         verifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +130,7 @@ public class UpdatePostScreen extends AppCompatActivity {
             }
         });
 
+//        On reject update post but keep the verified field false
         rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
