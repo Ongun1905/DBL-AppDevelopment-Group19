@@ -22,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 
 import com.appdev.terra.R;
+import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
 import com.appdev.terra.users.shared.SearchScreen;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.AccountService;
@@ -43,7 +44,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private SearchView searchView;
     private RecyclerView recyclerView;
-    private MyAdapter adapter = new MyAdapter(items, new MyAdapter.OnItemClickListener() {
+    private PostCollectionVHAdapter adapter = new PostCollectionVHAdapter(items, new PostCollectionVHAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(PostCollection item) {
             // Open an activity based on this collection
