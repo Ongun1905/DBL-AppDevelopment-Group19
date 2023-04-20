@@ -30,36 +30,14 @@ public class PostModel {
 
     public final String userId;
 
+
+//  3 different constructors used for Postmodel because of different usage scenarios in other files
     public PostModel(
             String description,
             Timestamp postedAt, GeoPoint location, StatusEnum status,
             HashMap<QualificationsEnum, Boolean> qualifications
     ) {
         this(description, postedAt, location, status, qualifications, false, AccountService.logedInUserModel.id);
-    }
-
-    public PostModel(
-            String description,
-            Timestamp postedAt, GeoPoint location, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications, boolean verified
-    ) {
-        this(description, postedAt, location, status, qualifications, verified, AccountService.logedInUserModel.id);
-    }
-
-    public PostModel(
-            String description,
-            Timestamp postedAt, double latitude, double longitude, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications
-    ) {
-        this(description, postedAt, latitude, longitude, status, qualifications, false, AccountService.logedInUserModel.id);
-    }
-
-    public PostModel(
-            String description,
-            Timestamp postedAt, GeoPoint location, StatusEnum status,
-            HashMap<QualificationsEnum, Boolean> qualifications, String userId
-    ) {
-        this(description, postedAt, location, status, qualifications, false, userId);
     }
 
     public PostModel(
