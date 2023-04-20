@@ -65,7 +65,7 @@ public class HomeScreenGov extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-
+//      get the posts of a certain thread by using their common location
         if (userLocationOption == null) {
             System.out.println("Failed to get location for post feed!");
         } else if (userLocationOption.isPresent()) {
@@ -81,6 +81,7 @@ public class HomeScreenGov extends AppCompatActivity {
             });
         }
 
+//      deal with the search functionality of the feed
         searchView = findViewById(R.id.searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
