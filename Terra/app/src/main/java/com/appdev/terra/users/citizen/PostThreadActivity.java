@@ -46,17 +46,16 @@ public class PostThreadActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        set the layout and the navigation bar
         setContentView(R.layout.activity_home_screen);
-
         BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.home);
 
         Bundle extras = getIntent().getExtras();
 
-        //a/ Add request for location permissions
         // Request location
         ActivityCompat.requestPermissions( this,
                 new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-
+//      get the posts out of a thread
         postService.getPostCollection(
                 PostModel.makeGeoId(
                         extras.getDouble("latitude"),
@@ -82,8 +81,10 @@ public class PostThreadActivity extends AppCompatActivity {
             @Override
             public void onClick(PostModel item) {
                 // Wow, such empty
+                // nothing should happen
             }
 
+//          check if user qualifications match the post qualification
             @Override
             public boolean shouldHaveRedCross(PostModel post) {
                 return Arrays.stream(QualificationsEnum.values()).anyMatch(q ->
@@ -94,6 +95,7 @@ public class PostThreadActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
+//        deals with creating a new post activity when the + button is pressed
         Button addButton = findViewById(R.id.user_new_post_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,7 @@ public class PostThreadActivity extends AppCompatActivity {
             }
         });
 
+//        deals with the search functionality of the feed
         searchView = findViewById(R.id.searchView);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
