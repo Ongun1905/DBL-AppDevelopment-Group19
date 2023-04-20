@@ -1,6 +1,5 @@
 package com.appdev.terra.users.citizen;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -15,22 +14,20 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 
 import com.appdev.terra.R;
+import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
-import com.appdev.terra.users.shared.SearchScreen;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
@@ -38,7 +35,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class HomeScreen extends AppCompatActivity {
-    BottomNavigationView bottomNavigationView;
     private List<PostCollection> items = new ArrayList<>();
     private List<PostCollection> filteredItems = new ArrayList<>();
 
@@ -75,8 +71,7 @@ public class HomeScreen extends AppCompatActivity {
                 this
         );
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.home);
 
         Button addButton = findViewById(R.id.user_new_post_button);
 
@@ -84,40 +79,6 @@ public class HomeScreen extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch (item.getItemId()) {
-
-                    case R.id.contact:
-                        startActivity(new Intent(getApplicationContext(), ContactScreen.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-                    case R.id.sos:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-                    case R.id.home:
-                        return true;
-
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), ProfileScreen.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-                    case R.id.search:
-                        startActivity(new Intent(getApplicationContext(), SearchScreen.class));
-                        overridePendingTransition(0, 0);
-                        return true;
-
-                }
-                return false;
-            }
-        });
 
         Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
 
