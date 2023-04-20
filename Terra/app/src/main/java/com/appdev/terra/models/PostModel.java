@@ -7,14 +7,11 @@ import android.location.Geocoder;
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.services.AccountService;
-import com.appdev.terra.services.PostService;
-import com.appdev.terra.services.UserService;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;

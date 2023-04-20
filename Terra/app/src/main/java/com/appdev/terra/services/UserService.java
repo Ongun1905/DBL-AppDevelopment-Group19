@@ -2,8 +2,6 @@ package com.appdev.terra.services;
 
 import androidx.annotation.NonNull;
 
-import com.appdev.terra.enums.StatusEnum;
-import com.appdev.terra.models.PostModel;
 import com.appdev.terra.models.UserModel;
 import com.appdev.terra.services.IServices.IDatabaseService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;

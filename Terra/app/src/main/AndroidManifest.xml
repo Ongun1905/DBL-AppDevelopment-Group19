@@ -18,48 +18,48 @@
         android:theme="@style/Theme.Terra"
         tools:targetApi="31" >
         <activity
-            android:name=".AuthoritySearchScreen"
+            android:name=".users.government.AuthoritySearchScreen"
             android:exported="false" />
         <activity
-            android:name=".AuthorityLoginScreen"
+            android:name=".users.government.AuthorityLoginScreen"
             android:exported="false" />
         <activity
-            android:name=".UserLoginScreen"
+            android:name=".users.citizen.UserLoginScreen"
             android:exported="false" />
         <activity
-            android:name=".AddFriendScreen"
+            android:name=".users.citizen.AddFriendScreen"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".SearchScreen"
+            android:name=".users.shared.SearchScreen"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".ProfileScreen"
+            android:name=".users.citizen.ProfileScreen"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".ContactScreen"
+            android:name=".users.citizen.ContactScreen"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".HomeScreen"
+            android:name=".users.citizen.HomeScreen"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".HomeScreenGov"
+            android:name=".users.government.HomeScreenGov"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".services.UpdatePostScreen"
+            android:name=".users.government.UpdatePostScreen"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".MainActivity"
+            android:name=".users.citizen.MainActivity"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".users.shared.SplashScreen"
             android:exported="true"
             android:screenOrientation="sensor" >
             <intent-filter>
@@ -69,31 +69,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewPostActivity"
+            android:name=".users.citizen.NewPostActivity"
             android:label="New Post"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".users.citizen.MainActivity"
             android:screenOrientation="sensor" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".users.citizen.MainActivity" />
         </activity>
         <activity
-            android:name=".PostThreadActivity"
+            android:name=".users.citizen.PostThreadActivity"
             android:label="Thread"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".users.citizen.MainActivity"
             android:screenOrientation="sensor" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".users.citizen.MainActivity" />
         </activity>
         <activity
-            android:name=".PostThreadActivityGov"
+            android:name=".users.government.PostThreadActivityGov"
             android:label="Thread"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".users.citizen.MainActivity"
             android:screenOrientation="sensor" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".users.citizen.MainActivity" />
         </activity>
 
 
