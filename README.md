@@ -12,12 +12,12 @@ We do not have a third-party source used in the app that is unchanged. However, 
 ## Citizen User Scenario
 
 Maria is a citizen who lives in a city that is prone to earthquakes. One day, 
-while she is at home, she feels the ground shaking violently. She quickly realizes that it's an earthquake and tries to remember what she should do in such a situation. Then she remembers hearing about the Terra app and decides to download it to see if it can help her.
+while she is at home, she feels the ground shaking violently. She quickly realizes that it's an earthquake and tries to remember what she should do in such a situation. Then she remembers the Terra app she downloaded a while ago to see if it can help her.
 
 
-After downloading the app, Maria opens it and is prompted to choose between the citizen or government user type. 
-Since she is a citizen, she selects that option and enters her phone number and password to log in. Once she logs in, she is taken to the home page, 
-which shows a feed of posts related to the earthquake, sorted by location. 
+Maria opens it and is prompted to choose between the citizen or government user type. 
+Since she is a citizen, she selects that option and enters her phone number and password to log in with the details she created a while ago. 
+Once she logs in, she is taken to the home page, which shows a feed of posts related to the earthquake, sorted by location. 
 She sees that there are several posts in her neighborhood, so she taps on the location group to view them.
 
 
