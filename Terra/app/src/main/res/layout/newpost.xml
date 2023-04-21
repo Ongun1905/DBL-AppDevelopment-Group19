@@ -6,7 +6,7 @@
     android:id="@+id/add_friend_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".users.citizen.NewPostActivity" >
+    tools:context=".users.citizen.activities.NewPostCitAc" >
 
     <RelativeLayout
         android:id="@+id/rel_layout"

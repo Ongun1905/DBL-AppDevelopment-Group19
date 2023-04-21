@@ -15,9 +15,9 @@ public class PostVHAdapter extends RecyclerView.Adapter<PostViewHolder> {
     private List<PostModel> items;
     private final PostVHUpdate updator;
 
-    public PostVHAdapter(List<PostModel> items, PostVHUpdate updator) {
+    public PostVHAdapter(List<PostModel> items, PostVHUpdate updater) {
         this.items = items;
-        this.updator = updator;
+        this.updator = updater;
     }
 
     @Override

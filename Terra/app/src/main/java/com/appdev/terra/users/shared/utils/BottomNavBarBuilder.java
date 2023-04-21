@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 
 import com.appdev.terra.R;
 import com.appdev.terra.users.citizen.ContactScreen;
-import com.appdev.terra.users.citizen.HomeScreen;
-import com.appdev.terra.users.citizen.MainActivity;
-import com.appdev.terra.users.citizen.ProfileScreen;
-import com.appdev.terra.users.government.activities.GovernmentSearchScreen;
-import com.appdev.terra.users.government.HomeScreenGov;
-import com.appdev.terra.users.citizen.activities.CitizenSearchScreen;
+import com.appdev.terra.users.citizen.activities.PostCollectionFeedCitAc;
+import com.appdev.terra.users.citizen.activities.SOSButtonCitAc;
+import com.appdev.terra.users.citizen.activities.ProfileCitAc;
+import com.appdev.terra.users.government.activities.SearchGovAc;
+import com.appdev.terra.users.government.activities.PostCollectionFeedGovAc;
+import com.appdev.terra.users.citizen.activities.SearchCitAc;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -46,22 +46,22 @@ public abstract class BottomNavBarBuilder {
                         return true;
 
                     case R.id.sos:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), SOSButtonCitAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 
                     case R.id.home:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), HomeScreen.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), PostCollectionFeedCitAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 
                     case R.id.profile:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), ProfileScreen.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), ProfileCitAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 
                     case R.id.search:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), CitizenSearchScreen.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), SearchCitAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 
@@ -93,12 +93,12 @@ public abstract class BottomNavBarBuilder {
 
                 switch (item.getItemId()) {
                     case R.id.home:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), HomeScreenGov.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), PostCollectionFeedGovAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 
                     case R.id.search:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), GovernmentSearchScreen.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), SearchGovAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 
