@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.appdev.terra.R;
-import com.appdev.terra.users.citizen.NewPostActivity;
 import com.appdev.terra.users.shared.activities.PostCollectionFeedAc;
 import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
@@ -57,7 +56,7 @@ public class PostCollectionFeedCitAc extends PostCollectionFeedAc {
             public void onClick(View view) {
                 Intent intent = new Intent(
                         PostCollectionFeedCitAc.this,
-                        NewPostActivity.class
+                        NewPostCitAc.class
                 );
                 startActivity(intent);
             }

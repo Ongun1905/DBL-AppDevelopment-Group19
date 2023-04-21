@@ -1,4 +1,4 @@
-package com.appdev.terra.users.citizen;
+package com.appdev.terra.users.citizen.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdev.terra.R;
-import com.appdev.terra.users.citizen.activities.PostCollectionFeedCitAc;
 import com.appdev.terra.users.shared.utils.SpinnerUtils;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.models.PostModel;
@@ -31,7 +30,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.Timestamp;
@@ -40,81 +38,73 @@ import com.google.firebase.firestore.GeoPoint;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class NewPostActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private CheckBoxVHAdapter checkBoxAdapter;
-
-    private EditText description;
-    private Button submitBtn;
-    private PostService postServive = new PostService();
+public class NewPostCitAc extends AppCompatActivity {
+    // Services
+    private final PostService postService = new PostService();
     private LocationService locationService;
 
+
+    // Helper objects
+    private CheckBoxVHAdapter checkBoxAdapter;
     private StatusEnum status;
 
-    private static final String TAG = NewPostActivity.class.getSimpleName();
+
+    private static final String TAG = NewPostCitAc.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newpost);
 
-        BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.home);
-
+        // Instantiate the location services
         locationService = new LocationService(
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE),
                 this,
                 this
         );
 
-        description = findViewById(R.id.description);
-        submitBtn = findViewById(R.id.submitButton);
+        // Link all GUI elements
+        RecyclerView checkBoxList = findViewById(R.id.checkboxes);
+        EditText description = findViewById(R.id.description);
+        Button submitBtn = findViewById(R.id.submitButton);
+        Spinner statusSpinner = findViewById(R.id.statusSpinner);
 
-        checkBoxAdapter = new CheckBoxVHAdapter(
-                getApplicationContext(),
-                new CheckBoxVHAdapter.OnCheckBoxClickListener() {
-                    @Override
-                    public void onItemClick(CheckBox checkBox) {
-                        checkBox.toggle();
-                    }
-                }
-        );
+        // Set up the navigation bar menu at the bottom of the page
+        BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.home);
 
-        recyclerView = findViewById(R.id.checkboxes);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(checkBoxAdapter);
+        // Instantiate the adapter for the qualifications checkbox list
+        checkBoxAdapter = new CheckBoxVHAdapter(getApplicationContext(), CheckBox::toggle);
 
-        //Initialize the SDK
+        // Set up the list of qualification checkboxes
+        checkBoxList.setLayoutManager(new LinearLayoutManager(this));
+        checkBoxList.setAdapter(checkBoxAdapter);
+
+        // Set up location determining through the `Places` API
         String apiKey = "AIzaSyBbjGgg9-D0FK4rhhGaf6jm-CvEhqjVfKc";
         Places.initialize(getApplicationContext(), apiKey);
         final LatLng[] selectedLocation = {null};
 
-        //Create a new Places client instance
-        PlacesClient placesClient = Places.createClient(this);
-
-        //Initialize the AutocompleteSupportFragment
+        // Initialize an AutocompleteSupportFragment for the location search bar
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
-        //Specify the types of place data to return
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
-
-        // Set up a PlaceSelectionListener to handle the response.
+        // Specify the storage of location information whenever a location has been selected
+        autocompleteFragment.setPlaceFields(Arrays.asList(
+                Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG
+        ));
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 selectedLocation[0] = place.getLatLng();
-                System.out.println(selectedLocation);
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
 
-
-        Spinner statusSpinner = findViewById(R.id.statusSpinner);
+        // Set up the dropdown for the accident status and choose the first enum value as initial
         SpinnerUtils.populateStatusSpinner(this, statusSpinner);
         statusSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -128,30 +118,34 @@ public class NewPostActivity extends AppCompatActivity {
             }
         });
 
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
+        // Set the submit button to combine all information in a post and send it to the database
+        submitBtn.setOnClickListener(view -> {
+            Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
 
-                if (userLocationOption == null) {
-                    System.out.println("Failed to get location for post feed!");
-                } else if (userLocationOption.isPresent()) {
-                    postServive.add(new PostModel(
-                            description.getText().toString(),
-                            Timestamp.now(),
-                            new GeoPoint(selectedLocation[0].latitude, selectedLocation[0].longitude),
-                            status,
-                            checkBoxAdapter.getQualifications()
-                    ), new IFirestoreCallback<PostModel>() {
-                        @Override
-                        public void onCallback(PostModel model1, String message) {
-                            Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                Intent intent = new Intent(getApplicationContext(), PostCollectionFeedCitAc.class);
-                startActivity(intent);
+            if (userLocationOption == null) {
+                System.out.println("Location permissions were not granted");
+            } else {
+                userLocationOption.ifPresent(geoPoint -> postService.add(new PostModel(
+                        description.getText().toString(),
+                        Timestamp.now(),
+                        new GeoPoint(
+                                selectedLocation[0].latitude,
+                                selectedLocation[0].longitude
+                        ),
+                        status,
+                        checkBoxAdapter.getQualifications()
+                ), new IFirestoreCallback<PostModel>() {
+                    @Override
+                    public void onCallback(PostModel model1, String message) {
+                        Toast.makeText(
+                                getApplicationContext(), message, Toast.LENGTH_LONG
+                        ).show();
+                    }
+                }));
             }
+
+            Intent intent = new Intent(getApplicationContext(), PostCollectionFeedCitAc.class);
+            startActivity(intent);
         });
     }
 }

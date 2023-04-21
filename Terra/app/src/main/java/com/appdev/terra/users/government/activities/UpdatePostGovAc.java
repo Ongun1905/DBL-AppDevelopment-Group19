@@ -52,15 +52,7 @@ public class UpdatePostGovAc extends AppCompatActivity {
         BottomNavBarBuilder.setUpGovernmentNavBar(this, R.id.home);
 
         // Instantiate the adapter for the qualifications checkbox list
-        checkBoxAdapter = new CheckBoxVHAdapter(
-                getApplicationContext(),
-                new CheckBoxVHAdapter.OnCheckBoxClickListener() {
-                    @Override
-                    public void onItemClick(CheckBox checkBox) {
-                        checkBox.toggle();
-                    }
-                }
-        );
+        checkBoxAdapter = new CheckBoxVHAdapter(getApplicationContext(), CheckBox::toggle);
 
         // Set up the list of qualification checkboxes
         checkBoxList.setLayoutManager(new LinearLayoutManager(this));
