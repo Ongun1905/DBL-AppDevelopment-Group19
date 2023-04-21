@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import com.appdev.terra.R;
 import com.appdev.terra.users.citizen.ContactScreen;
 import com.appdev.terra.users.citizen.activities.PostCollectionFeedCitAc;
-import com.appdev.terra.users.citizen.MainActivity;
-import com.appdev.terra.users.citizen.ProfileScreen;
+import com.appdev.terra.users.citizen.activities.SOSButtonCitAc;
+import com.appdev.terra.users.citizen.activities.ProfileCitAc;
 import com.appdev.terra.users.government.activities.SearchGovAc;
 import com.appdev.terra.users.government.activities.PostCollectionFeedGovAc;
 import com.appdev.terra.users.citizen.activities.SearchCitAc;
@@ -46,7 +46,7 @@ public abstract class BottomNavBarBuilder {
                         return true;
 
                     case R.id.sos:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), SOSButtonCitAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 
@@ -56,7 +56,7 @@ public abstract class BottomNavBarBuilder {
                         return true;
 
                     case R.id.profile:
-                        activity.startActivity(new Intent(activity.getApplicationContext(), ProfileScreen.class));
+                        activity.startActivity(new Intent(activity.getApplicationContext(), ProfileCitAc.class));
                         activity.overridePendingTransition(0,0);
                         return true;
 

@@ -8,7 +8,6 @@ import android.widget.Button;
 import com.appdev.terra.R;
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.services.AccountService;
-import com.appdev.terra.users.citizen.NewPostActivity;
 import com.appdev.terra.users.shared.activities.PostFeedAc;
 import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 import com.appdev.terra.users.shared.utils.PostVHAdapter;
@@ -58,7 +57,7 @@ public class PostFeedCitAc extends PostFeedAc {
             public void onClick(View view) {
                 Intent intent = new Intent(
                         PostFeedCitAc.this,
-                        NewPostActivity.class
+                        NewPostCitAc.class
                 );
                 startActivity(intent);
             }
