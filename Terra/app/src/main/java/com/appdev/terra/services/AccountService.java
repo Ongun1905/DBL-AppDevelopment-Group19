@@ -23,16 +23,15 @@ public class AccountService {
         userService.get(phoneNumber, new IFirestoreCallback<UserModel>() {
             @Override
             public void onCallback(UserModel model) {
-                System.out.println("bok");
                 if (model == null) {
-                    firestoreCallback.onCallback(model, false, "The user doesn't exist!");
+                    firestoreCallback.onCallback(false, "The user doesn't exist!");
                 } else {
                     if (password.equals(model.password)) {
                         logedInUserModel = model;
                         isAuthorized = false;
-                        firestoreCallback.onCallback(model, true, "Login sucessful!");
+                        firestoreCallback.onCallback(true, "Login sucessful!");
                     } else {
-                        firestoreCallback.onCallback(model, false, "Incorrect password!");
+                        firestoreCallback.onCallback(false, "Incorrect password!");
                     }
                 }
             }
@@ -49,13 +48,13 @@ public class AccountService {
             public void onCallback(AuthTokenModel model) {
                 System.out.println(model.token + model.username);
                 if (model == null) {
-                    firestoreCallback.onCallback(model,false, "User with the username not found!");
+                    firestoreCallback.onCallback(false, "User with the username not found!");
                 } else {
                     if (token.equals(model.token)) {
                         isAuthorized = true;
-                        firestoreCallback.onCallback(model, true, "Login sucessful!");
+                        firestoreCallback.onCallback(true, "Login sucessful!");
                     } else {
-                        firestoreCallback.onCallback(model, false, "Invalid access token!");
+                        firestoreCallback.onCallback(false, "Invalid access token!");
                     }
                 }
             }

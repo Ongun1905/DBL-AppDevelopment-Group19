@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".users.citizen.UserLoginScreen">
+    tools:context=".users.citizen.activities.LoginCitAc">
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/editTextAuthToken"
         android:layout_width="236dp"
         android:layout_height="52dp"
         android:ems="10"
@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.735" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress2"
+        android:id="@+id/editTextUsername"
         android:layout_width="237dp"
         android:layout_height="59dp"
         android:ems="10"
@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="0.514" />
 
     <Button
-        android:id="@+id/user_login_button"
+        android:id="@+id/login_button"
         android:layout_width="112dp"
         android:layout_height="54dp"
         android:background="@drawable/round_button"
@@ -68,7 +68,7 @@
         app:layout_constraintVertical_bias="0.841" />
 
     <ImageButton
-        android:id="@+id/user_back_button"
+        android:id="@+id/back_button"
         android:layout_width="61dp"
         android:layout_height="54dp"
         android:layout_marginTop="4dp"
