@@ -12,13 +12,13 @@ import android.widget.TextView;
 
 import com.appdev.terra.R;
 import com.appdev.terra.services.AccountService;
-import com.appdev.terra.users.shared.CheckBoxAdapter;
+import com.appdev.terra.users.shared.utils.CheckBoxVHAdapter;
 import com.appdev.terra.services.UserService;
 import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
 
 public class ProfileScreen extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private CheckBoxAdapter adapter;
+    private CheckBoxVHAdapter checkBoxAdapter;
 
     TextView userIdText;
 
@@ -32,7 +32,7 @@ public class ProfileScreen extends AppCompatActivity {
 
         userIdText = findViewById(R.id.textView20);
         userIdText.setText("User ID: " + AccountService.logedInUserModel.id);
-        adapter = new CheckBoxAdapter(getApplicationContext(), new CheckBoxAdapter.OnCheckBoxClickListener() {
+        checkBoxAdapter = new CheckBoxVHAdapter(getApplicationContext(), new CheckBoxVHAdapter.OnCheckBoxClickListener() {
             @Override
             public void onItemClick(CheckBox checkBox) {
                 checkBox.toggle();
@@ -41,10 +41,10 @@ public class ProfileScreen extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.checkboxes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(checkBoxAdapter);
 
         AccountService.logedInUserModel.qualifications.forEach((qualification, selected) -> {
-            adapter.setQualificationBoolean(qualification, selected);
+            checkBoxAdapter.setQualificationBoolean(qualification, selected);
         });
 
         Button saveButton = findViewById(R.id.SaveButton);
@@ -52,7 +52,7 @@ public class ProfileScreen extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccountService.logedInUserModel.qualifications = adapter.getQualifications();
+                AccountService.logedInUserModel.qualifications = checkBoxAdapter.getQualifications();
                 (new UserService()).tryAdd(AccountService.logedInUserModel);
             }
         });

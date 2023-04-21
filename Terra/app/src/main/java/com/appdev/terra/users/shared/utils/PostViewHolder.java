@@ -32,8 +32,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
     }
 
     // Bind a specific post to a PostViewHolder and initialize the GUI field values
-    public void bind(PostModel post, PostVHAdapter.PostVHUpdate updator) {
-        imageView.setVisibility( updator.shouldHaveRedCross(post) ? View.VISIBLE : View.GONE );
+    public void bind(PostModel post, PostVHAdapter.PostVHUpdate updater) {
+        imageView.setVisibility( updater.shouldHaveRedCross(post) ? View.VISIBLE : View.GONE );
 
         // Set the correct values for the remaining text fields
         location.setText(post.getTitle(this.itemView.getContext()));
@@ -45,7 +45,7 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updator.onClick(post);
+                updater.onClick(post);
             }
         });
     }

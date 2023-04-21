@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.appdev.terra.users.shared.CheckBoxAdapter;
+import com.appdev.terra.users.shared.utils.CheckBoxVHAdapter;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.R;
-import com.appdev.terra.users.shared.SpinnerUtils;
+import com.appdev.terra.users.shared.utils.SpinnerUtils;
 import com.appdev.terra.enums.QualificationsEnum;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.models.PostModel;
@@ -33,7 +33,7 @@ public class UpdatePostGovAc extends AppCompatActivity {
     // Helper objects
     private PostModel post;
     private StatusEnum status;
-    private CheckBoxAdapter adapter;
+    private CheckBoxVHAdapter checkBoxAdapter;
 
 
     @Override
@@ -52,9 +52,9 @@ public class UpdatePostGovAc extends AppCompatActivity {
         BottomNavBarBuilder.setUpGovernmentNavBar(this, R.id.home);
 
         // Instantiate the adapter for the qualifications checkbox list
-        adapter = new CheckBoxAdapter(
+        checkBoxAdapter = new CheckBoxVHAdapter(
                 getApplicationContext(),
-                new CheckBoxAdapter.OnCheckBoxClickListener() {
+                new CheckBoxVHAdapter.OnCheckBoxClickListener() {
                     @Override
                     public void onItemClick(CheckBox checkBox) {
                         checkBox.toggle();
@@ -64,7 +64,7 @@ public class UpdatePostGovAc extends AppCompatActivity {
 
         // Set up the list of qualification checkboxes
         checkBoxList.setLayoutManager(new LinearLayoutManager(this));
-        checkBoxList.setAdapter(adapter);
+        checkBoxList.setAdapter(checkBoxAdapter);
 
         // Get the post that was just clicked
         Bundle extras = getIntent().getExtras();
@@ -79,7 +79,7 @@ public class UpdatePostGovAc extends AppCompatActivity {
                 post = collection.getPostWithId(userId);
 
                 post.qualifications.forEach((qualificationString, selected) -> {
-                    adapter.setQualificationBoolean(
+                    checkBoxAdapter.setQualificationBoolean(
                             QualificationsEnum.valueOf(qualificationString),
                             selected
                     );
@@ -131,7 +131,7 @@ public class UpdatePostGovAc extends AppCompatActivity {
                 Timestamp.now(),
                 post.location,
                 status,
-                adapter.getQualifications(),
+                checkBoxAdapter.getQualifications(),
                 verified,
                 post.userId
         );

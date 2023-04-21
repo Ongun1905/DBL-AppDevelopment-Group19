@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.appdev.terra.R;
-import com.appdev.terra.users.shared.SpinnerUtils;
+import com.appdev.terra.users.shared.utils.SpinnerUtils;
 import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;

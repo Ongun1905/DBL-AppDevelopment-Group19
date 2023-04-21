@@ -19,10 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdev.terra.R;
 import com.appdev.terra.users.citizen.activities.PostCollectionFeedCitAc;
-import com.appdev.terra.users.shared.SpinnerUtils;
+import com.appdev.terra.users.shared.utils.SpinnerUtils;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.models.PostModel;
-import com.appdev.terra.users.shared.CheckBoxAdapter;
+import com.appdev.terra.users.shared.utils.CheckBoxVHAdapter;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.LocationService;
@@ -42,7 +42,7 @@ import java.util.Optional;
 
 public class NewPostActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private CheckBoxAdapter adapter;
+    private CheckBoxVHAdapter checkBoxAdapter;
 
     private EditText description;
     private Button submitBtn;
@@ -69,16 +69,19 @@ public class NewPostActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         submitBtn = findViewById(R.id.submitButton);
 
-        adapter = new CheckBoxAdapter(getApplicationContext(), new CheckBoxAdapter.OnCheckBoxClickListener() {
-            @Override
-            public void onItemClick(CheckBox checkBox) {
-                checkBox.toggle();
-            }
-        });
+        checkBoxAdapter = new CheckBoxVHAdapter(
+                getApplicationContext(),
+                new CheckBoxVHAdapter.OnCheckBoxClickListener() {
+                    @Override
+                    public void onItemClick(CheckBox checkBox) {
+                        checkBox.toggle();
+                    }
+                }
+        );
 
         recyclerView = findViewById(R.id.checkboxes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(checkBoxAdapter);
 
         //Initialize the SDK
         String apiKey = "AIzaSyBbjGgg9-D0FK4rhhGaf6jm-CvEhqjVfKc";
@@ -138,7 +141,7 @@ public class NewPostActivity extends AppCompatActivity {
                             Timestamp.now(),
                             new GeoPoint(selectedLocation[0].latitude, selectedLocation[0].longitude),
                             status,
-                            adapter.getQualifications()
+                            checkBoxAdapter.getQualifications()
                     ), new IFirestoreCallback<PostModel>() {
                         @Override
                         public void onCallback(PostModel model1, String message) {
