@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".users.government.AuthorityLoginScreen">
+    tools:context=".users.government.activities.LoginGovAc">
 
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextAuthToken"
         android:layout_width="236dp"
         android:layout_height="52dp"
         android:ems="10"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.726" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/editTextUsername"
         android:layout_width="237dp"
         android:layout_height="59dp"
         android:ems="10"
@@ -54,7 +54,7 @@
         app:layout_constraintVertical_bias="0.538" />
 
     <Button
-        android:id="@+id/login_button_authority"
+        android:id="@+id/login_button"
         android:layout_width="118dp"
         android:layout_height="57dp"
         android:background="@drawable/round_button"
@@ -70,7 +70,7 @@
         app:layout_constraintVertical_bias="0.833" />
 
     <ImageButton
-        android:id="@+id/authority_back_button"
+        android:id="@+id/back_button"
         android:layout_width="61dp"
         android:layout_height="54dp"
         android:layout_marginTop="4dp"
