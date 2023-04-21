@@ -6,7 +6,7 @@
     android:id="@+id/add_friend_back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".users.government.UpdatePostScreen" >
+    tools:context=".users.government.activities.UpdatePostGovAc" >
 
     <RelativeLayout
         android:id="@+id/rel_layout"
@@ -105,13 +105,13 @@
         android:text="Reject"
         android:textColor="#FFFFFF"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationViewAuthority"
         app:layout_constraintTop_toBottomOf="@id/verify_button"
         app:layout_constraintVertical_bias="0.222"
         tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@id/bottomNavigationView"
+        android:id="@id/bottomNavigationViewAuthority"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#C6C6C6"

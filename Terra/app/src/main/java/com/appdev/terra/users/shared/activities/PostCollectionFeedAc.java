@@ -1,4 +1,4 @@
-package com.appdev.terra.users.citizen;
+package com.appdev.terra.users.shared.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -6,7 +6,6 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -14,101 +13,85 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.SearchView;
 
 import com.appdev.terra.R;
-import com.appdev.terra.users.shared.utils.BottomNavBarBuilder;
-import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
-import com.appdev.terra.models.PostModel;
 import com.appdev.terra.services.AccountService;
 import com.appdev.terra.services.IServices.IFirestoreCallback;
 import com.appdev.terra.services.PostService;
 import com.appdev.terra.services.helpers.LocationService;
 import com.appdev.terra.services.helpers.PostCollection;
+import com.appdev.terra.users.government.activities.PostFeedGovAc;
+import com.appdev.terra.users.shared.utils.PostCollectionVHAdapter;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class HomeScreen extends AppCompatActivity {
-    private List<PostCollection> items = new ArrayList<>();
-    private List<PostCollection> filteredItems = new ArrayList<>();
+public abstract class PostCollectionFeedAc extends AppCompatActivity {
+    // Services
+    protected PostService postService = new PostService("__GOV__");
+    protected LocationService locationService;
 
-    private SearchView searchView;
-    private RecyclerView recyclerView;
-    private PostCollectionVHAdapter adapter = new PostCollectionVHAdapter(items, new PostCollectionVHAdapter.OnItemClickListener() {
-        @Override
-        public void onItemClick(PostCollection item) {
-            // Open an activity based on this collection
-            System.out.println("Clicked: " + item.getLocation().toString());
-            Intent intent = new Intent(getApplicationContext(), PostThreadActivity.class);
-            intent.putExtra("latitude", item.getLatitude());
-            intent.putExtra("longitude", item.getLongitude());
-            intent.putExtra("geoId", PostModel.makeGeoId(item.getLatitude(), item.getLongitude()));
-            startActivity(intent);
 
-        }
-    });
-    private ScrollView scrollView;
+    // Helper objects
+    protected List<PostCollection> nearbyAccidents = new ArrayList<>();
+    protected List<PostCollection> filteredNearbyAccidents = new ArrayList<>();
+    protected PostCollectionVHAdapter nearbyAccidentsAdapter = new PostCollectionVHAdapter(
+            nearbyAccidents,
+            new PostCollectionVHAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(PostCollection item) {
+                    // Open an activity based on this collection
+                    System.out.println("Clicked: " + item.getLocation().toString());
+                    Intent intent = new Intent(getApplicationContext(), PostFeedGovAc.class);
+                    intent.putExtra("latitude", item.getLatitude());
+                    intent.putExtra("longitude", item.getLongitude());
+                    startActivity(intent);
+                }
+            }
+    );
 
-    private PostService postService = new PostService();
 
-    private LocationService locationService;
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
 
+        // Link all GUI elements
+        SearchView searchView = findViewById(R.id.searchView);
+        RecyclerView postCollectionsRecyclerView = findViewById(R.id.recyclerView);
+
+        // Instantiate the location services
         locationService = new LocationService(
                 (LocationManager) getSystemService(Context.LOCATION_SERVICE),
                 this,
                 this
         );
 
-        BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.home);
+        // Set up the list of nearby emergency locations
+        postCollectionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        postCollectionsRecyclerView.setAdapter(nearbyAccidentsAdapter);
 
-        Button addButton = findViewById(R.id.user_new_post_button);
-
-        scrollView = findViewById(R.id.scrollView2);
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-
+        // Fill the list of nearby emergency locations
         Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
-
         if (userLocationOption == null) {
-            System.out.println("Failed to get location for post feed!");
-        } else if (userLocationOption.isPresent()) {
-            postService.getNearbyPostCollections(userLocationOption.get(), new IFirestoreCallback<PostCollection>() {
-                @Override
-                public void onCallback(ArrayList<PostCollection> models) {
-                    IFirestoreCallback.super.onCallback(models);
-                    for (PostCollection collection : models) {
-                        items.add(collection);
+            System.out.println("Location permissions were not granted");
+        } else {
+            userLocationOption.ifPresent(geoPoint -> postService.getNearbyPostCollections(
+                    geoPoint,
+                    new IFirestoreCallback<PostCollection>() {
+                        @Override
+                        public void onCallback(ArrayList<PostCollection> models) {
+                            IFirestoreCallback.super.onCallback(models);
+                            nearbyAccidents.addAll(models);
+                            nearbyAccidentsAdapter.setItems(nearbyAccidents);
+                        }
                     }
-                    adapter.setItems(items);
-                }
-            });
+            ));
         }
 
-        sendNearbyNotification();
-
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeScreen.this, NewPostActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        searchView = findViewById(R.id.searchView);
-
+        // Define search bar behavior
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -127,25 +110,32 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
-        // Initialize filteredItems with all the items
-        filteredItems.addAll(items);
+        // Initialize the list of filtered nearby accidents to a list of all nearby accidents
+        filteredNearbyAccidents.addAll(nearbyAccidents);
+
+        // Send a notification if nearby accidents exist
+        if (nearbyAccidents.size() > 0) {
+            sendNearbyNotification();
+        }
     }
 
+    // TODO: Document that crap
     private void search(String query) {
         // Clear the current filteredItems list
-        filteredItems.clear();
+        filteredNearbyAccidents.clear();
 
         // Loop through the original items list and add the items that match the query
-        for (PostCollection collection : items) {
+        for (PostCollection collection : nearbyAccidents) {
             if (collection.getLocationName(this).toLowerCase().contains(query.toLowerCase())) {
-                filteredItems.add(collection);
+                filteredNearbyAccidents.add(collection);
             }
         }
 
         // Update the RecyclerView with the filtered items list
-        adapter.setItems(filteredItems);
+        nearbyAccidentsAdapter.setItems(filteredNearbyAccidents);
     }
 
+    // TODO: Document that crap
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Channel post";
@@ -161,11 +151,12 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
+    // TODO: Document that crap
     private void sendNearbyNotification() {
         createNotificationChannel();
         Optional<GeoPoint> userLocationOption = locationService.getGeoPoint();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "CHANNEL_ID");
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
         if (userLocationOption == null) {
             System.out.println("Failed to get location for post feed!");
         } else if (userLocationOption.isPresent()) {
@@ -179,22 +170,18 @@ public class HomeScreen extends AppCompatActivity {
                                     .setContentText("There are nearby posts available! Please check nearby posts...")
                                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(HomeScreen.this);
+                            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
                             int notificationId = 1;
                             try {
                                 notificationManager.notify(notificationId, builder.build());
                             } catch (SecurityException e) {
                                 e.printStackTrace();
                             }
-
                         }
                     }
                 });
                 AccountService.nearbyNotificationSent = true;
             }
-
         }
     }
-
-
 }

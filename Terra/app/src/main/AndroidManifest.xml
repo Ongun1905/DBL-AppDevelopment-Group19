@@ -18,18 +18,18 @@
         android:theme="@style/Theme.Terra"
         tools:targetApi="31" >
         <activity
-            android:name=".users.government.activities.GovernmentSearchScreen"
+            android:name=".users.government.activities.SearchGovAc"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".users.citizen.activities.CitizenSearchScreen"
+            android:name=".users.citizen.activities.SearchCitAc"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".users.government.AuthorityLoginScreen"
+            android:name=".users.government.activities.LoginGovAc"
             android:exported="false" />
         <activity
-            android:name=".users.citizen.UserLoginScreen"
+            android:name=".users.citizen.activities.LoginCitAc"
             android:exported="false" />
         <activity
             android:name=".users.citizen.AddFriendScreen"
@@ -44,15 +44,15 @@
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".users.citizen.HomeScreen"
+            android:name=".users.citizen.activities.PostCollectionFeedCitAc"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".users.government.HomeScreenGov"
+            android:name=".users.government.activities.PostCollectionFeedGovAc"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".users.government.UpdatePostScreen"
+            android:name=".users.government.activities.UpdatePostGovAc"
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
@@ -60,7 +60,7 @@
             android:exported="false"
             android:screenOrientation="sensor" />
         <activity
-            android:name=".users.shared.SplashScreen"
+            android:name=".users.shared.activities.SplashScreen"
             android:exported="true"
             android:screenOrientation="sensor" >
             <intent-filter>
@@ -79,7 +79,7 @@
                 android:value=".users.citizen.MainActivity" />
         </activity>
         <activity
-            android:name=".users.citizen.PostThreadActivity"
+            android:name=".users.citizen.activities.PostFeedCitAc"
             android:label="Thread"
             android:parentActivityName=".users.citizen.MainActivity"
             android:screenOrientation="sensor" >
@@ -88,7 +88,7 @@
                 android:value=".users.citizen.MainActivity" />
         </activity>
         <activity
-            android:name=".users.government.PostThreadActivityGov"
+            android:name=".users.government.activities.PostFeedGovAc"
             android:label="Thread"
             android:parentActivityName=".users.citizen.MainActivity"
             android:screenOrientation="sensor" >

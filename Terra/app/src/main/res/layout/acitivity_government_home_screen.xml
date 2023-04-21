@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".users.government.HomeScreenGov">
+    tools:context=".users.government.activities.PostCollectionFeedGovAc">
 
 <!--    <Button-->
 <!--        android:id="@+id/authority_new_post_button"-->

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appdev.terra.R;
+import com.appdev.terra.users.citizen.activities.PostCollectionFeedCitAc;
 import com.appdev.terra.users.shared.SpinnerUtils;
 import com.appdev.terra.enums.StatusEnum;
 import com.appdev.terra.models.PostModel;
@@ -145,7 +146,7 @@ public class NewPostActivity extends AppCompatActivity {
                         }
                     });
                 }
-                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                Intent intent = new Intent(getApplicationContext(), PostCollectionFeedCitAc.class);
                 startActivity(intent);
             }
         });
