@@ -28,8 +28,10 @@ public class ProfileScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_screen);
 
+        //Setting up navigation bar
         BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.profile);
 
+        //Setting up the check boxes
         userIdText = findViewById(R.id.textView20);
         userIdText.setText("User ID: " + AccountService.logedInUserModel.id);
         adapter = new CheckBoxAdapter(getApplicationContext(), new CheckBoxAdapter.OnCheckBoxClickListener() {
@@ -43,10 +45,12 @@ public class ProfileScreen extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
+        //Setting qualifications based on the user
         AccountService.logedInUserModel.qualifications.forEach((qualification, selected) -> {
             adapter.setQualificationBoolean(qualification, selected);
         });
 
+        //Saving user qualifications
         Button saveButton = findViewById(R.id.SaveButton);
 
         saveButton.setOnClickListener(new View.OnClickListener() {

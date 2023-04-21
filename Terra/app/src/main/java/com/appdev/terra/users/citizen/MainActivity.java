@@ -38,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
                 this
         );
 
+        //Setting Navigation Bar selected to sos
         BottomNavBarBuilder.setUpCitizenNavBar(this, R.id.sos);
 
+        //SOS button
         Button sosButton = (Button) findViewById(R.id.sos_button);
 
 
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //Send coordinates to database when sos button is clicked
         sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

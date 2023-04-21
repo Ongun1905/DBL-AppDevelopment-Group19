@@ -74,6 +74,7 @@ public class UserLoginScreen extends AppCompatActivity {
             }
         });
 
+        //When clicked and login correct user redirected to home page
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

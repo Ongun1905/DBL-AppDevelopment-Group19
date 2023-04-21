@@ -50,6 +50,8 @@ public class AuthorityLoginScreen extends AppCompatActivity {
             }
         });
 
+
+        //When clicked and login correct user redirected to home page
         buttonLoginAuthority.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

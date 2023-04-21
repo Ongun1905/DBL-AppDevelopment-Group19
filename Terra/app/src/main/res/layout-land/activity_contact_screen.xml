@@ -8,27 +8,36 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_list_view"
-        android:layout_width="720dp"
-        android:layout_height="278dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_friend"
+        android:layout_width="722dp"
+        android:layout_height="132dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="730dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/contact_list_view" />
 
     <Button
         android:id="@+id/add_friend"
-        android:layout_width="172dp"
-        android:layout_height="50dp"
-        android:background="@drawable/round_button"
-        android:fontFamily="@font/montserrat_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Add Friend"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contact_list_view" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
@@ -41,6 +50,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="390dp"
+        android:layout_height="9dp"
+        android:layout_marginBottom="1dp"
+        android:background="#602A2A"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_list_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
