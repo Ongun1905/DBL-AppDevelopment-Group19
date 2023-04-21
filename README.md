@@ -5,6 +5,14 @@
 <br>
 <br>
 
+## Login Details
+
+Citizen Number: 612345678
+Citizen Password: test
+
+Goverment ID: test
+Government access token: test
+
 
 ## Third-Party Sources
 We do not have a third-party source used in the app that is unchanged. However, you can find the user scenario for the app down below.
